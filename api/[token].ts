@@ -1,5 +1,4 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import debug from 'debug'
 import { Db, MongoClient } from 'mongodb'
 import { Update } from 'typegram'
 import { handleInlineQuery, handleMessage } from '../src'
@@ -7,9 +6,6 @@ import { config } from '../src/config'
 import { UserRepository } from '../src/repositories/users'
 
 type ValidUpdate = Update.InlineQueryUpdate | Update.MessageUpdate
-
-const log = (namespace: string, message: string) =>
-  debug('amandapix').extend(namespace)(message)
 
 let db: Db = null as any
 
@@ -42,7 +38,6 @@ export default async function handleUpdate(
     return res.status(403).end()
 
   if (!db) {
-    log('db', 'Conectando ao mongodb')
     db = await MongoClient.connect(config.database.uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true
