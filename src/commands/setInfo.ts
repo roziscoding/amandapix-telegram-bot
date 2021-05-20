@@ -5,7 +5,8 @@ const setInfo: Command = {
   name: 'setinfo',
   helpText: 'Define suas informações do Pix. Uso: /setinfo chave, cidade, nome',
   regex: /\/setinfo(?: (?<key>.*), ?(?<city>.*), ?(?<name>.*))?/,
-  fn: async (match, _, user, repository) => {
+  fn: async (ctx) => {
+    const { match, user, repository } = ctx
     const key = match?.groups?.key
     const city = match?.groups?.city
     const name = match?.groups?.name

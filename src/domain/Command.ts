@@ -5,14 +5,17 @@ import { User } from './User'
 
 type Awaitable<T> = Promise<T> | T
 
+export type Context = {
+  user: User
+  repository: UserRepository
+  message: Message.TextMessage
+  match: RegExpMatchArray | null
+  command: Command
+}
+
 export type Command = {
   name: string
   regex: RegExp
   helpText?: string
-  fn: (
-    match: RegExpMatchArray | null,
-    message: Message,
-    user: User,
-    repository: UserRepository
-  ) => Awaitable<Response<keyof Telegram>>
+  fn: (ctx: Context) => Awaitable<Response<keyof Telegram>>
 }

@@ -1,48 +1,18 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import https from 'https'
 import { format } from 'util'
 import { config } from '../src/config'
-
-const makeRequest = (url: string) =>
-  new Promise((resolve, reject) => {
-    const request = https.request(
-      url,
-      {
-        headers: {
-          'content-type': 'application/json',
-          accept: 'application/json'
-        }
-      },
-      (res) => {
-        const responseData: Buffer[] = []
-
-        res.on('data', (chunk) => {
-          responseData.push(chunk)
-        })
-
-        res.on('end', () => {
-          resolve(Buffer.concat(responseData).toString('utf-8'))
-        })
-      }
-    )
-
-    request.on('error', reject)
-    request.end()
-  })
+import { makeRequest } from '../src/util/makeRequest'
 
 export default async function (_req: VercelRequest, res: VercelResponse) {
-  const webhookUrl = config.webhook.url
+  const webhookUrl = `https://${config.webhook.url}/api/${config.telegram.token}`
 
   const url = format(
-    'https://api.telegram.org/bot%s/setWebhook?url=https://%s/api/%s',
+    'https://api.telegram.org/bot%s/setWebhook?url=%s',
     config.telegram.token,
     webhookUrl,
-    config.telegram.token
   )
 
-  console.log(url)
+  const response = JSON.parse(await makeRequest(url))
 
-  const response = await makeRequest(url)
-
-  res.status(200).send(response)
+  res.status(200).send({ response, url: webhookUrl })
 }

@@ -34,4 +34,22 @@ export class UserRepository {
       { $set: { pixKey: key, city, name } }
     )
   }
+
+  async setSesstion(id: number, command?: string, data?: any) {
+    if (!command) {
+      return this.collection.updateOne(
+        { telegramId: id },
+        { $unset: { session: 1 } }
+      )
+    }
+
+    return this.collection.updateOne(
+      { telegramId: id },
+      { $set: { session: { command, data } } }
+    )
+  }
+
+  async clearSession(id: number) {
+    return this.setSesstion(id)
+  }
 }
