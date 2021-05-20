@@ -53,7 +53,7 @@ export default async function handleUpdate(
 
   const user =
     (await userRepository.findByTelegramId(extractTelegramId(update))) ||
-    (await userRepository.create(extractTelegramId(update), ''))
+    (await userRepository.create(extractTelegramId(update), '', '', ''))
 
   if (isInlineQuery(update)) {
     return res
