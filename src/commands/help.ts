@@ -1,5 +1,4 @@
 import { Command } from '../domain/Command'
-import { sendMessage } from '../util/telegram/sendMessage'
 import commands, { specialCommands } from './'
 
 const help: Command = {
@@ -14,7 +13,7 @@ const help: Command = {
         .map((command) => `/${command.name}: ${command.helpText}`)
     ].join('\n')
 
-    return sendMessage(ctx.user.telegramId, message)
+    return ctx.sendMessage(message)
   }
 }
 

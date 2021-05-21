@@ -1,6 +1,5 @@
 import { Command } from '../domain/Command'
 import { User } from '../domain/User'
-import { sendMessage } from '../util/telegram/sendMessage'
 
 const KNOWN_MESSAGE = (user: User) =>
   `Opa, tudo certo? Eu já tenho seus dados do Pix aqui, olha só:
@@ -17,10 +16,8 @@ const start: Command = {
   regex: /\/start ?(?<amount>\d+)?/,
   helpText: 'Cria seu cadastro, caso ainda não exista',
   fn: async (ctx) => {
-    const { user } = ctx
-
-    if (user.pixKey) {
-      return sendMessage(user.telegramId, KNOWN_MESSAGE(user), true, {
+    if (ctx.user.pixKey) {
+      return ctx.sendMessage(KNOWN_MESSAGE(ctx.user), true, {
         inline_keyboard: [
           [
             {
@@ -34,13 +31,12 @@ const start: Command = {
 
     const amount = ctx.match?.groups?.amount
 
-    await ctx.repository.setSesstion(user.telegramId, 'setInfo', {
+    await ctx.repository.setSesstion(ctx.user.telegramId, 'setInfo', {
       amount,
       step: 1
     })
 
-    return sendMessage(
-      user.telegramId,
+    return ctx.sendMessage(
       amount
         ? `Opa, entendi que você quer gerar um código de ${amount} mas, pra isso, primeiro me manda sua chave Pix:`
         : `Opa, bora te cadastrar por aqui pra você poder gerar códigos Pix! Primeiro, me manda sua chave Pix:`

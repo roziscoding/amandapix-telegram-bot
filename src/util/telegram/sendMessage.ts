@@ -10,7 +10,7 @@ export const REMOVE_KEYBOARD: ReplyKeyboardRemove = {
   remove_keyboard: true
 }
 
-type Markup =
+export type Markup =
   | InlineKeyboardMarkup
   | ReplyKeyboardMarkup
   | ReplyKeyboardRemove

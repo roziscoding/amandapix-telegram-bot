@@ -1,6 +1,5 @@
 import { format } from 'util'
 import { Command } from '../domain/Command'
-import { sendMessage } from '../util/telegram/sendMessage'
 
 const getInfo: Command = {
   name: 'getinfo',
@@ -12,7 +11,7 @@ const getInfo: Command = {
       JSON.stringify(ctx.user, null, 4)
     )
 
-    return sendMessage(ctx.user.telegramId, message, true)
+    return ctx.sendMessage(message, true)
   }
 }
 
