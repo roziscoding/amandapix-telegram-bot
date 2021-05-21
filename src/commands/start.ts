@@ -32,23 +32,18 @@ const start: Command = {
       })
     }
 
-    if (ctx.match?.groups?.amount) {
-      const amount = ctx.match.groups.amount
-      await ctx.repository.setSesstion(user.telegramId, 'setInfo', {
-        amount,
-        step: 1
-      })
+    const amount = ctx.match?.groups?.amount
 
-      return sendMessage(
-        user.telegramId,
-        `Opa, entendi que você quer gerar um código de ${amount} mas, pra isso, primeiro me manda sua chave Pix:`
-      )
-    }
+    await ctx.repository.setSesstion(user.telegramId, 'setInfo', {
+      amount,
+      step: 1
+    })
 
     return sendMessage(
       user.telegramId,
-      `\`\`\`\n${JSON.stringify({ text: ctx.message.text }, null, 4)}\`\`\``,
-      true
+      amount
+        ? `Opa, entendi que você quer gerar um código de ${amount} mas, pra isso, primeiro me manda sua chave Pix:`
+        : `Opa, bora te cadastrar por aqui pra você poder gerar códigos Pix! Primeiro, me manda sua chave Pix:`
     )
   }
 }
