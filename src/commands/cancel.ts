@@ -7,7 +7,7 @@ const cancel: Command = {
   helpText: 'Cancela qualquer operação que estiver sendo realizada',
   fn: async (ctx) => {
     if (!ctx.user.session?.command) {
-      return sendMessage(ctx.user.telegramId, 'Eu nem tava fazendo nada pô...')
+      return sendMessage(ctx.user.telegramId, 'Eu nem tava fazendo nada pô...', false, REMOVE_KEYBOARD)
     }
 
     await ctx.repository.clearSession(ctx.user.telegramId)
