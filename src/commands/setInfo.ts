@@ -102,7 +102,7 @@ const steps: Command['fn'][] = [
 
 const setInfo: Command = {
   name: 'setinfo',
-  helpText: 'Define suas informações do Pix. Uso: /setinfo chave, cidade, nome',
+  helpText: 'Define suas informações do Pix',
   regex: /\/setinfo(?: (?<key>.*), ?(?<city>.*), ?(?<name>.*))?/,
   fn: async (ctx) => {
     const sessionData = ctx.user.session?.data
