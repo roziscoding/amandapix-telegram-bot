@@ -31,7 +31,7 @@ const start: Command = {
 
     const amount = ctx.match?.groups?.amount
 
-    await ctx.repository.setSesstion(ctx.user.telegramId, 'setInfo', {
+    await ctx.repository.setSesstion(ctx.user.telegramId, 'setinfo', {
       amount,
       step: 1
     })
