@@ -3,6 +3,7 @@ import commands, { specialCommands } from './commands'
 import { Command, Context } from './domain/Command'
 import { User } from './domain/User'
 import { UserRepository } from './repositories/users'
+import { sendMessage } from './util/telegram/sendMessage'
 
 // eslint-disable-next-line camelcase
 export const I_DONT_GET_IT: Command = {
@@ -42,7 +43,8 @@ const getContext = (
     repository,
     message,
     match,
-    command
+    command,
+    sendMessage: (text, markdown, markup) => sendMessage(user.telegramId, text, markdown, markup)
   }
 }
 
