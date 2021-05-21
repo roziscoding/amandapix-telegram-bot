@@ -52,4 +52,8 @@ export class UserRepository {
   async clearSession(id: number) {
     return this.setSesstion(id)
   }
+
+  async forget(id: number) {
+    return this.collection.deleteOne({ telegramId: id })
+  }
 }

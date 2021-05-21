@@ -17,5 +17,5 @@ export type Command = {
   name: string
   regex: RegExp
   helpText?: string
-  fn: (ctx: Context) => Awaitable<Response<keyof Telegram>>
+  fn: (ctx: Context) => Awaitable<Response<keyof Telegram> | null>
 }

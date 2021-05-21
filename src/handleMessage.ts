@@ -1,5 +1,5 @@
 import { Message } from 'typegram'
-import commands from './commands'
+import commands, { specialCommands } from './commands'
 import { Command, Context } from './domain/Command'
 import { User } from './domain/User'
 import { UserRepository } from './repositories/users'
@@ -20,11 +20,20 @@ const getContext = (
   repository: UserRepository,
   message: Message.TextMessage
 ): Context => {
-  const command = user.session?.command
+  const specialCommand = Object.values(specialCommands).find((command) =>
+    command.regex.test(message.text)
+  )
+
+  const sessionCommand = user.session?.command
     ? commands[user.session.command as keyof typeof commands]
-    : Object.values(commands)
-        .concat(I_DONT_GET_IT)
-        .find((command) => command.regex.test(message.text))!
+    : null
+
+  const command =
+    specialCommand ||
+    sessionCommand ||
+    Object.values(commands)
+      .concat(I_DONT_GET_IT)
+      .find((command) => command.regex.test(message.text))!
 
   const match = message.text.match(command.regex)
 

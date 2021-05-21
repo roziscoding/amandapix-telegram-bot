@@ -15,6 +15,7 @@ Pra gerar um código Pix, me chama no modo inline, ou clica no botão aqui em ba
 const start: Command = {
   name: 'start',
   regex: /\/start ?(?<amount>\d+)?/,
+  helpText: 'Cria seu cadastro, caso ainda não exista',
   fn: async (ctx) => {
     const { user } = ctx
 

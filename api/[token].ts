@@ -35,8 +35,7 @@ export default async function handleUpdate(
 ) {
   const update: ValidUpdate = req.body
 
-  if (!isValidUpdate(update))
-    return res.status(403).end()
+  if (!isValidUpdate(update)) return res.status(403).end()
 
   if (!db) {
     db = await MongoClient.connect(config.database.uri, {
@@ -58,9 +57,11 @@ export default async function handleUpdate(
   }
 
   if (isMessage(update)) {
-    return res
-      .status(200)
-      .json(await handleMessage(user, userRepository, update.message))
+    const result = await handleMessage(user, userRepository, update.message)
+
+    if (result) return res.status(200).json(result)
+
+    return res.status(204).end()
   }
 
   return res.status(204).end()
