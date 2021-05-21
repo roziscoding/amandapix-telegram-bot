@@ -11,11 +11,12 @@ const clearInfo: Command = {
       await wizard.next()
 
       return ctx.sendMessage(        
-        'Tem certeza que deseja apagar _**todos**_ os seus dados? Essa operação não é reversível',
+        'Tem certeza que deseja apagar **_todos_** os seus dados? Essa operação não é reversível',
         true,
         {
           keyboard: [[{ text: 'Sim' }, { text: 'Não' }]],
-          one_time_keyboard: true
+          one_time_keyboard: true,
+          resize_keyboard: true
         }
       )
     },
