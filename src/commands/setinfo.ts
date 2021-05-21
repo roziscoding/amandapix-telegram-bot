@@ -1,5 +1,5 @@
 import { Command } from '../domain/Command'
-import { REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
+import { CONFIRM_OR_CANCEL, REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
 import { getWizard } from '../util/telegram/wizard'
 
 const setInfo: Command = {
@@ -25,26 +25,18 @@ const setInfo: Command = {
 
       const message = `Bom, pelo que eu entendi, seus dados são:\n\n\`Chave: ${sessionData.key}\`\n\`Cidade: ${sessionData.city}\`\n\`Nome: ${ctx.message.text}\`\n\nTá correto?`
 
-      return ctx.sendMessage(message, true, {
-        keyboard: [[{ text: 'Sim' }], [{ text: 'Não' }], [{ text: 'Cancelar' }]],
-        one_time_keyboard: true,
-        resize_keyboard: true
-      })
+      return ctx.sendMessage(message, true, CONFIRM_OR_CANCEL)
     },
     async (ctx, wizard) => {
       if (ctx.message.text === 'Cancelar') {
         await wizard.exit()
-        return ctx.sendMessage(          
-          'OK, deixa pra lá. Até mais!',
-          false,
-          REMOVE_KEYBOARD
-        )
+        return ctx.sendMessage('OK, deixa pra lá. Até mais!', false, REMOVE_KEYBOARD)
       }
 
       if (ctx.message.text === 'Não') {
         await wizard.setStep(1)
 
-        return ctx.sendMessage(          
+        return ctx.sendMessage(
           'Ok, vamos do começo então. Me manda sua chave Pix:',
           false,
           REMOVE_KEYBOARD
@@ -59,7 +51,7 @@ const setInfo: Command = {
 
         const text = amount ? `Gerar código de ${amount} reais` : 'Gerar código Pix'
 
-        return ctx.sendMessage(          
+        return ctx.sendMessage(
           'Tudo certo! Você já pode gerar códigos Pix! Pra isso, me chama inline, ou clica no botão :D',
           false,
           {
@@ -69,9 +61,7 @@ const setInfo: Command = {
         )
       }
 
-      return ctx.sendMessage(        
-        'Hm... Não entendi. Clica em um dos botões, por favor.'
-      )
+      return ctx.sendMessage('Hm... Não entendi. Clica em um dos botões, por favor.')
     }
   ])
 }

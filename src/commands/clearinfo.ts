@@ -1,5 +1,5 @@
 import { Command } from '../domain/Command'
-import { REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
+import { CONFIRM, REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
 import { getWizard } from '../util/telegram/wizard'
 
 const clearInfo: Command = {
@@ -10,14 +10,10 @@ const clearInfo: Command = {
     async (ctx, wizard) => {
       await wizard.next()
 
-      return ctx.sendMessage(        
+      return ctx.sendMessage(
         'Tem certeza que deseja apagar **_todos_** os seus dados? Essa operação não é reversível',
         true,
-        {
-          keyboard: [[{ text: 'Sim' }, { text: 'Não' }]],
-          one_time_keyboard: true,
-          resize_keyboard: true
-        }
+        CONFIRM
       )
     },
     async (ctx, wizard) => {
@@ -25,7 +21,7 @@ const clearInfo: Command = {
         await wizard.exit()
         await ctx.repository.forget(ctx.user.telegramId)
 
-        return ctx.sendMessage(          
+        return ctx.sendMessage(
           'OK. Apaguei tudo que eu sabia sobre você :)',
           false,
           REMOVE_KEYBOARD
