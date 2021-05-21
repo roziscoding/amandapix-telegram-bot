@@ -8,7 +8,7 @@ export function handleInlineQuery(
   user: User,
   query: InlineQuery
 ): Response<'answerInlineQuery'> {
-  const match = query.query.match(/[\d.,]/)
+  const match = query.query.match(/[\d.,]+/ig)
 
   if (!match) {
     return {
@@ -24,7 +24,7 @@ export function handleInlineQuery(
       inline_query_id: query.id,
       cache_time: 0,
       results: [],
-      switch_pm_text: 'Não tenho seus dados. Utilize /setinfo',
+      switch_pm_text: 'Clique aqui pra se cadastrar',
       switch_pm_parameter: query.query
     }
   }

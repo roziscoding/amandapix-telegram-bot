@@ -18,14 +18,15 @@ export const I_DONT_GET_IT: Command = {
 const getContext = (
   user: User,
   repository: UserRepository,
-  message: Message.TextMessage,
-  match: RegExpExecArray | null = null
+  message: Message.TextMessage
 ): Context => {
   const command = user.session?.command
     ? commands[user.session.command as keyof typeof commands]
     : Object.values(commands)
         .concat(I_DONT_GET_IT)
         .find((command) => command.regex.test(message.text))!
+
+  const match = message.text.match(command.regex)
 
   return {
     user,
