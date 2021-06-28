@@ -77,7 +77,7 @@ export async function handleInlineQuery(
           : undefined,
         input_message_content: {
           message_text: format(
-            'Para me transferir %s reais, utilize o código abaixo:\n\n`%s`',
+            'Para me transferir %s reais, utilize o código abaixo (clique no código para copiar):\n\n`%s`',
             value,
             pixCode
           ),
