@@ -1,14 +1,16 @@
+import axios from 'axios'
+import { format } from 'util'
 import { pix } from 'pix-me'
 import { InlineQuery } from 'typegram'
-import { format } from 'util'
 import { Response } from './domain/Response'
 import { User } from './domain/User'
+import { config } from './config'
 
-export function handleInlineQuery(
+export async function handleInlineQuery(
   user: User,
   query: InlineQuery
-): Response<'answerInlineQuery'> {
-  const match = query.query.match(/[\d.,]+/ig)
+): Promise<Response<'answerInlineQuery'>> {
+  const match = query.query.match(/[\d.,]+/gi)
 
   if (!match) {
     return {
@@ -38,6 +40,28 @@ export function handleInlineQuery(
     name: user.name
   })
 
+  const qrCodeId = await axios
+    .post<{ codeId: string }>(
+      `https://${config.webhook.url}/api/qrcode?pixCode=${encodeURIComponent(pixCode)}&telegramId=${
+        user.telegramId
+      }`,
+      undefined,
+      {
+        headers: {
+          authorization: config.telegram.token
+        }
+      }
+    )
+    .then(({ data }) => data.codeId)
+    .catch((err) => {
+      console.error(err)
+      return null
+    })
+
+  const qrCodeUrl = qrCodeId
+    ? encodeURI(format('https://%s/api/qrcode?codeId=%s', config.webhook.url, qrCodeId))
+    : null
+
   const response: Response<'answerInlineQuery'> = {
     method: 'answerInlineQuery',
     inline_query_id: query.id,
@@ -48,6 +72,9 @@ export function handleInlineQuery(
         id: `${value}`,
         type: 'article',
         title: format('Gerar código pix de %s reais', value),
+        reply_markup: qrCodeUrl
+          ? { inline_keyboard: [[{ text: 'QRCode', url: qrCodeUrl }]] }
+          : undefined,
         input_message_content: {
           message_text: format(
             'Para me transferir %s reais, utilize o código abaixo:\n\n`%s`',
@@ -57,6 +84,20 @@ export function handleInlineQuery(
           parse_mode: 'Markdown'
         }
       }
+      // {
+      //   type: 'photo',
+      //   id: `${value}-photo`,
+      //   photo_url: qrcodeUrl,
+      //   thumb_url: qrcodeUrl,
+      //   description: 'Gera um código do Pix Copia e Cola e um QRCode',
+      //   title: format('Gerar código pix de %s reais', value),
+      //   caption: format(
+      //     'Para me transferir %s reais, utilize o código abaixo (clique no código para copiar):\n\n`%s`',
+      //     value,
+      //     pixCode
+      //   ),
+      //   parse_mode: 'Markdown'
+      // }
     ]
   }
 
