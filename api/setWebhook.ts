@@ -14,5 +14,5 @@ export default async function (_req: VercelRequest, res: VercelResponse) {
 
   const response = JSON.parse(await makeRequest(url))
 
-  res.status(200).send({ response, url: webhookUrl })
+  res.status(200).send({ response, url: `https://${config.webhook.url}/api/` })
 }
