@@ -1,6 +1,6 @@
 {
   "name": "amandapix-telegram-bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Telegram bot that generates Pix codes",
   "scripts": {
     "test": "mocha",
