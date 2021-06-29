@@ -1,10 +1,14 @@
-import axios from 'axios'
+import * as math from 'mathjs'
 import { format } from 'util'
 import { pix } from 'pix-me'
 import { InlineQuery } from 'typegram'
 import { Response } from './domain/Response'
 import { User } from './domain/User'
 import { config } from './config'
+
+async function evaluateQuery(query: string) {
+  return math.round(math.evaluate(query), 2)
+}
 
 export async function handleInlineQuery(
   user: User,
@@ -31,7 +35,18 @@ export async function handleInlineQuery(
     }
   }
 
-  const value = query.query.replace(/,/g, '.')
+  const value = await evaluateQuery(query.query.replace(/,/g, '.')).catch((err) => {
+    console.error(err)
+    return null
+  })
+
+  if (!value) {
+    return {
+      method: 'answerInlineQuery',
+      inline_query_id: query.id,
+      results: []
+    }
+  }
 
   const pixCode = pix({
     key: user.pixKey as any,
@@ -69,20 +84,6 @@ export async function handleInlineQuery(
           parse_mode: 'Markdown'
         }
       }
-      // {
-      //   type: 'photo',
-      //   id: `${value}-photo`,
-      //   photo_url: qrcodeUrl,
-      //   thumb_url: qrcodeUrl,
-      //   description: 'Gera um código do Pix Copia e Cola e um QRCode',
-      //   title: format('Gerar código pix de %s reais', value),
-      //   caption: format(
-      //     'Para me transferir %s reais, utilize o código abaixo (clique no código para copiar):\n\n`%s`',
-      //     value,
-      //     pixCode
-      //   ),
-      //   parse_mode: 'Markdown'
-      // }
     ]
   }
 
