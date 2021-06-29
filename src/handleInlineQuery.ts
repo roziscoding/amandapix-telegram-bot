@@ -40,27 +40,14 @@ export async function handleInlineQuery(
     name: user.name
   })
 
-  const qrCodeId = await axios
-    .post<{ codeId: string }>(
-      `https://${config.webhook.url}/api/qrcode?pixCode=${encodeURIComponent(pixCode)}&telegramId=${
-        user.telegramId
-      }`,
-      undefined,
-      {
-        headers: {
-          authorization: config.telegram.token
-        }
-      }
+  const qrCodeUrl = encodeURI(
+    format(
+      'https://%s/api/qrcode?telegramId=%s&value=%s',
+      config.webhook.url,
+      user.telegramId,
+      value
     )
-    .then(({ data }) => data.codeId)
-    .catch((err) => {
-      console.error(err)
-      return null
-    })
-
-  const qrCodeUrl = qrCodeId
-    ? encodeURI(format('https://%s/api/qrcode?codeId=%s', config.webhook.url, qrCodeId))
-    : null
+  )
 
   const response: Response<'answerInlineQuery'> = {
     method: 'answerInlineQuery',
@@ -72,13 +59,11 @@ export async function handleInlineQuery(
         id: `${value}`,
         type: 'article',
         title: format('Gerar código pix de %s reais', value),
-        reply_markup: qrCodeUrl
-          ? { inline_keyboard: [[{ text: 'QRCode', url: qrCodeUrl }]] }
-          : undefined,
         input_message_content: {
           message_text: format(
-            'Para me transferir %s reais, utilize o código abaixo (clique no código para copiar):\n\n`%s`',
+            'Para me transferir %s reais, escaneie o [QRCode](%s) ou utilize o código abaixo (clique no código para copiar):\n\n`%s`',
             value,
+            qrCodeUrl,
             pixCode
           ),
           parse_mode: 'Markdown'

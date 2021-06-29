@@ -1,27 +1,15 @@
-import { v4 as generateUuid } from 'uuid'
 import { promisify } from 'util'
 import { QRCodeSegment, toDataURL } from 'qrcode'
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import pngToJpeg from 'png-to-jpeg'
 import { Db, MongoClient } from 'mongodb'
 import { config } from '../src/config'
-import { QRCodeRepository } from '../src/repositories/qrcodes'
+import { UserRepository } from '../src/repositories/users'
+import { pix } from 'pix-me'
 
 const createQrCode = promisify<string | QRCodeSegment[], string>(toDataURL)
 
 let db: Db = null as any
-
-async function createCode(repository: QRCodeRepository, pixCode: string, telegramId: number) {
-  const uuid = generateUuid()
-
-  const base64Data = await createQrCode([{ data: pixCode as string, mode: 'byte' }])
-    .then((url) => url.split(',')[1])
-    .then((base64) => Buffer.from(base64!, 'base64'))
-    .then((buffer) => pngToJpeg({ quality: 100 })(buffer))
-    .then((buffer) => buffer.toString('base64'))
-
-  return repository.create(telegramId, uuid, base64Data)
-}
 
 export default async function (req: VercelRequest, res: VercelResponse) {
   if (!db) {
@@ -31,30 +19,33 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     }).then((connection) => connection.db(config.database.dbName))
   }
 
-  const qrCodeRepository = new QRCodeRepository(db)
+  const telegramId = Number(req.query.telegramId)
+  const value = req.query.value
 
-  if (req.method === 'POST' && req.headers.authorization === config.telegram.token) {
-    const { pixCode, telegramId } = req.query
-
-    const { codeId } = await createCode(
-      qrCodeRepository,
-      pixCode as string,
-      Number(telegramId as string)
-    )
-
-    return res.status(201).json({ codeId })
+  if (isNaN(telegramId) || !value || typeof value !== 'string') {
+    return res.status(403).end()
   }
 
-  if (req.method === 'GET' && req.query.codeId) {
-    const qrCode = await qrCodeRepository.findByCodeId(req.query.codeId as string)
+  const userRepository = new UserRepository(db)
 
-    if (!qrCode) return res.status(404).end()
+  const user = await userRepository.findByTelegramId(Number(req.query.telegramId))
 
-    const qrCodeBuffer = Buffer.from(qrCode.base64Data, 'base64')
-
-    res.setHeader('Content-Type', 'image/jpeg')
-    return res.status(200).send(qrCodeBuffer)
+  if (!user) {
+    return res.status(401).end()
   }
 
-  return res.status(401).end()
+  const pixCode = pix({
+    key: user.pixKey as any,
+    amount: value as any,
+    city: user.city,
+    name: user.name
+  })
+
+  const buffer = await createQrCode([{ data: pixCode as string, mode: 'byte' }])
+    .then((url) => url.split(',')[1])
+    .then((base64) => Buffer.from(base64!, 'base64'))
+    .then((buffer) => pngToJpeg({ quality: 100 })(buffer))
+
+  res.setHeader('Content-Type', 'image/jpeg')
+  res.status(200).send(buffer)
 }

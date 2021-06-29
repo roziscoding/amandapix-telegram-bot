@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import { Db, MongoClient } from 'mongodb'
 import { Message, Update } from 'typegram'
@@ -29,10 +30,7 @@ const extractTelegramId = (update: ValidUpdate) => {
   return 0
 }
 
-export default async function handleUpdate(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+export default async function handleUpdate(req: VercelRequest, res: VercelResponse) {
   const update: ValidUpdate = req.body
 
   if (!isValidUpdate(update)) return res.status(403).end()
@@ -51,9 +49,7 @@ export default async function handleUpdate(
     (await userRepository.create(extractTelegramId(update), '', '', ''))
 
   if (isInlineQuery(update)) {
-    return res
-      .status(200)
-      .json(await handleInlineQuery(user, update.inline_query))
+    return res.status(200).json(await handleInlineQuery(user, update.inline_query))
   }
 
   if (isMessage(update)) {
