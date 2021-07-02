@@ -17,6 +17,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
 
   if (method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Headers', '*')
     return res.status(200).end()
   }
 
