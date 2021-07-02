@@ -1,3 +1,4 @@
+import { allowCors } from '../src/util/allowCors'
 import * as uuid from 'uuid'
 import { pix } from 'pix-me'
 import * as math from 'mathjs'
@@ -12,14 +13,8 @@ function evaluateValue(value: string) {
   }
 }
 
-export default async function (req: VercelRequest, res: VercelResponse) {
+const handler = async function (req: VercelRequest, res: VercelResponse) {
   const { method, body } = req
-
-  if (method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Headers', '*')
-    return res.status(200).end()
-  }
 
   if (method !== 'POST') return res.status(404).end()
 
@@ -47,3 +42,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
 
   return res.status(200).json({ id, code })
 }
+
+const endpoint = allowCors(handler)
+
+export default endpoint
