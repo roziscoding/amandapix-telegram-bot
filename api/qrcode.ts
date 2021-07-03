@@ -35,8 +35,8 @@ export default async function (req: VercelRequest, res: VercelResponse) {
   }
 
   const pixCode = pix({
-    key: user.pixKey as any,
-    amount: value as any,
+    key: user.pixKey,
+    amount: value,
     city: user.city,
     name: user.name
   })
