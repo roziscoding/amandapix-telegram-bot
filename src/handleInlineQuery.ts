@@ -6,7 +6,7 @@ import { Response } from './domain/Response'
 import { User } from './domain/User'
 import { config } from './config'
 
-async function evaluateQuery(query: string) {
+async function evaluateQuery(query: string): Promise<number> {
   return math.round(math.evaluate(query), 2)
 }
 
@@ -49,8 +49,8 @@ export async function handleInlineQuery(
   }
 
   const pixCode = pix({
-    key: user.pixKey as any,
-    amount: value as any,
+    key: user.pixKey,
+    amount: value.toFixed(2),
     city: user.city,
     name: user.name
   })
