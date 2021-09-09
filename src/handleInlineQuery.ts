@@ -51,8 +51,8 @@ export async function handleInlineQuery(
   const pixCode = pix({
     key: user.pixKey,
     amount: value.toFixed(2),
-    city: user.city,
-    name: user.name
+    city: user.city.normalize('NFD').replace(/\p{Diacritic}/gu, ''),
+    name: user.name.normalize('NFD').replace(/\p{Diacritic}/gu, '')
   })
 
   const qrCodeUrl = encodeURI(
