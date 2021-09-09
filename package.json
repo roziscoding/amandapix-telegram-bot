@@ -24,6 +24,8 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.1",
     "@types/mongodb": "^3.6.14",
     "@types/node": "^15.0.1",
     "@types/qrcode": "^1.4.0",
@@ -42,6 +44,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "husky": "^6.0.0",
     "mocha": "^8.3.2",
+    "semantic-release": "^17.4.7",
     "typegram": "^3.3.1",
     "typescript": "^4.2.4"
   },
@@ -59,5 +62,28 @@
     "qrcode": "^1.4.4",
     "sugar-env": "^1.5.14",
     "uuid": "^8.3.2"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "type": "docs",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ]
   }
 }
