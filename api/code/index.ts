@@ -49,8 +49,8 @@ const handler = async function (req: VercelRequest, res: VercelResponse) {
 
   const code = pix({
     amount,
-    name,
-    city,
+    name.normalize('NFD').replace(/\p{Diacritic}/gu, ''),
+    city.normalize('NFD').replace(/\p{Diacritic}/gu, ''),
     key
   })
 
