@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.3.1...v1.4.0) (2022-06-09)
+
+
+### Features
+
+* update QRcode generation code ([7174b5f](https://github.com/roziscoding/amandapix-telegram-bot/commit/7174b5f9f4872dc0a1f05f72d401d3acea30eb67))
+
 ## [1.3.1](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.3.0...v1.3.1) (2022-06-08)
 
 
