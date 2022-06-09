@@ -1,11 +1,11 @@
 import { promisify } from 'util'
 import { QRCodeSegment, toDataURL } from 'qrcode'
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import pngToJpeg from 'png-to-jpeg'
 import { Db, MongoClient } from 'mongodb'
 import { config } from '../src/config'
 import { UserRepository } from '../src/repositories/users'
-import { pix } from 'pix-me'
+import { getPixCodeForUser } from '../src/util/pixCode'
+import { pngToJpeg } from '../src/util/image'
 
 const createQrCode = promisify<string | QRCodeSegment[], string>(toDataURL)
 
@@ -20,9 +20,9 @@ export default async function (req: VercelRequest, res: VercelResponse) {
   }
 
   const telegramId = Number(req.query.telegramId)
-  const value = req.query.value
+  const amount = req.query.value
 
-  if (isNaN(telegramId) || !value || typeof value !== 'string') {
+  if (isNaN(telegramId) || !amount || typeof amount !== 'string') {
     return res.status(403).end()
   }
 
@@ -34,17 +34,12 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     return res.status(401).end()
   }
 
-  const pixCode = pix({
-    key: user.pixKey,
-    amount: value,
-    city: user.city,
-    name: user.name
-  })
+  const pixCode = getPixCodeForUser(user, amount)
 
   const buffer = await createQrCode([{ data: pixCode as string, mode: 'byte' }])
     .then((url) => url.split(',')[1])
     .then((base64) => Buffer.from(base64!, 'base64'))
-    .then((buffer) => pngToJpeg({ quality: 100 })(buffer))
+    .then((buffer) => pngToJpeg(buffer))
 
   res.setHeader('Content-Type', 'image/jpeg')
   res.status(200).send(buffer)

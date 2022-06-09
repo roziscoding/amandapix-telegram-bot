@@ -1,10 +1,10 @@
 import * as math from 'mathjs'
 import { format } from 'util'
-import { pix } from 'pix-me'
 import { InlineQuery } from 'typegram'
 import { Response } from './domain/Response'
 import { User } from './domain/User'
 import { config } from './config'
+import { getPixCodeForUser } from './util/pixCode'
 
 async function evaluateQuery(query: string): Promise<number> {
   return math.round(math.evaluate(query), 2)
@@ -35,12 +35,12 @@ export async function handleInlineQuery(
     }
   }
 
-  const value = await evaluateQuery(query.query.replace(/,/g, '.')).catch((err) => {
+  const amount = await evaluateQuery(query.query.replace(/,/g, '.')).catch((err) => {
     console.error(err)
     return null
   })
 
-  if (!value) {
+  if (!amount) {
     return {
       method: 'answerInlineQuery',
       inline_query_id: query.id,
@@ -48,19 +48,14 @@ export async function handleInlineQuery(
     }
   }
 
-  const pixCode = pix({
-    key: user.pixKey,
-    amount: value.toFixed(2),
-    city: user.city.normalize('NFD').replace(/\p{Diacritic}/gu, ''),
-    name: user.name.normalize('NFD').replace(/\p{Diacritic}/gu, '')
-  })
+  const pixCode = getPixCodeForUser(user, amount)
 
   const qrCodeUrl = encodeURI(
     format(
       'https://%s/api/qrcode?telegramId=%s&value=%s',
       config.webhook.url,
       user.telegramId,
-      value
+      amount
     )
   )
 
@@ -71,13 +66,13 @@ export async function handleInlineQuery(
     is_personal: true,
     results: [
       {
-        id: `${value}`,
+        id: `${amount}`,
         type: 'article',
-        title: format('Gerar código pix de %s reais', value),
+        title: format('Gerar código pix de %s reais', amount),
         input_message_content: {
           message_text: format(
             'Para me transferir %s reais, escaneie o [QRCode](%s) ou utilize o código abaixo (clique no código para copiar):\n\n`%s`',
-            value,
+            amount,
             qrCodeUrl,
             pixCode
           ),

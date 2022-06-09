@@ -1,5 +1,5 @@
 import { Command } from '../domain/Command'
-import commands, { specialCommands } from './'
+import commands, { specialCommands } from '.'
 
 const help: Command = {
   name: 'help',

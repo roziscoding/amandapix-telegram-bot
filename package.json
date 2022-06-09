@@ -26,7 +26,7 @@
     "@commitlint/config-conventional": "^12.1.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.1",
-    "@types/mongodb": "^3.6.14",
+    "@types/mongodb": "^3.6.20",
     "@types/node": "^15.0.1",
     "@types/qrcode": "^1.4.0",
     "@types/uuid": "^8.3.1",
@@ -55,10 +55,10 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "jimp": "^0.16.1",
     "mathjs": "^9.4.3",
     "mongodb": "^3.6.7",
     "pix-me": "^2.0.0",
-    "png-to-jpeg": "^1.0.1",
     "qrcode": "^1.4.4",
     "sugar-env": "^1.5.14",
     "uuid": "^8.3.2"
