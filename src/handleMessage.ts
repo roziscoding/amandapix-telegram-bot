@@ -25,6 +25,8 @@ const getContext = (
     command.regex.test(message.text)
   )
 
+  console.log(user.session)
+
   const sessionCommand = user.session?.command
     ? commands[user.session.command as keyof typeof commands]
     : null

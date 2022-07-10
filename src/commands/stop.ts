@@ -2,11 +2,11 @@ import { Command } from '../domain/Command'
 import { CONFIRM, REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
 import { getWizard } from '../util/telegram/wizard'
 
-const clearInfo: Command = {
-  name: 'clearinfo',
-  regex: /\/clearinfo/,
+const stop: Command = {
+  name: 'stop',
+  regex: /\/stop/,
   helpText: 'Apaga todos os dados que eu tenho armazenados sobre você',
-  fn: getWizard('clearinfo', [
+  fn: getWizard('stop', [
     async (ctx, wizard) => {
       await wizard.next()
 
@@ -43,4 +43,4 @@ const clearInfo: Command = {
   ])
 }
 
-export default clearInfo
+export default stop
