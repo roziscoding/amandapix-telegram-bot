@@ -1,5 +1,6 @@
 import { Command } from '../domain/Command'
 import { User } from '../domain/User'
+import { evaluateQuery } from '../handleInlineQuery'
 
 const KNOWN_MESSAGE = (user: User) =>
   `Opa, tudo certo? Eu já tenho seus dados do Pix aqui, olha só:
@@ -11,6 +12,10 @@ const KNOWN_MESSAGE = (user: User) =>
 Se quiser alterar esses dados, utilize o comando /setinfo.
 Pra gerar um código Pix, me chama no modo inline, ou clica no botão aqui em baixo.`.trim()
 
+const KNOWN_MESSAGE_REQUESTED = (amount: string) => `
+Para gerar um código de R$ ${amount} conforme solicitado, clique no botão abaixo.
+`
+
 const start: Command = {
   name: 'start',
   regex: /\/start ?(?<amount>\d+)?/,
@@ -18,21 +23,31 @@ const start: Command = {
   fn: async (ctx) => {
     const amount = ctx.match?.groups?.amount
 
-    if (ctx.user.pixKey) {
-      return ctx.sendMessage(
-        amount ? 'Clique no botão abaixo para gerar o código Pix' : KNOWN_MESSAGE(ctx.user),
-        true,
-        {
-          inline_keyboard: [
-            [
-              {
-                text: 'Gerar código Pix',
-                switch_inline_query: amount || ''
-              }
-            ]
+    if (ctx.user.pixKey && !amount) {
+      return ctx.sendMessage(KNOWN_MESSAGE(ctx.user), true, {
+        inline_keyboard: [
+          [
+            {
+              text: 'Gerar código Pix',
+              switch_inline_query: ''
+            }
           ]
-        }
-      )
+        ]
+      })
+    }
+
+    if (ctx.user.pixKey && amount) {
+      const parsedAmount = await evaluateQuery(amount)
+      return ctx.sendMessage(KNOWN_MESSAGE_REQUESTED(parsedAmount.toFixed(2)), false, {
+        inline_keyboard: [
+          [
+            {
+              text: `Gerar código de R$ ${parsedAmount}`,
+              switch_inline_query: amount
+            }
+          ]
+        ]
+      })
     }
 
     await ctx.repository.setSesstion(ctx.user.telegramId, 'setinfo', {

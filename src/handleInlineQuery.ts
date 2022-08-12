@@ -6,7 +6,7 @@ import { Response } from './domain/Response'
 import { User } from './domain/User'
 import { getPixCodeForUser } from './util/pixCode'
 
-async function evaluateQuery(query: string): Promise<number> {
+export async function evaluateQuery(query: string): Promise<number> {
   return math.round(math.evaluate(query), 2)
 }
 
