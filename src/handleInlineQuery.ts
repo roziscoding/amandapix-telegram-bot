@@ -1,5 +1,5 @@
 import * as math from 'mathjs'
-import { InlineQuery, UserFromGetMe } from 'typegram'
+import { InlineQuery } from 'typegram'
 import { format } from 'util'
 import { config } from './config'
 import { Response } from './domain/Response'
@@ -12,10 +12,8 @@ export async function evaluateQuery(query: string): Promise<number> {
 
 export async function handleInlineQuery(
   user: User,
-  query: InlineQuery,
-  me: UserFromGetMe
+  query: InlineQuery
 ): Promise<Response<'answerInlineQuery'>> {
-  console.log('handling inline query', query.query, me)
   const match = query.query.match(/[\d.,]+/gi)
 
   if (!match) {
