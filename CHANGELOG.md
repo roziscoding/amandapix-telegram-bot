@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.5.0...v1.6.0) (2022-08-12)
+
+
+### Features
+
+* add option to request code ([040bedb](https://github.com/roziscoding/amandapix-telegram-bot/commit/040bedb923943154c08f9916df0c1362efb1ea69))
+
 # [1.5.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.4.0...v1.5.0) (2022-07-10)
 
 
