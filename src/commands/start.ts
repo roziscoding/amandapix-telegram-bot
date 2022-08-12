@@ -58,7 +58,8 @@ const start: Command = {
     return ctx.sendMessage(
       amount
         ? `Opa, entendi que você quer gerar um código de ${amount} mas, pra isso, primeiro me manda sua chave Pix:`
-        : `Opa, bora te cadastrar por aqui pra você poder gerar códigos Pix! Primeiro, me manda sua chave Pix:`
+        : `Opa, bora te cadastrar por aqui pra você poder gerar códigos Pix! Primeiro, me manda sua chave Pix:\n\n(Ao responder, você concorda com o armazenamento desses com o único propósito de gerar códigos pix que você solicitar e de acordo com a [política de privacidade](https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md))`,
+      true
     )
   }
 }
