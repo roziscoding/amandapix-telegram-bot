@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.8.0...v1.9.0) (2022-08-12)
+
+
+### Features
+
+* add money symbol to request message ([faf9ff4](https://github.com/roziscoding/amandapix-telegram-bot/commit/faf9ff41b1e72a68d60dfdf5ac47f06b222881fd))
+
 # [1.8.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.7.0...v1.8.0) (2022-08-12)
 
 
