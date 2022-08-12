@@ -96,7 +96,7 @@ export async function handleInlineQuery(
           inline_keyboard: [
             [
               {
-                text: format('Gerar código Pix de %s para %s', amount, user.name),
+                text: format('Gerar código Pix de %s', amount),
                 switch_inline_query_current_chat: query.query
               }
             ]
