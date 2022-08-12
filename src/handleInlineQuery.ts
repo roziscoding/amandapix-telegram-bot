@@ -87,7 +87,8 @@ export async function handleInlineQuery(
         title: format('Solicitar código pix de %s reais', amount),
         input_message_content: {
           message_text: format(
-            'Para gerar um código pix de %s reais, clique no botão abaixo',
+            '%s deseja te enviar %s via pix! Para gerar um código pix neste valor, clique no botão abaixo.',
+            user.name,
             amount
           )
         },
@@ -96,7 +97,7 @@ export async function handleInlineQuery(
             [
               {
                 text: format('Gerar código Pix de %s para %s', amount, user.name),
-                url: format('https://t.me/%s?start=%s', me.username, query.query)
+                switch_inline_query_current_chat: query.query
               }
             ]
           ]
