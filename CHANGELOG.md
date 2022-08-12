@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.7.0...v1.8.0) (2022-08-12)
+
+
+### Features
+
+* improve request button text ([241dd1d](https://github.com/roziscoding/amandapix-telegram-bot/commit/241dd1d9e807ac63dd4c6d445df61b6a961123c2))
+
 # [1.7.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.6.0...v1.7.0) (2022-08-12)
 
 
