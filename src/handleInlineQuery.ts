@@ -87,7 +87,7 @@ export async function handleInlineQuery(
         title: format('Solicitar código pix de %s reais', amount),
         input_message_content: {
           message_text: format(
-            '%s deseja te enviar %s via pix! Para gerar um código pix neste valor, clique no botão abaixo.',
+            '%s deseja te enviar R$ %s via pix! Para gerar um código pix neste valor, clique no botão abaixo.',
             user.name,
             amount
           )
@@ -96,7 +96,7 @@ export async function handleInlineQuery(
           inline_keyboard: [
             [
               {
-                text: format('Gerar código Pix de %s', amount),
+                text: format('Gerar código Pix de R$ %s', amount),
                 switch_inline_query_current_chat: query.query
               }
             ]
