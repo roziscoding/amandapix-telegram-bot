@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.10.0...v1.11.0) (2022-08-12)
+
+
+### Features
+
+* fix start message ([ca88043](https://github.com/roziscoding/amandapix-telegram-bot/commit/ca88043e46f358631f6b24e397fcc403d0649444))
+
 # [1.10.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.9.0...v1.10.0) (2022-08-12)
 
 
