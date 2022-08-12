@@ -1,9 +1,9 @@
 import * as math from 'mathjs'
+import { InlineQuery, UserFromGetMe } from 'typegram'
 import { format } from 'util'
-import { InlineQuery } from 'typegram'
+import { config } from './config'
 import { Response } from './domain/Response'
 import { User } from './domain/User'
-import { config } from './config'
 import { getPixCodeForUser } from './util/pixCode'
 
 async function evaluateQuery(query: string): Promise<number> {
@@ -12,8 +12,10 @@ async function evaluateQuery(query: string): Promise<number> {
 
 export async function handleInlineQuery(
   user: User,
-  query: InlineQuery
+  query: InlineQuery,
+  me: UserFromGetMe
 ): Promise<Response<'answerInlineQuery'>> {
+  console.log('handling inline query', query.query, me)
   const match = query.query.match(/[\d.,]+/gi)
 
   if (!match) {
@@ -77,6 +79,27 @@ export async function handleInlineQuery(
             pixCode
           ),
           parse_mode: 'Markdown'
+        }
+      },
+      {
+        id: `req-${amount}`,
+        type: 'article',
+        title: format('Solicitar código pix de %s reais', amount),
+        input_message_content: {
+          message_text: format(
+            'Para gerar um código pix de %s reais, clique no botão abaixo',
+            amount
+          )
+        },
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: format('Gerar código Pix de %s para %s', amount, user.name),
+                url: format('https://t.me/%s?start=%s', me.username, query.query)
+              }
+            ]
+          ]
         }
       }
     ]

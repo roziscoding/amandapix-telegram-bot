@@ -16,20 +16,24 @@ const start: Command = {
   regex: /\/start ?(?<amount>\d+)?/,
   helpText: 'Cria seu cadastro, caso ainda não exista',
   fn: async (ctx) => {
-    if (ctx.user.pixKey) {
-      return ctx.sendMessage(KNOWN_MESSAGE(ctx.user), true, {
-        inline_keyboard: [
-          [
-            {
-              text: 'Gerar código Pix',
-              switch_inline_query: ctx.match?.groups?.amount || ''
-            }
-          ]
-        ]
-      })
-    }
-
     const amount = ctx.match?.groups?.amount
+
+    if (ctx.user.pixKey) {
+      return ctx.sendMessage(
+        amount ? 'Clique no botão abaixo para gerar o código Pix' : KNOWN_MESSAGE(ctx.user),
+        true,
+        {
+          inline_keyboard: [
+            [
+              {
+                text: 'Gerar código Pix',
+                switch_inline_query: amount || ''
+              }
+            ]
+          ]
+        }
+      )
+    }
 
     await ctx.repository.setSesstion(ctx.user.telegramId, 'setinfo', {
       amount,

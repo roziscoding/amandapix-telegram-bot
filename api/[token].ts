@@ -1,10 +1,13 @@
 /* eslint-disable camelcase */
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import { Db, MongoClient } from 'mongodb'
-import { Message, Update } from 'typegram'
+import { Message, Update, UserFromGetMe } from 'typegram'
 import { handleInlineQuery, handleMessage } from '../src'
 import { config } from '../src/config'
 import { UserRepository } from '../src/repositories/users'
+import { getMe } from './getMe'
+
+let me: UserFromGetMe
 
 type ValidUpdate = Update.InlineQueryUpdate | Update.MessageUpdate
 
@@ -35,6 +38,10 @@ export default async function handleUpdate(req: VercelRequest, res: VercelRespon
 
   if (!isValidUpdate(update)) return res.status(403).end()
 
+  if (!me) {
+    me = await getMe().then((response) => response.result)
+  }
+
   if (!db) {
     db = await MongoClient.connect(config.database.uri, {
       useNewUrlParser: true,
@@ -49,7 +56,7 @@ export default async function handleUpdate(req: VercelRequest, res: VercelRespon
     (await userRepository.create(extractTelegramId(update), '', '', ''))
 
   if (isInlineQuery(update)) {
-    return res.status(200).json(await handleInlineQuery(user, update.inline_query))
+    return res.status(200).json(await handleInlineQuery(user, update.inline_query, me))
   }
 
   if (isMessage(update)) {
