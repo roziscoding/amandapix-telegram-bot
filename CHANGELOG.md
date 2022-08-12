@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.6.0...v1.7.0) (2022-08-12)
+
+
+### Features
+
+* generate requested code without leaving ([bd7a8a7](https://github.com/roziscoding/amandapix-telegram-bot/commit/bd7a8a7f9e508727262f14f74063823db4d387cb))
+* improve code request flow ([57f1cb8](https://github.com/roziscoding/amandapix-telegram-bot/commit/57f1cb8e4ea5911c12f18b9a2056f1dd661a1983))
+
 # [1.6.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.5.0...v1.6.0) (2022-08-12)
 
 
