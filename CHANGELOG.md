@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.9.0...v1.10.0) (2022-08-12)
+
+
+### Features
+
+* add privacy policy to start message ([23dd8b0](https://github.com/roziscoding/amandapix-telegram-bot/commit/23dd8b03b778383a8adaa0d85e7f0456a9d2f7d9))
+
 # [1.9.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.8.0...v1.9.0) (2022-08-12)
 
 
