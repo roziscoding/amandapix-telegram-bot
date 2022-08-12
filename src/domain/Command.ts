@@ -1,4 +1,4 @@
-import { Message, Telegram } from 'typegram'
+import { Message, Params, Telegram } from 'typegram'
 import { UserRepository } from '../repositories/users'
 import { Markup, sendMessage } from '../util/telegram/sendMessage'
 import { Awaitable } from '../util/types/Awaitable'
@@ -11,7 +11,12 @@ export type Context = {
   message: Message.TextMessage
   match: RegExpMatchArray | null
   command: Command
-  sendMessage: (text: string, markdown?: boolean, markup?: Markup) => ReturnType<typeof sendMessage>
+  sendMessage: (
+    text: string,
+    markdown?: boolean,
+    markup?: Markup,
+    extra?: Partial<Params<'sendMessage', any>[0]>
+  ) => ReturnType<typeof sendMessage>
 }
 
 export type Command = {
