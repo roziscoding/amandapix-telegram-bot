@@ -1,6 +1,6 @@
 import { format } from 'util'
+import { PRIVACY_POLICY_URL, PRIVACY_TEXT } from '../../util/strings'
 import { Command } from '../domain/Command'
-import { PRIVACY_POLICY_URL, PRIVACY_TEXT } from '../util/strings'
 
 const privacy: Command = {
   name: 'privacy',

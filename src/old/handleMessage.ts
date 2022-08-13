@@ -1,9 +1,9 @@
 import { Message } from 'typegram'
+import { sendMessage } from '../util/telegram/sendMessage'
 import commands, { specialCommands } from './commands'
 import { Command, Context } from './domain/Command'
 import { User } from './domain/User'
 import { UserRepository } from './repositories/users'
-import { sendMessage } from './util/telegram/sendMessage'
 
 // eslint-disable-next-line camelcase
 export const I_DONT_GET_IT: Command = {
@@ -16,20 +16,12 @@ export const I_DONT_GET_IT: Command = {
   })
 }
 
-const getContext = (
-  user: User,
-  repository: UserRepository,
-  message: Message.TextMessage
-): Context => {
-  const specialCommand = Object.values(specialCommands).find((command) =>
-    command.regex.test(message.text)
-  )
+const getContext = (user: User, repository: UserRepository, message: Message.TextMessage): Context => {
+  const specialCommand = Object.values(specialCommands).find((command) => command.regex.test(message.text))
 
   console.log(user.session)
 
-  const sessionCommand = user.session?.command
-    ? commands[user.session.command as keyof typeof commands]
-    : null
+  const sessionCommand = user.session?.command ? commands[user.session.command as keyof typeof commands] : null
 
   const command =
     specialCommand ||
@@ -50,11 +42,7 @@ const getContext = (
   }
 }
 
-export function handleMessage(
-  user: User,
-  repository: UserRepository,
-  message: Message.TextMessage
-) {
+export function handleMessage(user: User, repository: UserRepository, message: Message.TextMessage) {
   const context = getContext(user, repository, message)
 
   return context.command.fn(context)

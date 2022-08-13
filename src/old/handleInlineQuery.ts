@@ -1,19 +1,16 @@
 import * as math from 'mathjs'
 import { InlineQuery } from 'typegram'
 import { format } from 'util'
-import { config } from './config'
+import { config } from '../config'
+import { getPixCodeForUser } from '../util/pixCode'
 import { Response } from './domain/Response'
 import { User } from './domain/User'
-import { getPixCodeForUser } from './util/pixCode'
 
 export async function evaluateQuery(query: string): Promise<number> {
   return math.round(math.evaluate(query), 2)
 }
 
-export async function handleInlineQuery(
-  user: User,
-  query: InlineQuery
-): Promise<Response<'answerInlineQuery'>> {
+export async function handleInlineQuery(user: User, query: InlineQuery): Promise<Response<'answerInlineQuery'>> {
   const match = query.query.match(/[\d.,]+/gi)
 
   if (!match) {
@@ -51,12 +48,7 @@ export async function handleInlineQuery(
   const pixCode = getPixCodeForUser(user, amount)
 
   const qrCodeUrl = encodeURI(
-    format(
-      'https://%s/api/qrcode?telegramId=%s&value=%s',
-      config.webhook.url,
-      user.telegramId,
-      amount
-    )
+    format('https://%s/api/qrcode?telegramId=%s&value=%s', config.webhook.url, user.telegramId, amount)
   )
 
   const response: Response<'answerInlineQuery'> = {

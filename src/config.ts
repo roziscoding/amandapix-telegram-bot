@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import env from 'sugar-env'
 
 export const config = {
@@ -12,3 +13,5 @@ export const config = {
     dbName: env.get('DATABASE_DBNAME', 'amandapix')
   }
 }
+
+export type AppConfig = typeof config

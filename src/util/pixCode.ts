@@ -1,5 +1,5 @@
-import { User } from '../domain/User'
 import { pix } from 'pix-me'
+import { User } from '../old/domain/User'
 
 export function getPixCodeForUser(user: User, value: string | number) {
   return pix({

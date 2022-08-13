@@ -1,6 +1,6 @@
 import { Telegram } from 'typegram'
-import { Command, Context } from '../../domain/Command'
-import { Response } from '../../domain/Response'
+import { Command, Context } from '../../old/domain/Command'
+import { Response } from '../../old/domain/Response'
 import { Awaitable } from '../types/Awaitable'
 
 type WizardContext = {
@@ -10,10 +10,7 @@ type WizardContext = {
   exit: () => Promise<void>
 }
 
-type WizardFn = (
-  ctx: Context,
-  wizardCtx: WizardContext
-) => Awaitable<Response<keyof Telegram> | null>
+type WizardFn = (ctx: Context, wizardCtx: WizardContext) => Awaitable<Response<keyof Telegram> | null>
 
 export const getWizard =
   (commandName: string, steps: [WizardFn, ...WizardFn[]]): Command['fn'] =>

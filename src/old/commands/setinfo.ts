@@ -1,6 +1,6 @@
+import { CONFIRM_OR_CANCEL, REMOVE_KEYBOARD } from '../../util/telegram/sendMessage'
+import { getWizard } from '../../util/telegram/wizard'
 import { Command } from '../domain/Command'
-import { CONFIRM_OR_CANCEL, REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
-import { getWizard } from '../util/telegram/wizard'
 
 const setInfo: Command = {
   name: 'setinfo',
@@ -36,11 +36,7 @@ const setInfo: Command = {
       if (ctx.message.text === 'Não') {
         await wizard.setStep(1)
 
-        return ctx.sendMessage(
-          'Ok, vamos do começo então. Me manda sua chave Pix:',
-          false,
-          REMOVE_KEYBOARD
-        )
+        return ctx.sendMessage('Ok, vamos do começo então. Me manda sua chave Pix:', false, REMOVE_KEYBOARD)
       }
 
       if (ctx.message.text === 'Sim') {

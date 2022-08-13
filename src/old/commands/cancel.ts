@@ -1,5 +1,5 @@
+import { REMOVE_KEYBOARD } from '../../util/telegram/sendMessage'
 import { Command } from '../domain/Command'
-import { REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
 
 const cancel: Command = {
   name: 'cancel',
@@ -12,11 +12,7 @@ const cancel: Command = {
 
     await ctx.repository.clearSession(ctx.user.telegramId)
 
-    return ctx.sendMessage(
-      'Ok, deixa pra lá então',
-      false,
-      REMOVE_KEYBOARD
-    )
+    return ctx.sendMessage('Ok, deixa pra lá então', false, REMOVE_KEYBOARD)
   }
 }
 
