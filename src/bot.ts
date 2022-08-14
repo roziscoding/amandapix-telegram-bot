@@ -1,5 +1,6 @@
 import { Bot, Context, session, SessionFlavor } from 'grammy'
 import { start } from './commands'
+import { cancel } from './commands/cancel'
 import { AppConfig } from './config'
 import { WizardFlavor, wizards } from './util/wizard'
 import setInfo from './wizards/set-info'
@@ -29,6 +30,7 @@ export async function getBot(config: AppConfig) {
 
   bot.use(...wizards([setInfo]))
 
+  bot.command(cancel.name, cancel.fn)
   bot.command(start.name, start.fn)
 
   return bot
