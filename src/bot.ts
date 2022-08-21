@@ -1,9 +1,8 @@
+import { ConversationFlavor, conversations as grammyConversations } from '@grammyjs/conversations'
 import { Bot, Context, session, SessionFlavor } from 'grammy'
-import { start } from './commands'
-import { cancel } from './commands/cancel'
+import { cancel, setInfo, start } from './commands'
 import { AppConfig } from './config'
-import { WizardFlavor, wizards } from './util/wizard'
-import setInfo from './wizards/set-info'
+import * as conversations from './conversations'
 
 export type AppSession = {
   pixKey: string
@@ -12,7 +11,7 @@ export type AppSession = {
   query?: string
 }
 
-export type AppContext = Context & SessionFlavor<AppSession> & WizardFlavor
+export type AppContext = Context & SessionFlavor<AppSession> & ConversationFlavor
 
 export async function getBot(config: AppConfig) {
   const bot = new Bot<AppContext>(config.telegram.token)
@@ -28,10 +27,19 @@ export async function getBot(config: AppConfig) {
     })
   )
 
-  bot.use(...wizards([setInfo]))
+  bot.use(grammyConversations())
 
+  /** Cancel Command */
   bot.command(cancel.name, cancel.fn)
+
+  /** Conversations */
+  bot.use(conversations.setInfo)
+
+  /** Regular commands */
   bot.command(start.name, start.fn)
+  bot.command(setInfo.name, setInfo.fn)
+
+  bot.catch(console.error)
 
   return bot
 }

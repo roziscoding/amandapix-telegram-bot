@@ -3,14 +3,9 @@ import { AppContext } from '../bot'
 export const cancel = {
   name: 'cancel',
   helpText: 'Cancela a operação atual',
-  fn: (ctx: AppContext) => {
-    if (ctx.session.wizard?.id === 'setInfo') {
-      ctx.session.city = ''
-      ctx.session.name = ''
-      ctx.session.pixKey = ''
-    }
-    ctx.wizard.exit()
+  fn: async (ctx: AppContext) => {
     delete ctx.session.query
-    return ctx.reply('Ok, deixa pra lá')
+    await ctx.reply('Tudo bem. Deixa pra lá :)', { reply_markup: { remove_keyboard: true } })
+    await ctx.conversation.exit()
   }
 }
