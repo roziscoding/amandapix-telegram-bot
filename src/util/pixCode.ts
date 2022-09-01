@@ -1,7 +1,7 @@
 import { pix } from 'pix-me'
-import { User } from '../../old/domain/User'
+import { AppSession } from '../bot'
 
-export function getPixCodeForUser(user: User, value: string | number) {
+export function getPixCodeForUser(user: AppSession, value: string | number) {
   return pix({
     key: user.pixKey,
     amount: typeof value === 'number' ? value.toFixed(2) : value,

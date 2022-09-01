@@ -1,9 +1,8 @@
 import { InlineKeyboard } from 'grammy'
-import { evaluateQuery } from '../../old/handleInlineQuery'
-import { AppContext } from '../bot'
-import { User } from '../domain/User'
+import { AppContext, AppSession } from '../bot'
+import { evaluateQuery } from '../util/query'
 
-const KNOWN_MESSAGE = (user: User) =>
+const KNOWN_MESSAGE = (user: AppSession) =>
   `Opa, tudo certo? Eu já tenho seus dados do Pix aqui, olha só:
 
 \`Chave: ${user.pixKey}\`

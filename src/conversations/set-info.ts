@@ -1,8 +1,8 @@
 import { Conversation, createConversation } from '@grammyjs/conversations'
 import { oneLine, safeHtml, stripIndents } from 'common-tags'
 import { InlineKeyboard } from 'grammy'
-import { evaluateQuery } from '../../old/handleInlineQuery'
 import { AppContext } from '../bot'
+import { evaluateQuery } from '../util/query'
 
 const PRIVACY_URL = 'https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md'
 

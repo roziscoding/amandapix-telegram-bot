@@ -1,6 +1,6 @@
 import { ConversationFlavor, conversations as grammyConversations } from '@grammyjs/conversations'
 import { Bot, Context, session, SessionFlavor } from 'grammy'
-import { cancel, setInfo, start } from './commands'
+import * as commands from './commands'
 import { AppConfig } from './config'
 import * as conversations from './conversations'
 
@@ -30,14 +30,16 @@ export async function getBot(config: AppConfig) {
   bot.use(grammyConversations())
 
   /** Cancel Command */
-  bot.command(cancel.name, cancel.fn)
+  bot.command(commands.cancel.name, commands.cancel.fn)
 
   /** Conversations */
   bot.use(conversations.setInfo)
 
   /** Regular commands */
-  bot.command(start.name, start.fn)
-  bot.command(setInfo.name, setInfo.fn)
+  for (const command of Object.values(commands)) {
+    if (command.name === 'cancel') continue
+    bot.command(command.name, command.fn)
+  }
 
   bot.catch(console.error)
 

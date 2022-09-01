@@ -1,6 +1,7 @@
 import { AppContext } from '../bot'
+import { Command } from '../domain/Command'
 
-export const cancel = {
+export const cancel: Command = {
   name: 'cancel',
   helpText: 'Cancela a operação atual',
   fn: async (ctx: AppContext) => {
