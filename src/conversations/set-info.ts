@@ -1,12 +1,12 @@
 import { Conversation, createConversation } from '@grammyjs/conversations'
 import { oneLine, safeHtml, stripIndents } from 'common-tags'
-import { InlineKeyboard, Keyboard } from 'grammy'
+import { InlineKeyboard } from 'grammy'
 import { evaluateQuery } from '../../old/handleInlineQuery'
 import { AppContext } from '../bot'
 
 const PRIVACY_URL = 'https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md'
 
-const confirm = new Keyboard().text('Sim').text('Não').oneTime()
+const confirm = new InlineKeyboard().text('Sim', 'sim').text('Não', 'não')
 const cancellable = (fn: (ctx: AppContext) => any) => (ctx: AppContext) => ctx.hasCommand('cancel') ?? fn(ctx)
 
 const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) => {
@@ -18,12 +18,15 @@ const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) 
     { parse_mode: 'MarkdownV2', disable_web_page_preview: true, reply_markup: confirm }
   )
 
-  const privacyPolicy = await conversation.form.select(
-    ['Sim', 'Não'],
-    cancellable((ctx) => ctx.reply('Usa um dos botões pra me responder, por favor.'))
-  )
+  const privacyPolicy = await conversation
+    .waitFor('callback_query:data', (ctx) => ctx.reply('Não entendi... Por favor, clique em um dos botões'))
+    .then(async (ctx) => {
+      await ctx.editMessageReplyMarkup({})
+      return ctx
+    })
+    .then((ctx) => ctx.callbackQuery.data)
 
-  if (privacyPolicy === 'Não') {
+  if (privacyPolicy === 'não') {
     await ctx.reply('Tudo bem. Deixa pra lá então.', { reply_markup: { remove_keyboard: true } })
     return ctx.reply(
       'Se quiser sugerir mudanças na minha política de privacidade, você pode abrir uma issue no meu repositório.',
@@ -63,28 +66,34 @@ const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) 
 
       Tá correto?
     `,
-    { parse_mode: 'HTML', reply_markup: confirm.text('Cancelar Cadastro') }
+    { parse_mode: 'HTML', reply_markup: confirm.text('Cancelar Cadastro', 'cancel') }
   )
 
-  const confirmation = await conversation.form.select(
-    ['Sim', 'Não', 'Cancelar Cadastro'],
-    cancellable((ctx) => ctx.reply('Não entendi... Por favor, usa os botões pra me responder :)'))
-  )
+  const [confirmation, newContext] = await conversation
+    .waitFor(
+      'callback_query:data',
+      cancellable((ctx) => ctx.reply('Não entendi... Por favor, usa os botões pra me responder :)'))
+    )
+    .then(async (ctx) => {
+      await ctx.editMessageReplyMarkup({})
+      return ctx
+    })
+    .then((ctx) => [ctx.callbackQuery.data, ctx] as const)
 
-  if (confirmation === 'Cancelar Cadastro') {
+  if (confirmation === 'cancel') {
     return ctx.reply('OK. Deixa pra lá então. Espero poder ajudar numa próxima :)', {
       reply_markup: { remove_keyboard: true }
     })
   }
 
-  if (confirmation === 'Não') {
-    await ctx.reply('Putz. Bora do começo então', { reply_markup: { remove_keyboard: true } })
+  if (confirmation.match('não')) {
+    await ctx.reply('Putz. Bora do começo?', { reply_markup: { remove_keyboard: true } })
     return ctx.conversation.reenter('setInfo')
   }
 
-  // ctx.session.pixKey = pixKey
-  // ctx.session.city = city
-  // ctx.session.name = name
+  newContext.session.pixKey = pixKey
+  newContext.session.city = city
+  newContext.session.name = name
 
   await ctx.reply('Só mais um minuto...', { reply_markup: { remove_keyboard: true } })
   await conversation.sleep(1000)
