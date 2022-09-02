@@ -101,7 +101,7 @@ const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) 
   if (ctx.session.query) {
     const amount = await evaluateQuery(ctx.session.query)
     const keyboard = new InlineKeyboard().switchInline(`Gerar código Pix de R$ ${amount.toString()}`, ctx.session.query)
-    return ctx.reply(`Pronto! Agora tá tudo certo pra gerar o código Pix de ${amount} reais. É só clicar no botão:`, {
+    return ctx.reply(`Pronto! Agora tá tudo certo pra gerar o código Pix de R$ ${amount}. É só clicar no botão:`, {
       reply_markup: keyboard
     })
   }
