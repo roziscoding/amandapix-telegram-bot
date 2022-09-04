@@ -6,16 +6,16 @@ import { evaluateQuery } from '../util/query'
 
 const PRIVACY_URL = 'https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md'
 
-const confirm = new InlineKeyboard().text('Sim', 'sim').text('Não', 'não')
+const confirm = () => new InlineKeyboard().text('Sim', 'sim').text('Não', 'não')
 const cancellable = (fn: (ctx: AppContext) => any) => (ctx: AppContext) => ctx.hasCommand('cancel') ?? fn(ctx)
 
 const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) => {
   await ctx.reply(
     oneLine`
       Antes de começarmos, preciso que você leia minha [política de privacidade](${PRIVACY_URL})\\.
-      Você concorda com a política de privacidade? Você pode usar /cancel a qualquer momento pra encerrar a conversa\\.
+      Você concorda com a política de privacidade?.
     `,
-    { parse_mode: 'MarkdownV2', disable_web_page_preview: true, reply_markup: confirm }
+    { parse_mode: 'MarkdownV2', disable_web_page_preview: true, reply_markup: confirm() }
   )
 
   const privacyPolicy = await conversation
@@ -66,7 +66,7 @@ const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) 
 
       Tá correto?
     `,
-    { parse_mode: 'HTML', reply_markup: confirm.text('Cancelar Cadastro', 'cancel') }
+    { parse_mode: 'HTML', reply_markup: confirm().text('Cancelar', 'cancel') }
   )
 
   const [confirmation, newContext] = await conversation

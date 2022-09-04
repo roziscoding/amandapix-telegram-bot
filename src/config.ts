@@ -11,7 +11,8 @@ export const config = {
   database: {
     uri: env.get('DATABASE_URI', 'mongodb://localhost:27017/amandapix'),
     dbName: env.get('DATABASE_DBNAME', 'amandapix')
-  }
+  },
+  env: env.get('NODE_ENV', 'development')
 }
 
 export type AppConfig = typeof config

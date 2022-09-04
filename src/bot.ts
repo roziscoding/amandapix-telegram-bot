@@ -1,4 +1,5 @@
 import { ConversationFlavor, conversations as grammyConversations } from '@grammyjs/conversations'
+import { FileAdapter } from '@grammyjs/storage-file'
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb'
 import { Bot, Context, session, SessionFlavor } from 'grammy'
 import { MongoClient } from 'mongodb'
@@ -16,25 +17,31 @@ export type AppSession = {
 
 export type AppContext = Context & ConversationFlavor & SessionFlavor<AppSession>
 
-export async function getBot(config: AppConfig) {
+async function getStorage(config: AppConfig) {
+  if (config.env !== 'production') return new FileAdapter<AppSession>({ dirName: 'sessions' })
+
   const client = new MongoClient(config.database.uri)
   await client.connect()
   const db = client.db(config.database.dbName)
   const sessions = db.collection<ISession>('sessions')
 
+  return new MongoDBAdapter<AppSession>({
+    collection: sessions
+  })
+}
+
+export async function getBot(config: AppConfig) {
   const bot = new Bot<AppContext>(config.telegram.token)
 
   bot.use(
-    session<AppSession, AppContext>({
+    session({
       getSessionKey: (ctx) => ctx.from?.id.toString(),
       initial: () => ({
         pixKey: '',
         city: '',
         name: ''
       }),
-      storage: new MongoDBAdapter({
-        collection: sessions
-      })
+      storage: await getStorage(config)
     })
   )
 

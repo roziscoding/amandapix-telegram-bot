@@ -9,7 +9,7 @@
     "build": "tsc",
     "build:clean": "npm run clean && npm run build",
     "prepack": "npm run lint && npm test && npm run build:clean",
-    "dev": "tsnd src/index.ts"
+    "dev": "NODE_ENV=development tsnd src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -59,6 +59,7 @@
   "dependencies": {
     "@grammyjs/conversations": "^1.0.2",
     "@grammyjs/router": "^2.0.0",
+    "@grammyjs/storage-file": "^2.0.0",
     "@grammyjs/storage-mongodb": "^2.0.0",
     "axios": "^0.27.2",
     "common-tags": "^1.8.2",

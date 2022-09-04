@@ -21,7 +21,6 @@ const stop = async (conversation: Conversation<AppContext>, ctx: AppContext) => 
     return ctx.reply('Beleza, não vou apagar nada então.')
   }
 
-  // await ctx.conversation.exit()
   newContext.session = undefined
 
   return ctx.reply('Pronto. Excluí todos os dados que eu tinha sobre você')
