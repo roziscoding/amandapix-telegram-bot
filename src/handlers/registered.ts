@@ -1,7 +1,7 @@
 import { stripIndents } from 'common-tags'
 import { Bot, InlineKeyboard } from 'grammy'
 import { AppContext } from '../bot'
-import { getPixCodeForUser } from '../util/pixCode'
+import { getPixCodeForUser } from '../util/pix-code'
 import { evaluateQuery } from '../util/query'
 
 export function install(bot: Bot<AppContext>) {
@@ -21,6 +21,7 @@ export function install(bot: Bot<AppContext>) {
       if (!amount) return ctx.answerInlineQuery([])
 
       const pixCode = getPixCodeForUser(ctx.session, amount)
+      const qrCodeUrl = ctx.getQrCodeUrl(pixCode)
 
       return ctx.answerInlineQuery([
         {
@@ -29,7 +30,7 @@ export function install(bot: Bot<AppContext>) {
           title: `Gerar código pix de R$ ${amount}`,
           input_message_content: {
             message_text: stripIndents`
-              Para me transferir R$ ${amount}, escaneie o QRCode ou utilize o código abaixo (clique no código para copiar):
+              Para me transferir R$ ${amount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar):
 
               <code>${pixCode}</code>
             `,

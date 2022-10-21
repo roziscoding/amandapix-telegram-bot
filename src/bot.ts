@@ -1,6 +1,5 @@
 import { ConversationFlavor, conversations as grammyConversations } from '@grammyjs/conversations'
 import { FileAdapter } from '@grammyjs/storage-file'
-import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb'
 import { Bot, Context, session, SessionFlavor } from 'grammy'
 import { MongoClient } from 'mongodb'
 
@@ -8,6 +7,7 @@ import * as commands from './commands'
 import { AppConfig } from './config'
 import * as conversations from './conversations'
 import * as handlers from './handlers'
+import { qrCodeUrl, QRCodeUrlContext } from './util/qr-code-url'
 import { ISession, MongoDBAdapter } from './util/storage-adapter'
 
 export type AppSession = {
@@ -17,7 +17,7 @@ export type AppSession = {
   query?: string
 }
 
-export type AppContext = Context & ConversationFlavor & SessionFlavor<AppSession>
+export type AppContext = Context & ConversationFlavor & SessionFlavor<AppSession> & QRCodeUrlContext
 
 async function getStorage(config: AppConfig) {
   if (config.env !== 'production') return new FileAdapter<AppSession>({ dirName: 'sessions' })
@@ -34,6 +34,8 @@ async function getStorage(config: AppConfig) {
 
 export async function getBot(config: AppConfig) {
   const bot = new Bot<AppContext>(config.telegram.token)
+
+  bot.use(qrCodeUrl(config))
 
   bot.use(
     session({
