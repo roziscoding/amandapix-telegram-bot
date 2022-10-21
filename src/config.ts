@@ -3,7 +3,8 @@ import env from 'sugar-env'
 
 export const config = {
   telegram: {
-    token: env.get('TELEGRAM_TOKEN', '')
+    token: env.get('TELEGRAM_TOKEN', ''),
+    secret: env.get('TELEGRAM_TOKEN', '').replace(/[^a-zA-Z0-9]/gi, '')
   },
   webhook: {
     url: env.get(['WEBHOOK_URL', 'VERCEL_URL'])
