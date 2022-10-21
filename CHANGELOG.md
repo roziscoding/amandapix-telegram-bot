@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/roziscoding/amandapix-telegram-bot/compare/v2.0.0...v2.0.1) (2022-10-21)
+
+
+### Bug Fixes
+
+* setInfo conversation reenter ([5ce4e26](https://github.com/roziscoding/amandapix-telegram-bot/commit/5ce4e2601e5750f9ba2f6b8b220ff63d4af6eb20))
+
 # [2.0.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.11.0...v2.0.0) (2022-10-21)
 
 
