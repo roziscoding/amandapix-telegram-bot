@@ -41,23 +41,26 @@ const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) 
 
   await ctx.reply('Boa! Agora sim, podemos começar!', { reply_markup: { remove_keyboard: true } })
 
-  await ctx.reply('Primeiro, me envia sua chave pix.')
-  const pixKey = await conversation.form.text(
-    cancellable((ctx) => ctx.reply('Me manda sua chave pix como texto, por favor!'))
-  )
+  let confirmmed = false
 
-  await ctx.reply('Show. Agora me manda sua cidade, por favor')
-  const city = await conversation.form.text(
-    cancellable((ctx) => ctx.reply('Pra continuarmos, preciso que me mande sua cidade como texto'))
-  )
+  while (!confirmmed) {
+    await ctx.reply('Primeiro, me envia sua chave pix.')
+    const pixKey = await conversation.form.text(
+      cancellable((ctx) => ctx.reply('Me manda sua chave pix como texto, por favor!'))
+    )
 
-  await ctx.reply('Boa. Por último, me diz seu nome')
-  const name = await conversation.form.text(
-    cancellable((ctx) => ctx.reply('Ainda não sei seu nome... Pode me mandar como texto, por favor?'))
-  )
+    await ctx.reply('Show. Agora me manda sua cidade, por favor')
+    const city = await conversation.form.text(
+      cancellable((ctx) => ctx.reply('Pra continuarmos, preciso que me mande sua cidade como texto'))
+    )
 
-  await ctx.reply(
-    stripIndents(safeHtml)`
+    await ctx.reply('Boa. Por último, me diz seu nome')
+    const name = await conversation.form.text(
+      cancellable((ctx) => ctx.reply('Ainda não sei seu nome... Pode me mandar como texto, por favor?'))
+    )
+
+    await ctx.reply(
+      stripIndents(safeHtml)`
       Boa! Então me confirma se tá tudo certo. Esses são os dados que eu anotei:
 
       <b>Chave PIX</b>: ${pixKey}
@@ -66,34 +69,37 @@ const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) 
 
       Tá correto?
     `,
-    { parse_mode: 'HTML', reply_markup: confirm().text('Cancelar', 'cancel') }
-  )
-
-  const [confirmation, newContext] = await conversation
-    .waitFor(
-      'callback_query:data',
-      cancellable((ctx) => ctx.reply('Não entendi... Por favor, usa os botões pra me responder :)'))
+      { parse_mode: 'HTML', reply_markup: confirm().text('Cancelar', 'cancel') }
     )
-    .then(async (ctx) => {
-      await ctx.editMessageReplyMarkup({})
-      return ctx
-    })
-    .then((ctx) => [ctx.callbackQuery.data, ctx] as const)
 
-  if (confirmation === 'cancel') {
-    return ctx.reply('OK. Deixa pra lá então. Espero poder ajudar numa próxima :)', {
-      reply_markup: { remove_keyboard: true }
-    })
+    const [confirmation, newContext] = await conversation
+      .waitFor(
+        'callback_query:data',
+        cancellable((ctx) => ctx.reply('Não entendi... Por favor, usa os botões pra me responder :)'))
+      )
+      .then(async (ctx) => {
+        await ctx.editMessageReplyMarkup({})
+        return ctx
+      })
+      .then((ctx) => [ctx.callbackQuery.data, ctx] as const)
+
+    if (confirmation === 'cancel') {
+      return ctx.reply('OK. Deixa pra lá então. Espero poder ajudar numa próxima :)', {
+        reply_markup: { remove_keyboard: true }
+      })
+    }
+
+    if (confirmation.match('não')) {
+      await ctx.reply('Putz. Bora do começo?', { reply_markup: { remove_keyboard: true } })
+      continue
+    }
+
+    confirmmed = true
+
+    newContext.session.pixKey = pixKey
+    newContext.session.city = city
+    newContext.session.name = name
   }
-
-  if (confirmation.match('não')) {
-    await ctx.reply('Putz. Bora do começo?', { reply_markup: { remove_keyboard: true } })
-    return ctx.conversation.reenter('setInfo')
-  }
-
-  newContext.session.pixKey = pixKey
-  newContext.session.city = city
-  newContext.session.name = name
 
   await ctx.reply('Só mais um minuto...', { reply_markup: { remove_keyboard: true } })
   await conversation.sleep(1000)
