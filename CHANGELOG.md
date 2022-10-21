@@ -1,3 +1,30 @@
+# [2.0.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.11.0...v2.0.0) (2022-10-21)
+
+
+### Bug Fixes
+
+* use custom storage adapter ([3041f11](https://github.com/roziscoding/amandapix-telegram-bot/commit/3041f1111992f6eea82a0232b15589083fdc2aeb))
+* use HTML for tricky text ([586981e](https://github.com/roziscoding/amandapix-telegram-bot/commit/586981ec02d341c77455fa9a6a8817bbc6338a39))
+
+
+### Features
+
+* add /cancel command ([3c13d16](https://github.com/roziscoding/amandapix-telegram-bot/commit/3c13d160333c1aab79092946cb2389577821ce31))
+* add all other commands ([2b51ec7](https://github.com/roziscoding/amandapix-telegram-bot/commit/2b51ec7ee110696266a12a5437c9f6f05aa57c03))
+* add file storage for dev environment ([4b04f95](https://github.com/roziscoding/amandapix-telegram-bot/commit/4b04f95ad8cbb63f3f74cd6ba7680cb25212ed01))
+* add migration script ([338db76](https://github.com/roziscoding/amandapix-telegram-bot/commit/338db76d001a0e88d384d3ea600c5e6e430d956b))
+* add QRCode functionality ([1ae854b](https://github.com/roziscoding/amandapix-telegram-bot/commit/1ae854b9c1fd4cdb8026cda68a3e88d7fdb3f65e))
+* finish set-info ([cfb2472](https://github.com/roziscoding/amandapix-telegram-bot/commit/cfb2472f242fd54d01520be723186680a4c9ea2a))
+* implement /setinfo and /start commands ([c99422e](https://github.com/roziscoding/amandapix-telegram-bot/commit/c99422ebcf9a7a4423ede9a7cdd97c7a03836960))
+* last details ([dacb032](https://github.com/roziscoding/amandapix-telegram-bot/commit/dacb032808ef9e9a452fffc6b1211fa60cfa7c9f))
+* migrate api endpoints to grammY ([932da89](https://github.com/roziscoding/amandapix-telegram-bot/commit/932da89b0ba1f681aae8f404d3fbd5e38aa1b8f4))
+* migrate setInfo and start ([c0d9ebd](https://github.com/roziscoding/amandapix-telegram-bot/commit/c0d9ebd8573488fb17e2735ac4980bf6d285f69c))
+
+
+### BREAKING CHANGES
+
+* Migration to grammY
+
 # [1.11.0](https://github.com/roziscoding/amandapix-telegram-bot/compare/v1.10.0...v1.11.0) (2022-08-12)
 
 
