@@ -12,10 +12,10 @@ const cancellable = (fn: (ctx: AppContext) => any) => (ctx: AppContext) => ctx.h
 const setInfo = async (conversation: Conversation<AppContext>, ctx: AppContext) => {
   await ctx.reply(
     oneLine`
-      Antes de começarmos, preciso que você leia minha [política de privacidade](${PRIVACY_URL})\\.
+      Antes de começarmos, preciso que você leia minha <a href="${PRIVACY_URL}">política de privacidade</a>.
       Você concorda com a política de privacidade?.
     `,
-    { parse_mode: 'MarkdownV2', disable_web_page_preview: true, reply_markup: confirm() }
+    { parse_mode: 'HTML', disable_web_page_preview: true, reply_markup: confirm() }
   )
 
   const privacyPolicy = await conversation
