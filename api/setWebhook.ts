@@ -1,18 +1,11 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import { format } from 'util'
+import { Api } from 'grammy'
 import { config } from '../src/config'
-import { makeRequest } from '../src/util/makeRequest'
 
 export default async function (_req: VercelRequest, res: VercelResponse) {
-  const webhookUrl = `https://${config.webhook.url}/api/${config.telegram.token}`
+  const api = new Api(config.telegram.token)
 
-  const url = format(
-    'https://api.telegram.org/bot%s/setWebhook?url=%s',
-    config.telegram.token,
-    webhookUrl
-  )
+  await api.setWebhook(`https://${config.webhook.url}/api/bot`, { secret_token: config.telegram.secret })
 
-  const response = JSON.parse(await makeRequest(url))
-
-  res.status(200).send({ response, url: `https://${config.webhook.url}/api/` })
+  return res.status(204).end()
 }

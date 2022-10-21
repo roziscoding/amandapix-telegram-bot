@@ -1,18 +1,19 @@
-import { format } from 'util'
+import { safeHtml, stripIndents } from 'common-tags'
 import { Command } from '../domain/Command'
 
-const getInfo: Command = {
+export const getInfo: Command = {
   name: 'getinfo',
-  regex: /\/getinfo/,
   helpText: 'Exibe todas as informações que eu tenho sobre você',
   fn: async (ctx) => {
-    const message = format(
-      'Aqui estão todas as informações que eu tenho sobre você:\n\n```\n%s```',
-      JSON.stringify(ctx.user, null, 4)
-    )
+    if (!ctx.session.pixKey) return ctx.reply('Ainda não te conheço! Use /start pra se cadastrar.')
+    const message = stripIndents(safeHtml)`
+      Aqui estão todas as informações que eu tenho sobre você:
+      
+      <b>Chave PIX</b>: ${ctx.session.pixKey}
+      <b>Cidade</b>: ${ctx.session.city}
+      <b>Nome</b>: ${ctx.session.name}
+    `
 
-    return ctx.sendMessage(message, true)
+    return ctx.reply(message, { parse_mode: 'HTML' })
   }
 }
-
-export default getInfo

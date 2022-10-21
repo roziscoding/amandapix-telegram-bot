@@ -1,8 +1,8 @@
-import { Command } from '../domain/Command'
-import { User } from '../domain/User'
-import { evaluateQuery } from '../handleInlineQuery'
+import { InlineKeyboard } from 'grammy'
+import { AppContext, AppSession } from '../bot'
+import { evaluateQuery } from '../util/query'
 
-const KNOWN_MESSAGE = (user: User) =>
+const KNOWN_MESSAGE = (user: AppSession) =>
   `Opa, tudo certo? Eu já tenho seus dados do Pix aqui, olha só:
 
 \`Chave: ${user.pixKey}\`
@@ -16,54 +16,27 @@ const KNOWN_MESSAGE_REQUESTED = (amount: string) => `
 Para gerar um código de R$ ${amount} conforme solicitado, clique no botão abaixo.
 `
 
-const start: Command = {
+export const start = {
   name: 'start',
-  regex: /\/start ?(?<amount>\d+)?/,
   helpText: 'Cria seu cadastro, caso ainda não exista',
-  fn: async (ctx) => {
-    const amount = ctx.match?.groups?.amount
+  fn: async (ctx: AppContext) => {
+    const query = ctx.match as string
 
-    if (ctx.user.pixKey && !amount) {
-      return ctx.sendMessage(KNOWN_MESSAGE(ctx.user), true, {
-        inline_keyboard: [
-          [
-            {
-              text: 'Gerar código Pix',
-              switch_inline_query: ''
-            }
-          ]
-        ]
-      })
+    const { pixKey, name, city } = ctx.session
+    const hasUserData = pixKey && name && city
+
+    if (hasUserData && !query) {
+      const keyboard = new InlineKeyboard().switchInlineCurrent('Gerar código Pix', '')
+      return ctx.reply(KNOWN_MESSAGE(ctx.session), { reply_markup: keyboard, parse_mode: 'MarkdownV2' })
     }
 
-    if (ctx.user.pixKey && amount) {
-      const parsedAmount = await evaluateQuery(amount)
-      return ctx.sendMessage(KNOWN_MESSAGE_REQUESTED(parsedAmount.toFixed(2)), false, {
-        inline_keyboard: [
-          [
-            {
-              text: `Gerar código de R$ ${parsedAmount}`,
-              switch_inline_query: amount
-            }
-          ]
-        ]
-      })
+    if (hasUserData && query) {
+      const amount = await evaluateQuery(query)
+      const keyboard = new InlineKeyboard().switchInlineCurrent(`Gerar código de R$ ${amount}`, query)
+      return ctx.reply(KNOWN_MESSAGE_REQUESTED(amount.toFixed(2)), { reply_markup: keyboard })
     }
 
-    await ctx.repository.setSesstion(ctx.user.telegramId, 'setinfo', {
-      amount,
-      step: 1
-    })
-
-    return ctx.sendMessage(
-      amount
-        ? `Opa, entendi que você quer gerar um código de ${amount} mas, pra isso, primeiro me manda sua chave Pix:`
-        : `Opa, bora te cadastrar por aqui pra você poder gerar códigos Pix! Primeiro, me manda sua chave Pix:\n\n(Ao responder, você concorda com o armazenamento desses dados com o único propósito de gerar os códigos pix que você solicitar e de acordo com a [política de privacidade](https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md))`,
-      true,
-      undefined,
-      { disable_web_page_preview: true }
-    )
+    if (query) ctx.session.query = query
+    return ctx.conversation.enter('setInfo')
   }
 }
-
-export default start

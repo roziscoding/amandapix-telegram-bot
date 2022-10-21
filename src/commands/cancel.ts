@@ -1,23 +1,12 @@
+import { AppContext } from '../bot'
 import { Command } from '../domain/Command'
-import { REMOVE_KEYBOARD } from '../util/telegram/sendMessage'
 
-const cancel: Command = {
+export const cancel: Command = {
   name: 'cancel',
-  regex: /\/cancel/,
-  helpText: 'Cancela qualquer operação que estiver sendo realizada',
-  fn: async (ctx) => {
-    if (!ctx.user.session?.command) {
-      return ctx.sendMessage('Eu nem tava fazendo nada pô...', false, REMOVE_KEYBOARD)
-    }
-
-    await ctx.repository.clearSession(ctx.user.telegramId)
-
-    return ctx.sendMessage(
-      'Ok, deixa pra lá então',
-      false,
-      REMOVE_KEYBOARD
-    )
+  helpText: 'Cancela a operação atual',
+  fn: async (ctx: AppContext) => {
+    delete ctx.session.query
+    await ctx.reply('Tudo bem. Deixa pra lá :)', { reply_markup: { remove_keyboard: true } })
+    await ctx.conversation.exit()
   }
 }
-
-export default cancel
