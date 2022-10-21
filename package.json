@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "Telegram bot that generates Pix codes",
   "scripts": {
+    "lint": "eslint",
     "start": "NODE_ENV=development tsnd src/index.ts"
   },
   "repository": {
