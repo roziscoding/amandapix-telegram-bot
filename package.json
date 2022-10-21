@@ -3,13 +3,7 @@
   "version": "1.2.0",
   "description": "Telegram bot that generates Pix codes",
   "scripts": {
-    "test": "mocha",
-    "lint": "eslint .",
-    "clean": "rm -rf dist",
-    "build": "tsc",
-    "build:clean": "npm run clean && npm run build",
-    "prepack": "npm run lint && npm test && npm run build:clean",
-    "dev": "NODE_ENV=development tsnd src/index.ts"
+    "start": "NODE_ENV=development tsnd src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -67,7 +61,7 @@
     "grammy": "^1.11.0",
     "jimp": "^0.16.1",
     "mathjs": "^11.1.0",
-    "mongodb": "^4.9.1",
+    "mongodb": "^4.11.0",
     "pix-me": "^2.0.0",
     "qrcode": "^1.5.1",
     "sugar-env": "^1.5.14",
