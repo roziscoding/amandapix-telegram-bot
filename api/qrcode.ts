@@ -17,5 +17,5 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     .then((buffer) => pngToJpeg(buffer))
 
   res.setHeader('Content-Type', 'image/jpeg')
-  res.status(200).send(buffer)
+  return res.status(200).send(buffer)
 }
