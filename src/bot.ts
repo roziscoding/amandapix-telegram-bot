@@ -3,10 +3,12 @@ import { FileAdapter } from '@grammyjs/storage-file'
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb'
 import { Bot, Context, session, SessionFlavor } from 'grammy'
 import { MongoClient } from 'mongodb'
+
 import * as commands from './commands'
 import { AppConfig } from './config'
 import * as conversations from './conversations'
 import * as handlers from './handlers'
+import { ISession, MongoDBAdapter } from './util/storage-adapter'
 
 export type AppSession = {
   pixKey: string
