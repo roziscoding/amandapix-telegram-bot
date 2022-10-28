@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/roziscoding/amandapix-telegram-bot/compare/v2.0.1...v2.0.2) (2022-10-28)
+
+
+### Bug Fixes
+
+* use HTML parse_mode ([2bce9ce](https://github.com/roziscoding/amandapix-telegram-bot/commit/2bce9cef385e570663f599184cc678dfd4080536))
+
 ## [2.0.1](https://github.com/roziscoding/amandapix-telegram-bot/compare/v2.0.0...v2.0.1) (2022-10-21)
 
 
