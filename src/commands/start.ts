@@ -1,16 +1,18 @@
+import { stripIndents } from 'common-tags'
 import { InlineKeyboard } from 'grammy'
 import { AppContext, AppSession } from '../bot'
 import { evaluateQuery } from '../util/query'
 
-const KNOWN_MESSAGE = (user: AppSession) =>
-  `Opa, tudo certo? Eu já tenho seus dados do Pix aqui, olha só:
+const KNOWN_MESSAGE = (user: AppSession) => stripIndents`
+    Opa, tudo certo? Eu já tenho seus dados do Pix aqui, olha só:
 
-\`Chave: ${user.pixKey}\`
-\`Cidade: ${user.city}\`
-\`Nome: ${user.name}\`
+    <code>Chave: ${user.pixKey}</code>
+    <code>Cidade: ${user.city}</code>
+    <code>Nome: ${user.name}</code>
 
-Se quiser alterar esses dados, utilize o comando /setinfo.
-Pra gerar um código Pix, me chama no modo inline, ou clica no botão aqui em baixo.`.trim()
+    Se quiser alterar esses dados, utilize o comando /setinfo.
+    Pra gerar um código Pix, me chama no modo inline, ou clica no botão aqui em baixo.
+  `
 
 const KNOWN_MESSAGE_REQUESTED = (amount: string) => `
 Para gerar um código de R$ ${amount} conforme solicitado, clique no botão abaixo.
@@ -27,7 +29,7 @@ export const start = {
 
     if (hasUserData && !query) {
       const keyboard = new InlineKeyboard().switchInlineCurrent('Gerar código Pix', '')
-      return ctx.reply(KNOWN_MESSAGE(ctx.session), { reply_markup: keyboard, parse_mode: 'MarkdownV2' })
+      return ctx.reply(KNOWN_MESSAGE(ctx.session), { reply_markup: keyboard, parse_mode: 'HTML' })
     }
 
     if (hasUserData && query) {

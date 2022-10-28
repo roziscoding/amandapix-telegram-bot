@@ -8,6 +8,6 @@ export const privacy: Command = {
   fn: async (ctx) => {
     const message = format(PRIVACY_TEXT, PRIVACY_POLICY_URL)
 
-    return ctx.reply(message, { parse_mode: 'MarkdownV2' })
+    return ctx.reply(message, { parse_mode: 'HTML' })
   }
 }
