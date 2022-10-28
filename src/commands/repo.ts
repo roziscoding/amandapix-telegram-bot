@@ -6,8 +6,8 @@ export const repo: Command = {
   name: 'repo',
   helpText: 'Envia o link do repositório do bot',
   fn: async (ctx) => {
-    const message = format('Para obter meu código fonte, acesse meu [repositório no GitHub](%s)', REPO_URL)
+    const message = format('Para obter meu código fonte, acesse meu <a href="%s">repositório no GitHub</a>.', REPO_URL)
 
-    return ctx.reply(message, { parse_mode: 'MarkdownV2' })
+    return ctx.reply(message, { parse_mode: 'HTML' })
   }
 }
