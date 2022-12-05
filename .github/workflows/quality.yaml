@@ -31,9 +31,9 @@ jobs:
 
   check:
     name: Check
-    needs: format
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         entrypoint:
           - "server.ts"
