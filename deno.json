@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "polling": "deno run -A --watch polling.ts",
+    "server": "deno run -A server.ts"
+  }
+}

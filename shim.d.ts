@@ -1,1 +1,0 @@
-declare module 'png-to-jpeg'

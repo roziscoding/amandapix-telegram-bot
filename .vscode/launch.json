@@ -5,19 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "ts-node",
-      "type": "node",
       "request": "launch",
-      "args": [
-        "${relativeFile}"
-      ],
+      "name": "Launch Program",
+      "type": "node",
+      "program": "${workspaceFolder}/main.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "/home/roz/.asdf/shims/deno",
       "runtimeArgs": [
-        "-r",
-        "ts-node/register"
+        "run",
+        "--inspect",
+        "--allow-all"
       ],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
-      "internalConsoleOptions": "openOnSessionStart"
+      "attachSimplePort": 9229
     }
   ]
 }
