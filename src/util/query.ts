@@ -1,5 +1,9 @@
-import * as math from 'mathjs'
+import * as math from "https://esm.sh/mathjs@11.4.0";
 
-export async function evaluateQuery(query: string): Promise<number> {
-  return math.round(math.evaluate(query.replace(/,/g, '.')), 2)
+export function evaluateQuery(query: string): Promise<number | null> {
+  try {
+    return math.round(math.evaluate(query.replace(/,/g, ".")), 2);
+  } catch {
+    return Promise.resolve(null);
+  }
 }
