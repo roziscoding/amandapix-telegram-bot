@@ -18,7 +18,6 @@ jobs:
 
   format:
     name: Format
-    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Chekout code
