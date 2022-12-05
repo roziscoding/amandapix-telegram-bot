@@ -1,11 +1,10 @@
-name: Lint
-
 on:
   pull_request:
     branches: [main]
 
 jobs:
-  lint:
+  check:
+    name: Check
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,4 +19,5 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
+      - run: deno cache
       - run: deno check ${{ matrix.entrypoint }}
