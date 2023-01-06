@@ -1,5 +1,5 @@
-// @deno-types="npm:@types/common-tags"
-import { safeHtml, stripIndents } from "npm:common-tags";
+// @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
+import { safeHtml, stripIndents } from "common-tags";
 import { Command } from "../domain/Command.ts";
 
 export const getInfo: Command = {

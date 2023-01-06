@@ -7,6 +7,7 @@
     "std/": "https://deno.land/std@0.167.0/",
     "qrcode/": "https://deno.land/x/qrcode@v2.0.0/",
     "sift/": "https://deno.land/x/sift@0.6.0/",
-    "pix/": "https://deno.land/x/pix@v2.0.6/"
+    "pix/": "https://deno.land/x/pix@v2.0.6/",
+    "common-tags": "https://esm.sh/common-tags@1.8.2"
   }
 }

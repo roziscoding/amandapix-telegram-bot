@@ -1,5 +1,5 @@
-// @deno-types="npm:@types/common-tags"
-import { stripIndents } from "npm:common-tags";
+// @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
+import { stripIndents } from "common-tags";
 import { Bot, InlineKeyboard } from "grammy/mod.ts";
 import { AppContext } from "../bot.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";

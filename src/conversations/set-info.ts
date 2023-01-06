@@ -1,5 +1,5 @@
-// @deno-types="npm:@types/common-tags"
-import { oneLine, safeHtml, stripIndents } from "npm:common-tags";
+// @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
+import { oneLine, safeHtml, stripIndents } from "common-tags";
 import { Conversation, createConversation } from "grammy_conversations/mod.ts";
 import { InlineKeyboard } from "grammy/mod.ts";
 import { AppContext } from "../bot.ts";
