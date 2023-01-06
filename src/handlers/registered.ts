@@ -1,5 +1,6 @@
-import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
-import { Bot, InlineKeyboard } from "https://deno.land/x/grammy@v1.12.0/mod.ts";
+// @deno-types="npm:@types/common-tags"
+import { stripIndents } from "npm:common-tags";
+import { Bot, InlineKeyboard } from "grammy/mod.ts";
 import { AppContext } from "../bot.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";
@@ -36,6 +37,10 @@ export function install(bot: Bot<AppContext>) {
             `,
             parse_mode: "HTML",
           },
+          reply_markup: new InlineKeyboard().text(
+            "Marcar como concluído",
+            `done_${amount}`,
+          ),
         },
         {
           id: `req-${query}`,

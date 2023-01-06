@@ -1,4 +1,4 @@
-import { pix } from "https://deno.land/x/pix@v2.0.6/mod.ts";
+import { pix } from "pix/mod.ts";
 import { AppSession } from "../bot.ts";
 
 const normalize = (value: string) =>

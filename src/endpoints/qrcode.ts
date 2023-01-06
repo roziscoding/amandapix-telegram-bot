@@ -1,6 +1,6 @@
-import { decode } from "https://deno.land/std@0.154.0/encoding/base64.ts";
-import { qrcode } from "https://deno.land/x/qrcode@v2.0.0/mod.ts";
-import { json } from "https://deno.land/x/sift@0.6.0/mod.ts";
+import { decode } from "std/encoding/base64.ts";
+import { qrcode } from "qrcode/mod.ts";
+import { json } from "sift/mod.ts";
 
 function createQrCode(content: string) {
   return qrcode(content)

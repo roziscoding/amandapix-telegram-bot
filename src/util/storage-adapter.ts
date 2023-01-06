@@ -1,5 +1,5 @@
-import type { StorageAdapter } from "https://deno.land/x/grammy@v1.12.0/mod.ts";
-import type { Collection } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
+import type { StorageAdapter } from "grammy/mod.ts";
+import type { Collection } from "mongo/mod.ts";
 
 export interface ISession {
   _id: { $oid: string };

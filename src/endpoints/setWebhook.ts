@@ -1,4 +1,4 @@
-import { Api } from "https://deno.land/x/grammy@v1.12.0/mod.ts";
+import { Api } from "grammy/mod.ts";
 import { config } from "../config.ts";
 
 export async function setWebhook() {

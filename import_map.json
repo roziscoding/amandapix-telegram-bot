@@ -1,0 +1,12 @@
+{
+  "imports": {
+    "grammy/": "https://deno.land/x/grammy@v1.13.0/",
+    "grammy_conversations/": "https://deno.land/x/grammy_conversations@v1.1.0/",
+    "grammy_storages/": "https://deno.land/x/grammy_storages@v2.0.2/",
+    "mongo/": "https://deno.land/x/mongo@v0.31.1/",
+    "std/": "https://deno.land/std@0.167.0/",
+    "qrcode/": "https://deno.land/x/qrcode@v2.0.0/",
+    "sift/": "https://deno.land/x/sift@0.6.0/",
+    "pix/": "https://deno.land/x/pix@v2.0.6/"
+  }
+}

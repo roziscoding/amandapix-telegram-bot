@@ -1,5 +1,6 @@
-import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
-import { InlineKeyboard } from "https://deno.land/x/grammy@v1.12.0/mod.ts";
+// @deno-types="npm:@types/common-tags"
+import { stripIndents } from "npm:common-tags";
+import { InlineKeyboard } from "grammy/mod.ts";
 import { AppContext, AppSession } from "../bot.ts";
 import { evaluateQuery } from "../util/query.ts";
 

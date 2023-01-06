@@ -1,4 +1,4 @@
-import { webhookCallback } from "https://deno.land/x/grammy@v1.12.0/mod.ts";
+import { webhookCallback } from "grammy/mod.ts";
 import { getBot } from "../bot.ts";
 import { config } from "../config.ts";
 
