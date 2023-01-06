@@ -1,4 +1,4 @@
-import { evaluate, round } from "npm:mathjs";
+import { evaluate, round } from "mathjs";
 
 export function evaluateQuery(query: string): Promise<number | null> {
   try {
