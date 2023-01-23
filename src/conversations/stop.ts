@@ -1,5 +1,8 @@
-import { Conversation, createConversation } from "grammy_conversations/mod.ts";
-import { InlineKeyboard } from "grammy/mod.ts";
+import {
+  Conversation,
+  createConversation,
+} from "https://deno.land/x/grammy_conversations@v1.1.0/mod.ts";
+import { InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppContext } from "../bot.ts";
 
 const stop = async (

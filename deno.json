@@ -4,7 +4,6 @@
     "server": "deno run -A server.ts",
     "quality": "deno lint && deno fmt && deno check polling.ts && deno check server.ts"
   },
-  "importMap": "./import_map.json",
   "lint": {
     "files": {
       "exclude": [

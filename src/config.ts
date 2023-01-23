@@ -1,4 +1,4 @@
-import "std/dotenv/load.ts";
+import "https://deno.land/std@0.167.0/dotenv/load.ts";
 
 function env(name: string, otherwise?: string) {
   const value = Deno.env.get(name) ?? otherwise;

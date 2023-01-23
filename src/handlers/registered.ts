@@ -1,6 +1,6 @@
 // @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
-import { stripIndents } from "common-tags";
-import { Bot, InlineKeyboard } from "grammy/mod.ts";
+import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
+import { Bot, InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppContext } from "../bot.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";

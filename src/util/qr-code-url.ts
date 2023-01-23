@@ -1,4 +1,7 @@
-import type { Context, MiddlewareFn } from "grammy/mod.ts";
+import type {
+  Context,
+  MiddlewareFn,
+} from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppConfig } from "../config.ts";
 
 export type QRCodeUrlContext = Context & {

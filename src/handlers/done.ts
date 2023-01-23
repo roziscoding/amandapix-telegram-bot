@@ -1,4 +1,4 @@
-import { Bot } from "grammy/mod.ts";
+import { Bot } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppContext } from "../bot.ts";
 
 export function install(bot: Bot<AppContext>) {
