@@ -1,5 +1,6 @@
 // @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
 import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
+import { BRL } from "../util/currency.ts";
 import { Bot, InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppContext } from "../bot.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
@@ -24,15 +25,21 @@ export function install(bot: Bot<AppContext>) {
       const pixCode = getPixCodeForUser(ctx.session, amount);
       const qrCodeUrl = ctx.getQrCodeUrl(pixCode);
 
+      const formattedAmount = BRL(amount);
+
       return ctx.answerInlineQuery([
         {
           id: query,
           type: "article",
-          title: `Gerar código pix de R$ ${amount}`,
+          title: `Gerar código pix de ${formattedAmount}`,
           input_message_content: {
             message_text: stripIndents`
-              Para me transferir R$ ${amount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar):
+              Para me transferir ${formattedAmount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar).
 
+              <b>Valor:</b> ${formattedAmount}
+              <b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>
+
+              <b>Pix Copia e Cola:</b>
               <code>${pixCode}</code>
             `,
             parse_mode: "HTML",
@@ -45,13 +52,13 @@ export function install(bot: Bot<AppContext>) {
         {
           id: `req-${query}`,
           type: "article",
-          title: `Solicitar código pix de R$ ${amount}`,
+          title: `Solicitar código pix de ${formattedAmount}`,
           input_message_content: {
             message_text:
-              `${ctx.session.name} deseja te enviar R$ ${amount} via pix! Para gerar um código pix neste valor, clique no botão abaixo.`,
+              `${ctx.session.name} deseja te enviar ${formattedAmount} via pix! Para gerar um código pix neste valor, clique no botão abaixo.`,
           },
           reply_markup: new InlineKeyboard().switchInlineCurrent(
-            `Gerar código pix de R$ ${amount}`,
+            `Gerar código pix de ${formattedAmount}`,
             amount.toFixed(2),
           ),
         },

@@ -3,6 +3,7 @@ import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
 import { InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppContext, AppSession } from "../bot.ts";
 import { evaluateQuery } from "../util/query.ts";
+import { BRL } from "../util/currency.ts";
 
 const KNOWN_MESSAGE = (user: AppSession) =>
   stripIndents`
@@ -17,7 +18,9 @@ const KNOWN_MESSAGE = (user: AppSession) =>
   `;
 
 const KNOWN_MESSAGE_REQUESTED = (amount: string) => `
-Para gerar um código de R$ ${amount} conforme solicitado, clique no botão abaixo.
+Para gerar um código de ${
+  BRL(amount)
+} conforme solicitado, clique no botão abaixo.
 `;
 
 function sendWithoutAmount(ctx: AppContext) {
@@ -37,7 +40,7 @@ async function sendWithAmount(ctx: AppContext, query: string) {
   if (amount === null) return sendWithoutAmount(ctx);
 
   const keyboard = new InlineKeyboard().switchInlineCurrent(
-    `Gerar código de R$ ${amount}`,
+    `Gerar código de ${BRL(amount)}`,
     query,
   );
   return ctx.reply(KNOWN_MESSAGE_REQUESTED(amount.toFixed(2)), {

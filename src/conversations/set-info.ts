@@ -11,6 +11,7 @@ import {
 import { InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppContext } from "../bot.ts";
 import { evaluateQuery } from "../util/query.ts";
+import { BRL } from "../util/currency.ts";
 
 const PRIVACY_URL =
   "https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md";
@@ -156,11 +157,13 @@ const setInfo = async (
   if (ctx.session.query) {
     const amount = await evaluateQuery(ctx.session.query) ?? 0;
     const keyboard = new InlineKeyboard().switchInline(
-      `Gerar código Pix de R$ ${amount.toString()}`,
+      `Gerar código Pix de ${BRL(amount)}`,
       ctx.session.query,
     );
     return ctx.reply(
-      `Pronto! Agora tá tudo certo pra gerar o código Pix de R$ ${amount}. É só clicar no botão:`,
+      `Pronto! Agora tá tudo certo pra gerar o código Pix de ${
+        BRL(amount)
+      }. É só clicar no botão:`,
       {
         reply_markup: keyboard,
       },
