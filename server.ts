@@ -8,4 +8,4 @@ serve({
   "/bot": handleUpdate,
   "/setWebhook": setWebhook,
   "/qrcode": getQRCode,
-});
+}, { port: Number(Deno.env.get("PORT") ?? "") || undefined });
