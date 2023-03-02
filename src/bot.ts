@@ -3,12 +3,7 @@ import {
   conversations as grammyConversations,
 } from "https://deno.land/x/grammy_conversations@v1.1.0/mod.ts";
 import { FileAdapter } from "https://deno.land/x/grammy_storages@v2.0.2/file/src/mod.ts";
-import {
-  Bot,
-  Context,
-  session,
-  SessionFlavor,
-} from "https://deno.land/x/grammy@v1.13.1/mod.ts";
+import { Bot, Context, session, SessionFlavor } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 
 import * as commands from "./commands.ts";

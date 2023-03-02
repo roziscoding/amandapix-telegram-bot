@@ -18,9 +18,7 @@ const KNOWN_MESSAGE = (user: AppSession) =>
   `;
 
 const KNOWN_MESSAGE_REQUESTED = (amount: string) => `
-Para gerar um código de ${
-  BRL(amount)
-} conforme solicitado, clique no botão abaixo.
+Para gerar um código de ${BRL(amount)} conforme solicitado, clique no botão abaixo.
 `;
 
 function sendWithoutAmount(ctx: AppContext) {

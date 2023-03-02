@@ -13,5 +13,10 @@
         ".vercel"
       ]
     }
+  },
+  "fmt": {
+    "options": {
+      "lineWidth": 120
+    }
   }
 }

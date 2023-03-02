@@ -1,25 +1,15 @@
 // @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
-import {
-  oneLine,
-  safeHtml,
-  stripIndents,
-} from "https://esm.sh/common-tags@1.8.2";
-import {
-  Conversation,
-  createConversation,
-} from "https://deno.land/x/grammy_conversations@v1.1.0/mod.ts";
+import { oneLine, safeHtml, stripIndents } from "https://esm.sh/common-tags@1.8.2";
+import { Conversation, createConversation } from "https://deno.land/x/grammy_conversations@v1.1.0/mod.ts";
 import { InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
 import { AppContext } from "../bot.ts";
 import { evaluateQuery } from "../util/query.ts";
 import { BRL } from "../util/currency.ts";
 
-const PRIVACY_URL =
-  "https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md";
+const PRIVACY_URL = "https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md";
 
-const confirm = () =>
-  new InlineKeyboard().text("Sim", "sim").text("Não", "não");
-const cancellable = (fn: (ctx: AppContext) => unknown) => (ctx: AppContext) =>
-  ctx.hasCommand("cancel") ?? fn(ctx);
+const confirm = () => new InlineKeyboard().text("Sim", "sim").text("Não", "não");
+const cancellable = (fn: (ctx: AppContext) => unknown) => (ctx: AppContext) => ctx.hasCommand("cancel") ?? fn(ctx);
 
 const setInfo = async (
   conversation: Conversation<AppContext>,
@@ -72,9 +62,7 @@ const setInfo = async (
   while (!confirmmed) {
     await ctx.reply("Primeiro, me envia sua chave pix.");
     const pixKey = await conversation.form.text(
-      cancellable((ctx) =>
-        ctx.reply("Me manda sua chave pix como texto, por favor!")
-      ),
+      cancellable((ctx) => ctx.reply("Me manda sua chave pix como texto, por favor!")),
     );
 
     await ctx.reply("Show. Agora me manda sua cidade, por favor");
@@ -161,9 +149,7 @@ const setInfo = async (
       ctx.session.query,
     );
     return ctx.reply(
-      `Pronto! Agora tá tudo certo pra gerar o código Pix de ${
-        BRL(amount)
-      }. É só clicar no botão:`,
+      `Pronto! Agora tá tudo certo pra gerar o código Pix de ${BRL(amount)}. É só clicar no botão:`,
       {
         reply_markup: keyboard,
       },
