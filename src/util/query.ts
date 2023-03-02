@@ -14,6 +14,7 @@ export async function evaluateQuery(
       converted: number;
     }[];
     readonly finalQuery: string;
+    readonly originalQuery: string;
   }
 > {
   const values = extractCurrencies(query);
@@ -26,6 +27,7 @@ export async function evaluateQuery(
       rates: {},
       values: [{ converted: amount, currency: "BRL", value: amount }],
       finalQuery: query,
+      originalQuery: query,
     };
   }
 
@@ -42,6 +44,7 @@ export async function evaluateQuery(
     rates,
     values: convertedValues,
     finalQuery: convertedQuery,
+    originalQuery: query,
   } as const;
 }
 

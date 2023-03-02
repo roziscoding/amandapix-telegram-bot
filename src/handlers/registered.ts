@@ -7,10 +7,12 @@ import { evaluateQuery } from "../util/query.ts";
 function buildAdditionalData(data: Awaited<ReturnType<typeof evaluateQuery>>) {
   if (!data.hasConversion) return ``;
 
-  const { rates, values } = data;
+  const { rates, values, originalQuery } = data;
   const ratesArray = Object.entries(rates);
 
   return [
+    "",
+    `<b>Cálculo original:</b> ${originalQuery}`
     "",
     "<b>Valores de Câmbio:</b>",
     ...ratesArray.map(([currency, rate]) => `<b>${currency}:</b> ${BRL(rate)}`),
