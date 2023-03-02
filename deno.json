@@ -18,6 +18,14 @@
   "fmt": {
     "options": {
       "lineWidth": 120
+    },
+    "files": {
+      "exclude": [
+        "dist",
+        "node_modules",
+        "sessions",
+        ".vercel"
+      ]
     }
   }
 }

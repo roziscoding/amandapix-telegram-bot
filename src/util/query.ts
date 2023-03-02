@@ -1,39 +1,48 @@
 import { evaluate, round } from "mathjs";
 import { CurrencyConverstionRates, getConversionRates } from "./currency.ts";
 
-export function evaluateQuery(query: string): Promise<number | null> {
-  try {
-    return round(evaluate(query.replace(/,/g, ".")), 2);
-  } catch {
-    return Promise.resolve(null);
-  }
-}
-
-export async function evaluateConversionQuery(
+export async function evaluateQuery(
   query: string,
-) {
-  try {
-    const values = extractCurrencies(query);
-    const rates = await getConversionRates(
-      values.map(({ currency }) => currency),
-    );
-    const convertedValues = convertValues(values, rates);
-
-    const convertedQuery = buildConvertedQuery(query, convertedValues);
-
-    return {
-      ok: true,
-      finalValue: round(evaluate(convertedQuery), 2),
-      rates,
-      values: convertedValues,
-      finalQuery: convertedQuery,
-    } as const;
-  } catch (error) {
-    return {
-      ok: false,
-      error,
-    } as const;
+): Promise<
+  {
+    readonly finalValue: number;
+    readonly hasConversion: boolean;
+    readonly rates: Record<string, number>;
+    readonly values: {
+      currency: string;
+      value: number;
+      converted: number;
+    }[];
+    readonly finalQuery: string;
   }
+> {
+  const values = extractCurrencies(query);
+
+  if (!values.length) {
+    const amount = round(evaluate(query), 2);
+    return {
+      finalValue: amount,
+      hasConversion: false,
+      rates: {},
+      values: [{ converted: amount, currency: "BRL", value: amount }],
+      finalQuery: query,
+    };
+  }
+
+  const rates = await getConversionRates(
+    values.map(({ currency }) => currency),
+  );
+  const convertedValues = convertValues(values, rates);
+
+  const convertedQuery = buildConvertedQuery(query, convertedValues);
+
+  return {
+    finalValue: round(evaluate(convertedQuery), 2),
+    hasConversion: Object.keys(rates).length > 0,
+    rates,
+    values: convertedValues,
+    finalQuery: convertedQuery,
+  } as const;
 }
 
 export function extractCurrencies(query: string) {

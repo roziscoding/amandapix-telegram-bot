@@ -35,8 +35,8 @@ export const BRL = (amount: number | string) =>
     minimumFractionDigits: 2,
   });
 
-export function getConversionRates<Rates extends readonly string[]>(
-  currencies: Rates,
+export function getConversionRates(
+  currencies: string[],
 ) {
   const BASE_URL = "https://economia.awesomeapi.com.br/last/";
 
@@ -46,13 +46,16 @@ export function getConversionRates<Rates extends readonly string[]>(
     .map((currency) => `${currency}-BRL`)
     .join(",");
 
+  if (!currencyList) return {} as Record<string, number>;
+
   const url = new URL(currencyList, BASE_URL);
 
   return fetch(url)
     .then(async (response) => {
-      const json = await response.json();
+      const text = await response.text();
+      const json = JSON.parse(text);
       if (!response.ok && json?.code === "CoinNotExists") {
-        throw new CurrencyNotFoundError(json.message);
+        throw new CurrencyNotFoundError(text);
       }
 
       return json;
@@ -63,8 +66,8 @@ export function getConversionRates<Rates extends readonly string[]>(
         currencySchema.parse(currencyRate).high,
       ]);
 
-      return Object.fromEntries(rates);
-    }) as { [k in Rates[number]]: number };
+      return Object.fromEntries(rates) as Record<string, number>;
+    });
 }
 
 export type CurrencyConverstionRates = Awaited<

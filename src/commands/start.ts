@@ -33,7 +33,7 @@ function sendWithoutAmount(ctx: AppContext) {
 }
 
 async function sendWithAmount(ctx: AppContext, query: string) {
-  const amount = await evaluateQuery(query);
+  const amount = await evaluateQuery(query).then(({ finalValue }) => finalValue);
 
   if (amount === null) return sendWithoutAmount(ctx);
 

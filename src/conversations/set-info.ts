@@ -143,7 +143,7 @@ const setInfo = async (
   await conversation.sleep(1000);
 
   if (ctx.session.query) {
-    const amount = await evaluateQuery(ctx.session.query) ?? 0;
+    const amount = await evaluateQuery(ctx.session.query).then(({ finalValue }) => finalValue ?? 0);
     const keyboard = new InlineKeyboard().switchInline(
       `Gerar código Pix de ${BRL(amount)}`,
       ctx.session.query,
