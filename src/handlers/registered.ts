@@ -34,7 +34,7 @@ export function install(bot: Bot<AppContext>) {
           title: `Gerar código pix de ${formattedAmount}`,
           input_message_content: {
             message_text: stripIndents`
-              Para me transferir ${formattedAmount}, escaneie o <a href="qrcode">QRCode</a> ou utilize o código abaixo (clique no código para copiar).
+              Para me transferir ${formattedAmount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar).
 
               <b>Valor:</b> ${formattedAmount}
               <b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>
