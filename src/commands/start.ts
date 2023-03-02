@@ -1,6 +1,6 @@
-// @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
-import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
-import { InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
+// @deno-types="common-tags"
+import { stripIndents } from "common-tags";
+import { InlineKeyboard } from "grammy";
 import { AppContext, AppSession } from "../bot.ts";
 import { evaluateQuery } from "../util/query.ts";
 import { BRL } from "../util/currency.ts";
@@ -18,9 +18,7 @@ const KNOWN_MESSAGE = (user: AppSession) =>
   `;
 
 const KNOWN_MESSAGE_REQUESTED = (amount: string) => `
-Para gerar um código de ${
-  BRL(amount)
-} conforme solicitado, clique no botão abaixo.
+Para gerar um código de ${BRL(amount)} conforme solicitado, clique no botão abaixo.
 `;
 
 function sendWithoutAmount(ctx: AppContext) {
@@ -35,7 +33,7 @@ function sendWithoutAmount(ctx: AppContext) {
 }
 
 async function sendWithAmount(ctx: AppContext, query: string) {
-  const amount = await evaluateQuery(query);
+  const amount = await evaluateQuery(query).then(({ finalValue }) => finalValue);
 
   if (amount === null) return sendWithoutAmount(ctx);
 

@@ -1,16 +1,11 @@
-import type {
-  Context,
-  MiddlewareFn,
-} from "https://deno.land/x/grammy@v1.13.1/mod.ts";
+import type { Context, MiddlewareFn } from "grammy";
 import { AppConfig } from "../config.ts";
 
 export type QRCodeUrlContext = Context & {
   getQrCodeUrl: (pixCode: string) => string;
 };
 
-export const qrCodeUrl =
-  (config: AppConfig): MiddlewareFn<QRCodeUrlContext> => async (ctx, next) => {
-    ctx.getQrCodeUrl = (pixCode) =>
-      `${config.webhook.url}/qrcode?pixCode=${pixCode}`;
-    await next();
-  };
+export const qrCodeUrl = (config: AppConfig): MiddlewareFn<QRCodeUrlContext> => async (ctx, next) => {
+  ctx.getQrCodeUrl = (pixCode) => `${config.webhook.url}/qrcode?pixCode=${pixCode}`;
+  await next();
+};

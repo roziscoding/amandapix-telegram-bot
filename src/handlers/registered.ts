@@ -1,10 +1,26 @@
-// @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
-import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
 import { BRL } from "../util/currency.ts";
-import { Bot, InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
+import { Bot, InlineKeyboard } from "grammy";
 import { AppContext } from "../bot.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";
+
+function buildAdditionalData(data: Awaited<ReturnType<typeof evaluateQuery>>) {
+  if (!data.hasConversion) return ``;
+
+  const { rates, values } = data;
+  const ratesArray = Object.entries(rates);
+
+  return [
+    "",
+    "<b>Valores de Câmbio:</b>",
+    ...ratesArray.map(([currency, rate]) => `<b>${currency}:</b> ${BRL(rate)}`),
+    "",
+    "<b>Valores convertidos:</b>",
+    ...values.filter(({ currency }) => currency !== "BRL").map(({ currency, value, converted }) =>
+      `<b>${value} ${currency}</b> = ${BRL(converted)}`
+    ),
+  ];
+}
 
 export function install(bot: Bot<AppContext>) {
   bot
@@ -18,14 +34,15 @@ export function install(bot: Bot<AppContext>) {
 
       const [query] = ctx.match;
 
-      const amount = await evaluateQuery(query);
+      const parsedQueryData = await evaluateQuery(query);
+      const { finalValue } = parsedQueryData;
 
-      if (!amount) return ctx.answerInlineQuery([], { cache_time: 0 });
+      if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 });
 
-      const pixCode = getPixCodeForUser(ctx.session, amount);
+      const pixCode = getPixCodeForUser(ctx.session, finalValue);
       const qrCodeUrl = ctx.getQrCodeUrl(pixCode);
 
-      const formattedAmount = BRL(amount);
+      const formattedAmount = BRL(finalValue);
 
       return ctx.answerInlineQuery([
         {
@@ -33,20 +50,21 @@ export function install(bot: Bot<AppContext>) {
           type: "article",
           title: `Gerar código pix de ${formattedAmount}`,
           input_message_content: {
-            message_text: stripIndents`
-              Para me transferir ${formattedAmount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar).
-
-              <b>Valor:</b> ${formattedAmount}
-              <b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>
-
-              <b>Pix Copia e Cola:</b>
-              <code>${pixCode}</code>
-            `,
+            message_text: [
+              `Para me transferir ${formattedAmount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar).`,
+              "",
+              `<b>Valor:</b> ${formattedAmount}`,
+              `<b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>`,
+              ...buildAdditionalData(parsedQueryData),
+              "",
+              `<b>Pix Copia e Cola:</b>`,
+              `<code>${pixCode}</code>`,
+            ].join("\n"),
             parse_mode: "HTML",
           },
           reply_markup: new InlineKeyboard().text(
             "Marcar como concluído",
-            `done_${amount}`,
+            `done_${finalValue}`,
           ),
         },
         {
@@ -59,7 +77,7 @@ export function install(bot: Bot<AppContext>) {
           },
           reply_markup: new InlineKeyboard().switchInlineCurrent(
             `Gerar código pix de ${formattedAmount}`,
-            amount.toFixed(2),
+            finalValue.toFixed(2),
           ),
         },
       ], { cache_time: 0 });
