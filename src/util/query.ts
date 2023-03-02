@@ -1,4 +1,4 @@
-import { evaluate, round } from "https://esm.sh/mathjs@11.5.0";
+import { evaluate, round } from "mathjs";
 import { CurrencyConverstionRates, getConversionRates } from "./currency.ts";
 
 export function evaluateQuery(query: string): Promise<number | null> {

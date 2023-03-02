@@ -1,7 +1,7 @@
-// @deno-types="https://esm.sh/v102/@types/common-tags@1.8.1/index.d.ts"
-import { stripIndents } from "https://esm.sh/common-tags@1.8.2";
+// @deno-types="common-tags"
+import { stripIndents } from "common-tags";
 import { BRL } from "../util/currency.ts";
-import { Bot, InlineKeyboard } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
+import { Bot, InlineKeyboard } from "grammy";
 import { AppContext } from "../bot.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";
@@ -34,7 +34,7 @@ export function install(bot: Bot<AppContext>) {
           title: `Gerar código pix de ${formattedAmount}`,
           input_message_content: {
             message_text: stripIndents`
-              Para me transferir ${formattedAmount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar).
+              Para me transferir ${formattedAmount}, escaneie o <a href="qrcode">QRCode</a> ou utilize o código abaixo (clique no código para copiar).
 
               <b>Valor:</b> ${formattedAmount}
               <b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>

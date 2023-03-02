@@ -1,4 +1,4 @@
-import { z } from "https://deno.land/x/zod@v3.20.5/mod.ts";
+import { z } from "zod";
 
 export class CurrencyNotFoundError extends Error {
   public readonly currency: string;

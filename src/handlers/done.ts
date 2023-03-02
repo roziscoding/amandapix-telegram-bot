@@ -1,4 +1,4 @@
-import { Bot } from "https://deno.land/x/grammy@v1.13.1/mod.ts";
+import { Bot } from "grammy";
 import { AppContext } from "../bot.ts";
 import { BRL } from "../util/currency.ts";
 
