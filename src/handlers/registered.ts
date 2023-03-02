@@ -12,7 +12,7 @@ function buildAdditionalData(data: Awaited<ReturnType<typeof evaluateQuery>>) {
 
   return [
     "",
-    `<b>Cálculo original:</b> ${originalQuery}`
+    `<b>Cálculo original:</b> ${originalQuery}`,
     "",
     "<b>Valores de Câmbio:</b>",
     ...ratesArray.map(([currency, rate]) => `<b>${currency}:</b> ${BRL(rate)}`),
