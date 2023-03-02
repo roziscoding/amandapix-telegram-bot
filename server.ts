@@ -7,5 +7,5 @@ import { getQRCode } from "./src/endpoints/qrcode.ts";
 serve({
   "/bot": handleUpdate,
   "/setWebhook": setWebhook,
-  "qrcode": getQRCode,
+  "/qrcode": getQRCode,
 }, { port: Number(Deno.env.get("PORT") ?? "") || undefined });
