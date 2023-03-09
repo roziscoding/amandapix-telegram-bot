@@ -17,17 +17,18 @@ export async function evaluateQuery(
     readonly originalQuery: string;
   }
 > {
-  const values = extractCurrencies(query);
+  const replacedQuery = query.replace(/\,/ig, '.');
+  const values = extractCurrencies(replacedQuery);
 
   if (!values.length) {
-    const amount = round(evaluate(query), 2);
+    const amount = round(evaluate(replacedQuery), 2);
     return {
       finalValue: amount,
       hasConversion: false,
       rates: {},
       values: [{ converted: amount, currency: "BRL", value: amount }],
-      finalQuery: query,
-      originalQuery: query,
+      finalQuery: replacedQuery,
+      originalQuery: replacedQuery,
     };
   }
 
@@ -36,7 +37,7 @@ export async function evaluateQuery(
   );
   const convertedValues = convertValues(values, rates);
 
-  const convertedQuery = buildConvertedQuery(query, convertedValues);
+  const convertedQuery = buildConvertedQuery(replacedQuery, convertedValues);
 
   return {
     finalValue: round(evaluate(convertedQuery), 2),
@@ -44,7 +45,7 @@ export async function evaluateQuery(
     rates,
     values: convertedValues,
     finalQuery: convertedQuery,
-    originalQuery: query,
+    originalQuery: replacedQuery,
   } as const;
 }
 
