@@ -2,12 +2,12 @@
   "imports": {
     "grammy_conversations": "https://deno.land/x/grammy_conversations@v1.1.1/mod.ts",
     "grammy_storages": "https://deno.land/x/grammy_storages@v2.1.4/file/src/mod.ts",
-    "grammy": "https://deno.land/x/grammy@v1.14.1/mod.ts",
+    "grammy": "https://deno.land/x/grammy@v1.15.3/mod.ts",
     "mongo": "https://deno.land/x/mongo@v0.31.1/mod.ts",
     "pix": "https://deno.land/x/pix@v2.0.6/mod.ts",
     "sift": "https://deno.land/x/sift@0.6.0/mod.ts",
-    "zod": "https://deno.land/x/zod@v3.20.5/mod.ts",
-    "base64": "https://deno.land/std@0.178.0/encoding/base64.ts",
+    "zod": "https://deno.land/x/zod@v3.21.4/mod.ts",
+    "base64": "https://deno.land/std@0.180.0/encoding/base64.ts",
     "common-tags": "https://esm.sh/common-tags@1.8.2",
     "mathjs": "https://esm.sh/mathjs@11.6.0",
     "qrcode": "https://raw.githubusercontent.com/denorg/qrcode/87101e061a7b1f9f9d5ddb304ca8c9e99262e9e1/mod.ts"

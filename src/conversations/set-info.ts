@@ -60,10 +60,13 @@ const setInfo = async (
   let confirmmed = false;
 
   while (!confirmmed) {
-    await ctx.reply("Primeiro, me envia sua chave pix.");
+    await ctx.reply("Primeiro, me envia sua chave pix. Se for telefone, preciso do número com DDD.");
     const pixKey = await conversation.form.text(
       cancellable((ctx) => ctx.reply("Me manda sua chave pix como texto, por favor!")),
-    );
+    ).then((answer) => {
+      if (answer.length === 11) return answer;
+      return answer.replace(/\(|\)|\s/ig, "");
+    });
 
     await ctx.reply("Show. Agora me manda sua cidade, por favor");
     const city = await conversation.form.text(
