@@ -102,7 +102,7 @@ const setInfo = async (
       },
     );
 
-    const [confirmation, newContext] = await conversation
+    const confirmation = await conversation
       .waitFor(
         "callback_query:data",
         cancellable((ctx) =>
@@ -115,7 +115,7 @@ const setInfo = async (
         await ctx.editMessageReplyMarkup({});
         return ctx;
       })
-      .then((ctx) => [ctx.callbackQuery.data, ctx] as const);
+      .then((ctx) => ctx.callbackQuery.data);
 
     if (confirmation === "cancel") {
       return ctx.reply(
@@ -135,9 +135,9 @@ const setInfo = async (
 
     confirmmed = true;
 
-    newContext.session.pixKey = pixKey;
-    newContext.session.city = city;
-    newContext.session.name = name;
+    conversation.session.pixKey = pixKey;
+    conversation.session.city = city;
+    conversation.session.name = name;
   }
 
   await ctx.reply("Só mais um minuto...", {
