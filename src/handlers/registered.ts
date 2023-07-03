@@ -1,6 +1,6 @@
-import { BRL } from "../util/currency.ts";
-import { Bot, InlineKeyboard } from "grammy";
 import { AppContext } from "../bot.ts";
+import { Bot, InlineKeyboard } from "../deps.ts";
+import { BRL } from "../util/currency.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";
 

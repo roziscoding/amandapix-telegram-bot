@@ -1,31 +1,24 @@
 {
-  "importMap": "import-map.json",
   "tasks": {
     "polling": "deno run -A --watch polling.ts",
     "server": "deno run -A server.ts",
     "quality": "deno lint && deno fmt && deno check polling.ts && deno check server.ts"
   },
   "lint": {
-    "files": {
-      "exclude": [
-        "dist",
-        "node_modules",
-        "sessions",
-        ".vercel"
-      ]
-    }
+    "exclude": [
+      "dist",
+      "node_modules",
+      "sessions",
+      ".vercel"
+    ]
   },
   "fmt": {
-    "options": {
-      "lineWidth": 120
-    },
-    "files": {
-      "exclude": [
-        "dist",
-        "node_modules",
-        "sessions",
-        ".vercel"
-      ]
-    }
+    "lineWidth": 120,
+    "exclude": [
+      "dist",
+      "node_modules",
+      "sessions",
+      ".vercel"
+    ]
   }
 }

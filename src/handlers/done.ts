@@ -1,5 +1,5 @@
-import { Bot } from "grammy";
 import { AppContext } from "../bot.ts";
+import { Bot } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 
 export function install(bot: Bot<AppContext>) {

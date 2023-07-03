@@ -1,5 +1,5 @@
-import { pix } from "pix";
 import { AppSession } from "../bot.ts";
+import { pix } from "../deps.ts";
 
 const normalize = (value: string) => value.normalize("NFD").replace(/\p{Diacritic}/gu, "");
 

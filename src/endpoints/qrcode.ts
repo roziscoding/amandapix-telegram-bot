@@ -1,6 +1,4 @@
-import { decode } from "base64";
-import { qrcode } from "qrcode";
-import { json } from "sift";
+import { decode, json, qrcode } from "../deps.ts";
 
 function createQrCode(content: string) {
   return qrcode(content)

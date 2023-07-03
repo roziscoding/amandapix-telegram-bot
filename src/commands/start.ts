@@ -1,9 +1,7 @@
-// @deno-types="common-tags"
-import { stripIndents } from "common-tags";
-import { InlineKeyboard } from "grammy";
 import { AppContext, AppSession } from "../bot.ts";
-import { evaluateQuery } from "../util/query.ts";
+import { InlineKeyboard, stripIndents } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
+import { evaluateQuery } from "../util/query.ts";
 
 const KNOWN_MESSAGE = (user: AppSession) =>
   stripIndents`

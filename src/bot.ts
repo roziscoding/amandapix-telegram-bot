@@ -1,7 +1,13 @@
-import { type ConversationFlavor, conversations as grammyConversations } from "grammy_conversations";
-import { FileAdapter } from "grammy_storages";
-import { Bot, Context, session, SessionFlavor } from "grammy";
-import { MongoClient } from "mongo";
+import {
+  Bot,
+  Context,
+  type ConversationFlavor,
+  conversations as grammyConversations,
+  FileAdapter,
+  MongoClient,
+  session,
+  SessionFlavor,
+} from "./deps.ts";
 
 import * as commands from "./commands.ts";
 import { AppConfig } from "./config.ts";

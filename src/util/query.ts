@@ -1,4 +1,4 @@
-import { evaluate, round } from "mathjs";
+import { evaluate, round } from "../deps.ts";
 import { CurrencyConverstionRates, getConversionRates } from "./currency.ts";
 
 export async function evaluateQuery(
@@ -17,7 +17,7 @@ export async function evaluateQuery(
     readonly originalQuery: string;
   }
 > {
-  const replacedQuery = query.replace(/\,/ig, '.');
+  const replacedQuery = query.replace(/\,/ig, ".");
   const values = extractCurrencies(replacedQuery);
 
   if (!values.length) {

@@ -1,5 +1,4 @@
-import type { StorageAdapter } from "grammy";
-import type { Collection } from "mongo";
+import type { Collection, StorageAdapter } from "../deps.ts";
 
 export interface ISession {
   _id: { $oid: string };

@@ -1,5 +1,5 @@
-import { Api } from "grammy";
 import { config } from "../config.ts";
+import { Api } from "../deps.ts";
 
 export async function setWebhook() {
   const api = new Api(config.telegram.token);

@@ -1,10 +1,7 @@
-// @deno-types="common-tags"
-import { oneLine, safeHtml, stripIndents } from "common-tags";
-import { Conversation, createConversation } from "grammy_conversations";
-import { InlineKeyboard } from "grammy";
 import { AppContext } from "../bot.ts";
-import { evaluateQuery } from "../util/query.ts";
+import { Conversation, createConversation, InlineKeyboard, oneLine, safeHtml, stripIndents } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
+import { evaluateQuery } from "../util/query.ts";
 
 const PRIVACY_URL = "https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md";
 

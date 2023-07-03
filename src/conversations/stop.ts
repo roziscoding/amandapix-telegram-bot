@@ -1,6 +1,5 @@
-import { Conversation, createConversation } from "grammy_conversations";
-import { InlineKeyboard } from "grammy";
 import { AppContext } from "../bot.ts";
+import { Conversation, createConversation, InlineKeyboard } from "../deps.ts";
 
 const stop = async (
   conversation: Conversation<AppContext>,

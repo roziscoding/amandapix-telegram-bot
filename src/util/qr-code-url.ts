@@ -1,5 +1,5 @@
-import type { Context, MiddlewareFn } from "grammy";
 import { AppConfig } from "../config.ts";
+import type { Context, MiddlewareFn } from "../deps.ts";
 
 export type QRCodeUrlContext = Context & {
   getQrCodeUrl: (pixCode: string) => string;
