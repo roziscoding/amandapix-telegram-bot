@@ -49,8 +49,10 @@ export async function getBot(config: AppConfig, development = false) {
 
   if (development) {
     bot.use(async (ctx, next) => {
+      console.time("update");
       console.log(ctx.update);
       await next();
+      console.timeEnd("update");
     });
   }
 

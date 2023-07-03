@@ -46,6 +46,10 @@ export function install(bot: Bot<AppContext>) {
 
       const formattedAmount = BRL(finalValue);
 
+      await new Promise((resolve) => {
+        setTimeout(resolve, 15000);
+      });
+
       return ctx.answerInlineQuery([
         {
           id: query,
@@ -82,6 +86,7 @@ export function install(bot: Bot<AppContext>) {
             finalValue.toFixed(2),
           ),
         },
-      ], { cache_time: 0 });
+      ], { cache_time: 0 })
+        .catch(console.error);
     });
 }
