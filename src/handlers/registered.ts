@@ -1,8 +1,10 @@
+
 import { AppContext } from "../bot.ts";
-import { Bot, InlineKeyboard } from "../deps.ts";
+import { Bot, InlineKeyboard, debug } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";
+const log = debug("handlers/registered.ts");
 
 function buildAdditionalData(data: Awaited<ReturnType<typeof evaluateQuery>>) {
   if (!data.hasConversion) return ``;
@@ -34,21 +36,24 @@ export function install(bot: Bot<AppContext>) {
         });
       }
 
+      log("inlineQuery", ctx.match);
+
       const [query] = ctx.match;
 
       const parsedQueryData = await evaluateQuery(query);
+      log("parsed query data:", parsedQueryData);
       const { finalValue } = parsedQueryData;
+      log("final value:", finalValue);
 
       if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 });
 
       const pixCode = getPixCodeForUser(ctx.session, finalValue);
+      log("pix code:", pixCode);
       const qrCodeUrl = ctx.getQrCodeUrl(pixCode);
+      log("qr code url:", qrCodeUrl);
 
       const formattedAmount = BRL(finalValue);
-
-      await new Promise((resolve) => {
-        setTimeout(resolve, 15000);
-      });
+      log("formatted amount:", formattedAmount);
 
       return ctx.answerInlineQuery([
         {
