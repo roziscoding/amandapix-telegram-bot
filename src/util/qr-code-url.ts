@@ -6,6 +6,6 @@ export type QRCodeUrlFlavor = {
 };
 
 export const qrCodeUrl = (config: AppConfig): MiddlewareFn<Context & QRCodeUrlFlavor> => async (ctx, next) => {
-  ctx.getQrCodeUrl = (pixCode) => `${config.webhook.url}/qrcode?pixCode=${pixCode}`;
+  ctx.getQrCodeUrl = (pixCode) => `https://${config.WEBHOOK_URL}/qrcode?pixCode=${pixCode}`;
   await next();
 };
