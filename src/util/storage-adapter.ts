@@ -34,7 +34,7 @@ export class MongoDBAdapter<T> implements StorageAdapter<T> {
           value: data,
         },
       },
-      { upsert: true, ignoreUndefined: true },
+      { upsert: true },
     );
   }
 

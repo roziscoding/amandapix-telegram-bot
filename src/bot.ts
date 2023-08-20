@@ -6,14 +6,14 @@ import {
   MongoClient,
   session,
   SessionFlavor,
-  type ConversationFlavor,
+  type ConversationFlavor
 } from "./deps.ts";
 
 import * as commands from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import * as conversations from "./conversations.ts";
 import * as handlers from "./handlers.ts";
-import { qrCodeUrl, QRCodeUrlContext } from "./util/qr-code-url.ts";
+import { qrCodeUrl, QRCodeUrlFlavor } from "./util/qr-code-url.ts";
 import { ISession, MongoDBAdapter } from "./util/storage-adapter.ts";
 
 export type AppSession = {
@@ -23,11 +23,11 @@ export type AppSession = {
   query?: string;
 };
 
-export type AppContext =
-  & Context
-  & SessionFlavor<AppSession>
-  & ConversationFlavor
-  & QRCodeUrlContext;
+export type AppContext = 
+& Context
+& ConversationFlavor
+& SessionFlavor<AppSession>
+& QRCodeUrlFlavor;
 
 function getStorage(config: AppConfig, development = false) {
   if (development) {
@@ -35,14 +35,14 @@ function getStorage(config: AppConfig, development = false) {
   }
 
   const client = new MongoClient({
-    dataSource: config.database.dataSource,
-    endpoint: config.database.endpoint,
+    dataSource: config.DATABASE_DATASOURCE,
+    endpoint: config.DATABASE_ENDPOINT,
     auth: {
-      apiKey: config.database.apiKey
+      apiKey: config.DATABASE_API_KEY
     }
   });
   
-  const db = client.database(config.database.dbName);
+  const db = client.database(config.DATABASE_DBNAME);
   const sessions = db.collection<ISession>("sessions");
 
   return new MongoDBAdapter<AppSession>({
@@ -51,7 +51,7 @@ function getStorage(config: AppConfig, development = false) {
 }
 
 export async function getBot(config: AppConfig, development = false) {
-  const bot = new Bot<AppContext>(config.telegram.token);
+  const bot = new Bot<AppContext>(config.TELEGRAM_TOKEN);
 
   if (development) {
     bot.use(async (ctx, next) => {
