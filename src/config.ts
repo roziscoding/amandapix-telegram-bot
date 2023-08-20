@@ -3,7 +3,7 @@ import { z } from './deps.ts';
 
 const AppConfig = z.object({
   TELEGRAM_TOKEN: z.string(),
-  WEBHOOK_URL: z.string().url(),
+  WEBHOOK_URL: z.string(),
   DATABASE_ENDPOINT: z.string().url(),
   DATABASE_API_KEY: z.string(),
   DATABASE_DATASOURCE: z.string(),
