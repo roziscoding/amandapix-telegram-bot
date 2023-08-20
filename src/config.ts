@@ -16,8 +16,10 @@ export const config = {
     url: env("WEBHOOK_URL", ""),
   },
   database: {
-    uri: env("DATABASE_URI", "mongodb://localhost:27017/amandapix"),
-    dbName: env("DATABASE_DBNAME", "amandapix"),
+    endpoint: env("DATABASE_ENDPOINT", ""),
+    apiKey: env("DATABASE_API_KEY", ""),
+    dataSource: env("DATABASE_DATA_SOURCE", ""),
+    dbName: env("DATABASE_NAME", ""),
   },
 };
 

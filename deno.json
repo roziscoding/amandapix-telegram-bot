@@ -2,7 +2,8 @@
   "tasks": {
     "polling": "deno run -A --watch polling.ts",
     "server": "deno run -A server.ts",
-    "quality": "deno lint && deno fmt && deno check polling.ts && deno check server.ts"
+    "quality": "deno lint && deno fmt && deno check polling.ts && deno check server.ts",
+    "udd": "deno run -A --unstable https://deno.land/x/udd@0.8.2/main.ts"
   },
   "lint": {
     "exclude": [

@@ -1,12 +1,12 @@
 import {
   Bot,
   Context,
-  type ConversationFlavor,
-  conversations as grammyConversations,
   FileAdapter,
+  conversations as grammyConversations,
   MongoClient,
   session,
   SessionFlavor,
+  type ConversationFlavor,
 } from "./deps.ts";
 
 import * as commands from "./commands.ts";
@@ -29,13 +29,19 @@ export type AppContext =
   & ConversationFlavor
   & QRCodeUrlContext;
 
-async function getStorage(config: AppConfig, development = false) {
+function getStorage(config: AppConfig, development = false) {
   if (development) {
     return new FileAdapter<AppSession>({ dirName: "sessions" });
   }
 
-  const client = new MongoClient();
-  await client.connect(config.database.uri);
+  const client = new MongoClient({
+    dataSource: config.database.dataSource,
+    endpoint: config.database.endpoint,
+    auth: {
+      apiKey: config.database.apiKey
+    }
+  });
+  
   const db = client.database(config.database.dbName);
   const sessions = db.collection<ISession>("sessions");
 
