@@ -8,5 +8,5 @@ export function install(bot: Bot<AppContext>) {
       ctx.answerInlineQuery([], {
         button: { text: "Clique aqui pra se cadastrar", start_parameter: ctx.inlineQuery.query },
         cache_time: 0,
-      }));
+      }).catch(() => {}));
 }

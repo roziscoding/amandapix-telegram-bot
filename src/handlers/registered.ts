@@ -1,6 +1,5 @@
-
 import { AppContext } from "../bot.ts";
-import { Bot, InlineKeyboard, debug } from "../deps.ts";
+import { Bot, debug, InlineKeyboard } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";
@@ -33,7 +32,7 @@ export function install(bot: Bot<AppContext>) {
       if (!ctx.match || !Array.isArray(ctx.match) || !ctx.match[0]) {
         return ctx.answerInlineQuery([], {
           cache_time: 0,
-        });
+        }).catch(() => {});
       }
 
       log("inlineQuery", ctx.match);
@@ -45,7 +44,7 @@ export function install(bot: Bot<AppContext>) {
       const { finalValue } = parsedQueryData;
       log("final value:", finalValue);
 
-      if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 });
+      if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 }).catch(() => {});
 
       const pixCode = getPixCodeForUser(ctx.session, finalValue);
       log("pix code:", pixCode);
