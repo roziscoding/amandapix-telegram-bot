@@ -1,7 +1,7 @@
 import { debug, evaluate, round } from "../deps.ts";
 import { CurrencyConverstionRates, getConversionRates } from "./currency.ts";
 
-const log = debug('query.ts')
+const log = debug("query.ts");
 
 export async function evaluateQuery(
   query: string,
@@ -19,16 +19,16 @@ export async function evaluateQuery(
     readonly originalQuery: string;
   }
 > {
-  log('evaluateQuery', query)
+  log("evaluateQuery", query);
   const replacedQuery = query.replace(/\,/ig, ".");
-  log('extracting currencies')
+  log("extracting currencies");
   const values = extractCurrencies(replacedQuery);
-  log('extracted currencies', values)
+  log("extracted currencies", values);
 
   if (!values.length) {
-    log('no currencies found')
+    log("no currencies found");
     const amount = round(evaluate(replacedQuery), 2);
-    log('amount', amount)
+    log("amount", amount);
     return {
       finalValue: amount,
       hasConversion: false,
@@ -39,16 +39,16 @@ export async function evaluateQuery(
     };
   }
 
-  log('getting conversion rates')
+  log("getting conversion rates");
   const rates = await getConversionRates(
     values.map(({ currency }) => currency),
   );
-  log('conversion rates', rates)
+  log("conversion rates", rates);
   const convertedValues = convertValues(values, rates);
-  log('converted values', convertedValues)
+  log("converted values", convertedValues);
 
   const convertedQuery = buildConvertedQuery(replacedQuery, convertedValues);
-  log('converted query', convertedQuery)
+  log("converted query", convertedQuery);
 
   const finalResult = {
     finalValue: round(evaluate(convertedQuery), 2),
@@ -59,7 +59,7 @@ export async function evaluateQuery(
     originalQuery: replacedQuery,
   } as const;
 
-  log('final result', finalResult)
+  log("final result", finalResult);
   return finalResult;
 }
 
