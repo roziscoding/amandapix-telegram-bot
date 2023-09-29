@@ -1,15 +1,11 @@
-// @deno-types="https://esm.sh/common-tags@1.8.2"
+import { AppContext } from "../bot.ts";
 import { safeHtml, stripIndents } from "../deps.ts";
-import { Command } from "../domain/Command.ts";
 
-export const getInfo: Command = {
-  name: "getinfo",
-  helpText: "Exibe todas as informações que eu tenho sobre você",
-  fn: (ctx) => {
-    if (!ctx.session.pixKey) {
-      return ctx.reply("Ainda não te conheço! Use /start pra se cadastrar.");
-    }
-    const message = stripIndents(safeHtml)`
+export const getInfo = (ctx: AppContext) => {
+  if (!ctx.session.pixKey) {
+    return ctx.reply("Ainda não te conheço! Use /start pra se cadastrar.");
+  }
+  const message = stripIndents(safeHtml)`
       Aqui estão todas as informações que eu tenho sobre você:
       
       <b>Chave PIX</b>: ${ctx.session.pixKey}
@@ -17,6 +13,5 @@ export const getInfo: Command = {
       <b>Nome</b>: ${ctx.session.name}
     `;
 
-    return ctx.reply(message, { parse_mode: "HTML" });
-  },
+  return ctx.reply(message, { parse_mode: "HTML" });
 };

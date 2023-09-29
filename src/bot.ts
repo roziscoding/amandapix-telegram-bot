@@ -9,7 +9,7 @@ import {
   SessionFlavor,
 } from "./deps.ts";
 
-import * as commands from "./commands.ts";
+import { commands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import * as conversations from "./conversations.ts";
 import * as handlers from "./handlers.ts";
@@ -78,19 +78,14 @@ export async function getBot(config: AppConfig, development = false) {
 
   bot.use(grammyConversations());
 
-  /** Cancel Command */
-  bot.command(commands.cancel.name, commands.cancel.fn);
-
   /** Conversations */
   for (const conversation of Object.values(conversations)) {
     bot.use(conversation);
   }
 
-  /** Regular commands */
-  for (const command of Object.values(commands)) {
-    if (command.name === "cancel") continue;
-    bot.command(command.name, command.fn);
-  }
+  /** Commands */
+  bot.use(commands);
+  await commands.setCommands(bot);
 
   /** Inline query handlers */
   for (const handler of Object.values(handlers)) {

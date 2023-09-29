@@ -44,20 +44,16 @@ async function sendWithAmount(ctx: AppContext, query: string) {
   });
 }
 
-export const start = {
-  name: "start",
-  helpText: "Cria seu cadastro, caso ainda não exista",
-  fn: (ctx: AppContext) => {
-    const query = ctx.match as string;
+export const start = (ctx: AppContext) => {
+  const query = ctx.match as string;
 
-    const { pixKey, name, city } = ctx.session;
-    const hasUserData = pixKey && name && city;
+  const { pixKey, name, city } = ctx.session;
+  const hasUserData = pixKey && name && city;
 
-    if (hasUserData && !query) return sendWithoutAmount(ctx);
+  if (hasUserData && !query) return sendWithoutAmount(ctx);
 
-    if (hasUserData && query) return sendWithAmount(ctx, query);
+  if (hasUserData && query) return sendWithAmount(ctx, query);
 
-    if (query) ctx.session.query = query;
-    return ctx.conversation.enter("setInfo");
-  },
+  if (query) ctx.session.query = query;
+  return ctx.conversation.enter("setInfo");
 };

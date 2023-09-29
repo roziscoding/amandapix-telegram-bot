@@ -1,9 +1,5 @@
-import { Command } from "../domain/Command.ts";
+import { AppContext } from "../bot.ts";
 
-export const setInfo: Command = {
-  name: "setinfo",
-  helpText: "Define suas informações",
-  fn: (ctx) => {
-    return ctx.conversation.enter("setInfo");
-  },
+export const setInfo = (ctx: AppContext) => {
+  return ctx.conversation.enter("setInfo");
 };

@@ -3,6 +3,7 @@ export * from "https://deno.land/std@0.203.0/encoding/base64.ts";
 export { Collection, MongoClient } from "https://deno.land/x/atlas_sdk@v1.1.1/mod.ts";
 export { debug } from "https://deno.land/x/debug@0.2.0/mod.ts";
 export * from "https://deno.land/x/grammy@v1.19.0/mod.ts";
+export * from "https://deno.land/x/grammy_commands@v0.3.1/mod.ts";
 export { conversations, createConversation } from "https://deno.land/x/grammy_conversations@v1.1.2/mod.ts";
 export type { Conversation, ConversationFlavor } from "https://deno.land/x/grammy_conversations@v1.1.2/mod.ts";
 export * from "https://deno.land/x/grammy_storages@v2.3.2/file/src/mod.ts";

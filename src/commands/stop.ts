@@ -1,9 +1,5 @@
-import { Command } from "../domain/Command.ts";
+import { AppContext } from "../bot.ts";
 
-export const stop: Command = {
-  name: "stop",
-  helpText: "Apaga todos os dados que eu tenho armazenados sobre você",
-  fn: (ctx) => {
-    return ctx.conversation.enter("stop");
-  },
+export const stop = (ctx: AppContext) => {
+  return ctx.conversation.enter("stop");
 };
