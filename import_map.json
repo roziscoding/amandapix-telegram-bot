@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "common-tags": "https://esm.sh/v132/common-tags@1.8.2"
+  },
+  "scopes": {}
+}
