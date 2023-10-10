@@ -2,9 +2,9 @@
   "tasks": {
     "deps:reload": "deno cache --reload src/deps.ts",
     "deps:update": "deno run -A --unstable https://deno.land/x/udd@0.8.2/main.ts src/deps.ts && deno task esm:update & deno task deps:reload",
-    "esm:add": "deno run -A https://esm.sh/v132 add",
-    "esm:remove": "deno run -A https://esm.sh/v132 remove",
-    "esm:update": "deno run -A https://esm.sh/v132 update",
+    "esm:add": "deno run -A https://esm.sh/v133 add",
+    "esm:remove": "deno run -A https://esm.sh/v133 remove",
+    "esm:update": "deno run -A https://esm.sh/v133 update",
     "hooks:install": "deno run -A -r https://deno.land/x/githooks/githooks.ts",
     "quality:check": "FMTFLAGS=--check; deno task quality:fix",
     "quality:fix": "deno lint && deno fmt $FMTFLAGS && deno check polling.ts && deno check server.ts",
@@ -12,11 +12,21 @@
     "start:server": "deno run -A server.ts"
   },
   "lint": {
-    "exclude": ["dist", "node_modules", "sessions", ".vercel"]
+    "exclude": [
+      "dist",
+      "node_modules",
+      "sessions",
+      ".vercel"
+    ]
   },
   "fmt": {
     "lineWidth": 120,
-    "exclude": ["dist", "node_modules", "sessions", ".vercel"]
+    "exclude": [
+      "dist",
+      "node_modules",
+      "sessions",
+      ".vercel"
+    ]
   },
   "importMap": "import_map.json",
   "githooks": {
