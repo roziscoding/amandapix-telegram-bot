@@ -1,3 +1,6 @@
+import { commands } from "./commands.ts";
+import { AppConfig } from "./config.ts";
+import * as conversations from "./conversations.ts";
 import {
   Bot,
   Context,
@@ -8,10 +11,6 @@ import {
   session,
   SessionFlavor,
 } from "./deps.ts";
-
-import { commands } from "./commands.ts";
-import { AppConfig } from "./config.ts";
-import * as conversations from "./conversations.ts";
 import * as handlers from "./handlers.ts";
 import { qrCodeUrl, QRCodeUrlFlavor } from "./util/qr-code-url.ts";
 import { ISession, MongoDBAdapter } from "./util/storage-adapter.ts";
@@ -29,8 +28,13 @@ export type AppContext =
   & SessionFlavor<AppSession>
   & QRCodeUrlFlavor;
 
-function getStorage(config: AppConfig, development = false) {
-  if (development) {
+export enum Environment {
+  Development = "development",
+  Production = "production",
+}
+
+function getStorage(config: AppConfig, environment = Environment.Development) {
+  if (environment === Environment.Development) {
     return new FileAdapter<AppSession>({ dirName: "sessions" });
   }
 
@@ -50,10 +54,10 @@ function getStorage(config: AppConfig, development = false) {
   });
 }
 
-export async function getBot(config: AppConfig, development = false) {
+export async function getBot(config: AppConfig, environment = Environment.Development) {
   const bot = new Bot<AppContext>(config.TELEGRAM_TOKEN);
 
-  if (development) {
+  if (environment == Environment.Development) {
     bot.use(async (ctx, next) => {
       console.time("update");
       console.log(ctx.update);
@@ -72,7 +76,7 @@ export async function getBot(config: AppConfig, development = false) {
         city: "",
         name: "",
       }),
-      storage: await getStorage(config, development),
+      storage: await getStorage(config, environment),
     }),
   );
 

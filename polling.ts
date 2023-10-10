@@ -1,7 +1,7 @@
-import { getBot } from "./src/bot.ts";
+import { Environment, getBot } from "./src/bot.ts";
 import { config } from "./src/config.ts";
 
-const bot = await getBot(config, true);
+const bot = await getBot(config, Environment.Development);
 
 bot.use(async (ctx, next) => {
   console.log(JSON.stringify(ctx.update));
