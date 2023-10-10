@@ -1,5 +1,5 @@
 import { AppContext, AppSession } from "../bot.ts";
-import { InlineKeyboard, stripIndents } from "../deps.ts";
+import { Composer, InlineKeyboard, stripIndents } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 import { evaluateQuery } from "../util/query.ts";
 
@@ -44,7 +44,7 @@ async function sendWithAmount(ctx: AppContext, query: string) {
   });
 }
 
-export const start = (ctx: AppContext) => {
+export const start = new Composer<AppContext>((ctx: AppContext) => {
   const query = ctx.match as string;
 
   const { pixKey, name, city } = ctx.session;
@@ -56,4 +56,4 @@ export const start = (ctx: AppContext) => {
 
   if (query) ctx.session.query = query;
   return ctx.conversation.enter("setInfo");
-};
+});

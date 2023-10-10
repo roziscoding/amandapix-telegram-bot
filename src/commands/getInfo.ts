@@ -1,7 +1,7 @@
 import { AppContext } from "../bot.ts";
-import { safeHtml, stripIndents } from "../deps.ts";
+import { Composer, safeHtml, stripIndents } from "../deps.ts";
 
-export const getInfo = (ctx: AppContext) => {
+export const getInfo = new Composer<AppContext>((ctx) => {
   if (!ctx.session.pixKey) {
     return ctx.reply("Ainda não te conheço! Use /start pra se cadastrar.");
   }
@@ -14,4 +14,4 @@ export const getInfo = (ctx: AppContext) => {
     `;
 
   return ctx.reply(message, { parse_mode: "HTML" });
-};
+});

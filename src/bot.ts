@@ -1,19 +1,11 @@
 import { commands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
-import * as conversations from "./conversations.ts";
-import {
-  Bot,
-  Context,
-  type ConversationFlavor,
-  conversations as grammyConversations,
-  FileAdapter,
-  MongoClient,
-  session,
-  SessionFlavor,
-} from "./deps.ts";
-import * as handlers from "./handlers.ts";
+import conversations from "./conversations.ts";
+import { Bot, Context, type ConversationFlavor, conversations as grammyConversations, SessionFlavor } from "./deps.ts";
+import handlers from "./handlers.ts";
+import { loggerMiddleware } from "./middleware/logger.ts";
+import { sessionMiddleware } from "./middleware/session.ts";
 import { qrCodeUrl, QRCodeUrlFlavor } from "./util/qr-code-url.ts";
-import { ISession, MongoDBAdapter } from "./util/storage-adapter.ts";
 
 export type AppSession = {
   pixKey: string;
@@ -33,68 +25,24 @@ export enum Environment {
   Production = "production",
 }
 
-function getStorage(config: AppConfig, environment = Environment.Development) {
-  if (environment === Environment.Development) {
-    return new FileAdapter<AppSession>({ dirName: "sessions" });
-  }
-
-  const client = new MongoClient({
-    dataSource: config.DATABASE_DATASOURCE,
-    endpoint: config.DATABASE_ENDPOINT,
-    auth: {
-      apiKey: config.DATABASE_API_KEY,
-    },
-  });
-
-  const db = client.database(config.DATABASE_DBNAME);
-  const sessions = db.collection<ISession>("sessions");
-
-  return new MongoDBAdapter<AppSession>({
-    collection: sessions,
-  });
-}
-
 export async function getBot(config: AppConfig, environment = Environment.Development) {
   const bot = new Bot<AppContext>(config.TELEGRAM_TOKEN);
 
-  if (environment == Environment.Development) {
-    bot.use(async (ctx, next) => {
-      console.time("update");
-      console.log(ctx.update);
-      await next();
-      console.timeEnd("update");
-    });
-  }
-
+  /** Common middleware */
+  bot.use(loggerMiddleware(environment));
+  bot.use(sessionMiddleware(config, environment));
   bot.use(qrCodeUrl(config));
 
-  bot.use(
-    session({
-      getSessionKey: (ctx) => ctx.from?.id.toString(),
-      initial: () => ({
-        pixKey: "",
-        city: "",
-        name: "",
-      }),
-      storage: await getStorage(config, environment),
-    }),
-  );
-
-  bot.use(grammyConversations());
-
   /** Conversations */
-  for (const conversation of Object.values(conversations)) {
-    bot.use(conversation);
-  }
+  bot.use(grammyConversations());
+  bot.use(conversations);
 
   /** Commands */
   bot.use(commands);
   await commands.setCommands(bot);
 
-  /** Inline query handlers */
-  for (const handler of Object.values(handlers)) {
-    handler.install(bot);
-  }
+  /** Query Handlers */
+  bot.use(handlers);
 
   bot.catch(console.error);
 
