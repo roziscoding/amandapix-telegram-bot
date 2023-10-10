@@ -1,5 +1,16 @@
 {
-  "version": "2",
+  "version": "3",
+  "redirects": {
+    "https://esm.sh/v111/@types/common-tags@~1.8/index.d.ts": "https://esm.sh/v111/@types/common-tags@1.8.1/index.d.ts",
+    "https://esm.sh/v133/@types/common-tags@~1.8/index.d.ts": "https://esm.sh/v133/@types/common-tags@1.8.2/index.d.ts",
+    "https://esm.sh/v133/@types/escape-latex@latest/index.d.ts": "https://esm.sh/v133/@types/escape-latex@0.1.31/index.d.ts",
+    "https://esm.sh/v133/@types/seedrandom@~3.0/index.d.ts": "https://esm.sh/v133/@types/seedrandom@3.0.6/index.d.ts",
+    "https://lib.deno.dev/x/grammy@1.x/mod.ts": "https://deno.land/x/grammy@v1.19.1/mod.ts",
+    "https://lib.deno.dev/x/grammy@1/mod.ts": "https://deno.land/x/grammy@v1.19.1/mod.ts",
+    "https://lib.deno.dev/x/grammy@1/types.ts": "https://deno.land/x/grammy@v1.19.1/types.ts",
+    "https://lib.deno.dev/x/grammy@v1/mod.ts": "https://deno.land/x/grammy@v1.19.1/mod.ts",
+    "https://lib.deno.dev/x/grammy@v1/types.ts": "https://deno.land/x/grammy@v1.19.1/types.ts"
+  },
   "remote": {
     "https://cdn.skypack.dev/-/debug@v4.3.4-o4liVvMlOnQWbLSYZMXw/dist=es2019,mode=imports/optimized/debug.js": "671100993996e39b501301a87000607916d4d2d9f8fc8e9c5200ae5ba64a1389",
     "https://cdn.skypack.dev/-/http-cache-semantics@v4.1.1-N0bWdwKGKLbWpVco6TJA/dist=es2019,mode=imports/optimized/http-cache-semantics.js": "d2b8a8ddda629c7a915c269ecad2ba761cacad5c6e21bbf34381def053702294",
