@@ -213,6 +213,8 @@
     "https://esm.sh/preact@10.10.6?target=deno": "1e29f08f3e8ad648c83062cbb69e040235a18441c8b2e58aac3d82b39393bba2",
     "https://esm.sh/stable/preact@10.10.6/deno/preact.mjs": "8c7289f4add6fb4e6f9066a7f39b59e61254e32ed8204551b6499aed333921fb",
     "https://esm.sh/stable/preact@10.18.1/deno/preact.mjs": "c74342d8ebe76723bd4630840562411b5ed9faf0cd5785209df379cb8961b25b",
+    "https://esm.sh/stable/preact@10.18.1/denonext/jsx-runtime.js": "be3f1ff4c3c03b08ed19d69428e35bf3d90360a8e081a2e60075ddfd38fd86df",
+    "https://esm.sh/stable/preact@10.18.1/denonext/preact.mjs": "b2ad171554b90f2be0f30b1318f63d0df90420b2bdb727fddd97193daa177f84",
     "https://esm.sh/v111/@types/common-tags@1.8.1/index.d.ts": "c5590caef278ad8ba2532ec93e29a32ac354dfb333277348acce18512891d3b2",
     "https://esm.sh/v111/common-tags@1.8.2/deno/common-tags.js": "c6ec7093c8b76ed9a62b19f26feb571d83db4158fa7ab64c889582c98992948b",
     "https://esm.sh/v128/preact@10.10.6/src/index.d.ts": "d3e2e5125321d592d2458226f311de66411f2fa949e546cbaaefa533c4fb89e3",
@@ -246,6 +248,7 @@
     "https://esm.sh/v133/mathjs@11.11.1/X-ZS8q/types/index.d.ts": "355118df2510edef342490ae4392b03b7c05339aad85921f5430f8fdc55930ac",
     "https://esm.sh/v133/preact-render-to-string@5.2.4/deno/preact-render-to-string.mjs": "b33dea066f6d890bca7c54407674f899b757fe8c482ac87e0f58e5fef32d4280",
     "https://esm.sh/v133/preact-render-to-string@5.2.4/src/index.d.ts": "f9689d977891d792bc92c878aee9186e841d612615fea80f87ab1d48f43521f4",
+    "https://esm.sh/v133/preact@10.18.1/jsx-runtime": "019f849249d70baa9aefb684a8f1fbc350a893beae719a60b6c80adf3463b073",
     "https://esm.sh/v133/seedrandom@3.0.5": "58988aa1d60532d4217239c46d99cf234caf1092864c90a9b3648a4ba531d9b1",
     "https://esm.sh/v133/seedrandom@3.0.5/denonext/seedrandom.mjs": "cf4069e842b0324889378cb4922d03f3d8ed42cfadd1410a6b7ea8515693058f",
     "https://esm.sh/v133/tiny-emitter@2.1.0": "34f5a4a80f2d3fabf79118706ad7c0c9f1d315f661fb995e0fa1ddcd8acee216",
@@ -255,6 +258,7 @@
     "https://esm.sh/v133/typed-function@4.1.1/denonext/typed-function.mjs": "12418807abab62b29a44e8ceffe68b5a1f363868e7bcf7d002131cda05656e21",
     "https://raw.githubusercontent.com/denorg/qrcode/87101e061a7b1f9f9d5ddb304ca8c9e99262e9e1/mod.ts": "2104c34967c7a95093c0cd1068d5b45d79ead16637ca62b3116adad834adc326",
     "https://raw.githubusercontent.com/denorg/qrcode/87101e061a7b1f9f9d5ddb304ca8c9e99262e9e1/qrcode.d.ts": "a61fcfcecafbcfdff4d6623e82cc817cfd955b354015d39dc004dcc9dff660f5",
-    "https://raw.githubusercontent.com/denorg/qrcode/87101e061a7b1f9f9d5ddb304ca8c9e99262e9e1/qrcode.js": "138f870978e21843f48d8b0855b69de6ebf430c3ab9f57c3fa2746d6fba45bf1"
+    "https://raw.githubusercontent.com/denorg/qrcode/87101e061a7b1f9f9d5ddb304ca8c9e99262e9e1/qrcode.js": "138f870978e21843f48d8b0855b69de6ebf430c3ab9f57c3fa2746d6fba45bf1",
+    "https://raw.githubusercontent.com/grammyjs/web-app/main/index.ts": "b8f936ed38180493696d34cc15d3db56dd72b590a3c0d7795f0d8e3995c2424f"
   }
 }

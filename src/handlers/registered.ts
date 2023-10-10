@@ -62,7 +62,7 @@ composer
         title: `Gerar código pix de ${formattedAmount}`,
         input_message_content: {
           message_text: [
-            `Para me transferir ${formattedAmount}, escaneie o <a href="${qrCodeUrl}">QRCode</a> ou utilize o código abaixo (clique no código para copiar).`,
+            `Para me transferir ${formattedAmount}, utilize o código abaixo (clique no código para copiar).`,
             "",
             `<b>Valor:</b> ${formattedAmount}`,
             `<b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>`,
@@ -73,10 +73,10 @@ composer
           ].join("\n"),
           parse_mode: "HTML",
         },
-        reply_markup: new InlineKeyboard().text(
-          "Marcar como concluído",
-          `done_${finalValue}`,
-        ),
+        reply_markup: new InlineKeyboard()
+          .webApp("Visualizar QRCode", qrCodeUrl)
+          .row()
+          .text("Marcar como concluído", `done_${finalValue}`),
       },
       {
         id: `req-${query}`,

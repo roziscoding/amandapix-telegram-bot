@@ -2,7 +2,9 @@
   "imports": {
     "common-tags": "https://esm.sh/v133/common-tags@1.8.2",
     "mathjs": "https://esm.sh/v133/*mathjs@11.11.1",
-    "mathjs/": "https://esm.sh/v133/*mathjs@11.11.1/"
+    "mathjs/": "https://esm.sh/v133/*mathjs@11.11.1/",
+    "preact": "https://esm.sh/v133/preact@10.18.1",
+    "preact/": "https://esm.sh/v133/preact@10.18.1/"
   },
   "scopes": {
     "https://esm.sh/v133/": {

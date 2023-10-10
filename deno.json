@@ -9,7 +9,7 @@
     "quality:check": "FMTFLAGS=--check; deno task quality:fix",
     "quality:fix": "deno lint && deno fmt $FMTFLAGS && deno check polling.ts && deno check server.ts",
     "start:polling": "deno run -A --watch polling.ts",
-    "start:server": "deno run -A server.ts"
+    "start:server": "deno run -A --watch server.ts"
   },
   "lint": {
     "exclude": [
@@ -31,5 +31,9 @@
   "importMap": "import_map.json",
   "githooks": {
     "pre-commit": "quality:check"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
   }
 }
