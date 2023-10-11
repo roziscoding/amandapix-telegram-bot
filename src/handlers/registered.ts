@@ -74,7 +74,7 @@ composer
           parse_mode: "HTML",
         },
         reply_markup: new InlineKeyboard()
-          .webApp("Visualizar QRCode", qrCodeUrl)
+          .url("Visualizar QRCode", qrCodeUrl)
           .row()
           .text("Marcar como concluído", `done_${finalValue}`),
       },

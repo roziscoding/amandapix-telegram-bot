@@ -31,7 +31,7 @@ export async function getBot(config: AppConfig, environment = Environment.Develo
   /** Common middleware */
   bot.use(loggerMiddleware(environment));
   bot.use(sessionMiddleware(config, environment));
-  bot.use(qrCodeUrl(config));
+  bot.use(qrCodeUrl);
 
   /** Conversations */
   bot.use(grammyConversations());

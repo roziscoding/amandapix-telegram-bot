@@ -26,7 +26,7 @@ export const miniapp = () => {
           document.addEventListener("DOMContentLoaded", () => {
             const img = document.getElementById("img");
             const search = new URLSearchParams(location.search);
-            const pixcode = search.get("pixcode");
+            const pixcode = search.get("tgWebAppStartParam");
             img.src = "https://${config.WEBHOOK_URL}/qrcode?pixCode=" + pixcode;
           })
         </script>

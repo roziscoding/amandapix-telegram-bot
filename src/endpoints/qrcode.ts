@@ -1,14 +1,14 @@
-import { decode, json, qrcode } from "../deps.ts";
+import { decodeBase64, json, qrcode } from "../deps.ts";
 
 function createQrCode(content: string) {
   return qrcode(content)
     .then((codeString) => codeString.split(",")[1])
-    .then((codeString) => decode(codeString));
+    .then((codeString) => decodeBase64(codeString));
 }
 
 export async function getQRCode(req: Request) {
   const url = new URL(req.url);
-  const pixCode = url.searchParams.get("pixCode");
+  const pixCode = new TextDecoder().decode(decodeBase64(url.searchParams.get("pixCode") ?? ""));
 
   if (!pixCode) {
     return json({ message: "missing pixCode param" }, { status: 422 });

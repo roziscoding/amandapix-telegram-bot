@@ -1,5 +1,5 @@
 export * from "common-tags";
-export * from "https://deno.land/std@0.203.0/encoding/base64.ts";
+export { decodeBase64, encodeBase64 } from "https://deno.land/std@0.203.0/encoding/base64.ts";
 export { Collection, MongoClient } from "https://deno.land/x/atlas_sdk@v1.1.1/mod.ts";
 export { debug } from "https://deno.land/x/debug@0.2.0/mod.ts";
 export * from "https://deno.land/x/grammy@v1.19.1/mod.ts";
