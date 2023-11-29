@@ -24,9 +24,11 @@ function getStorage(config: AppConfig, environment = Environment.Development) {
   });
 }
 
+const getSessionKey = (ctx: Omit<AppContext, "session">) => ctx.chat?.id.toString() ?? ctx.from?.id.toString();
+
 export const sessionMiddleware = (config: AppConfig, environment: Environment) =>
   session<AppSession, AppContext>({
-    getSessionKey: (ctx) => ctx.from?.id.toString(),
+    getSessionKey,
     initial: () => ({
       pixKey: "",
       city: "",

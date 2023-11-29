@@ -2,7 +2,9 @@ import { commands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import conversations from "./conversations.ts";
 import { Bot, Context, type ConversationFlavor, conversations as grammyConversations, SessionFlavor } from "./deps.ts";
+import { SerializedGroup } from "./domain/Group.ts";
 import handlers from "./handlers.ts";
+import groupInstance, { GroupFlavor } from "./middleware/group-instance.ts";
 import { loggerMiddleware } from "./middleware/logger.ts";
 import { sessionMiddleware } from "./middleware/session.ts";
 import { qrCodeUrl, QRCodeUrlFlavor } from "./util/qr-code-url.ts";
@@ -12,13 +14,15 @@ export type AppSession = {
   city: string;
   name: string;
   query?: string;
+  group?: SerializedGroup;
 };
 
 export type AppContext =
   & Context
   & ConversationFlavor
   & SessionFlavor<AppSession>
-  & QRCodeUrlFlavor;
+  & QRCodeUrlFlavor
+  & GroupFlavor;
 
 export enum Environment {
   Development = "development",
@@ -32,6 +36,7 @@ export async function getBot(config: AppConfig, environment = Environment.Develo
   bot.use(loggerMiddleware(environment));
   bot.use(sessionMiddleware(config, environment));
   bot.use(qrCodeUrl);
+  bot.use(groupInstance);
 
   /** Conversations */
   bot.use(grammyConversations());

@@ -9,7 +9,7 @@ export const loggerMiddleware = (environment: Environment) => {
     .use(async (ctx, next) => {
       const id = ctx.update.update_id.toString();
       console.time(id);
-      console.log(ctx.update);
+      console.log(JSON.stringify(ctx.update, null, 2));
       await next();
       console.timeEnd(id);
     });

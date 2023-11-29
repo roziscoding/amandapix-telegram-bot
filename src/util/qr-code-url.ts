@@ -7,5 +7,5 @@ export type QRCodeUrlFlavor = {
 
 export const qrCodeUrl: MiddlewareFn<Context & QRCodeUrlFlavor> = async (ctx, next) => {
   ctx.getQrCodeUrl = (pixCode) => `https://t.me/${ctx.me.username}/qrcode?startapp=${encodeBase64(pixCode)}`;
-  await next();
+  return next();
 };

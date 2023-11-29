@@ -1,11 +1,14 @@
 import { AppContext } from "./bot.ts";
+import { debts } from "./commands/debts.ts";
+import { expense } from "./commands/expense.ts";
 import { getInfo } from "./commands/getInfo.ts";
+import { myDebts } from "./commands/my-debts.ts";
 import { privacy } from "./commands/privacy.ts";
 import { repo } from "./commands/repo.ts";
 import { setInfo } from "./commands/set-info.ts";
 import { start } from "./commands/start.ts";
 import { stop } from "./commands/stop.ts";
-import { Commands, InlineKeyboard } from "./deps.ts";
+import { Commands } from "./deps.ts";
 
 export const commands = new Commands<AppContext>();
 
@@ -33,16 +36,14 @@ commands
   .command("repo", "Envia o link do repositório do bot")
   .addToScope({ type: "default" }, repo);
 
-commands.command("webapp", "Opens the web app")
-  .addToScope({ type: "default" }, (ctx) => {
-    ctx.reply("WebApp test", {
-      reply_markup: new InlineKeyboard().webApp(
-        "Open WebApp",
-        `https://chatbot.roz.ninja/miniapp?pixcode=${
-          encodeURIComponent(
-            "00020126350014br.gov.bcb.pix0113pix@roz.ninja520400005303986540539.905802BR5914Rogerio Munhoz6011Joao Pessoa62070503***630432F6",
-          )
-        }`,
-      ),
-    });
-  });
+commands
+  .command("despesa", "Adiciona uma nova despesa")
+  .addToScope({ type: "all_group_chats" }, expense);
+
+commands
+  .command("meusdebitos", "Exibe todas as despesas que você adicionou")
+  .addToScope({ type: "all_group_chats" }, myDebts);
+
+commands
+  .command("debitos", "Exibe todas as despesas do grupo")
+  .addToScope({ type: "all_group_chats" }, debts);
