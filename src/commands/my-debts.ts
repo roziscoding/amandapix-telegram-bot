@@ -7,7 +7,6 @@ export const myDebts = new Composer<AppContext>();
 
 myDebts
   .filter(hasHydratedGroup)
-  .command("meusdebitos")
   .use((ctx) => {
     if (!ctx.from) return;
 

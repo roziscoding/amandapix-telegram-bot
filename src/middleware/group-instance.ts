@@ -9,6 +9,7 @@ export type GroupFlavor = {
 const composer = new Composer<AppContext>();
 
 composer.chatType(["group", "supergroup"])
+  .filter((ctx) => !["left", "kicked"].includes(ctx.myChatMember?.new_chat_member?.status ?? ""))
   .use(async (ctx, next) => {
     const group = ctx.session.group ? Group.hydrate(ctx.session.group) : new Group();
 

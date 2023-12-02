@@ -1,5 +1,5 @@
 import { AppContext } from "./bot.ts";
-import { debts } from "./commands/debts.ts";
+import { debts } from "./commands/all-debts.ts";
 import { expense } from "./commands/expense.ts";
 import { getInfo } from "./commands/getInfo.ts";
 import { myDebts } from "./commands/my-debts.ts";
@@ -37,13 +37,13 @@ commands
   .addToScope({ type: "default" }, repo);
 
 commands
-  .command("despesa", "Adiciona uma nova despesa")
+  .command("expense", "Adiciona uma nova despesa")
   .addToScope({ type: "all_group_chats" }, expense);
 
 commands
-  .command("meusdebitos", "Exibe todas as despesas que você adicionou")
+  .command("mydebts", "Exibe todas as despesas que você adicionou")
   .addToScope({ type: "all_group_chats" }, myDebts);
 
 commands
-  .command("debitos", "Exibe todas as despesas do grupo")
+  .command("alldebts", "Exibe todas as despesas do grupo")
   .addToScope({ type: "all_group_chats" }, debts);

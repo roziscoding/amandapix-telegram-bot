@@ -1,13 +1,12 @@
 import { AppContext } from "../bot.ts";
 import { ChatMemberUpdated, Composer, InlineKeyboard } from "../deps.ts";
+import { Group } from "../domain/Group.ts";
 import { hasHydratedGroup } from "../middleware/group-instance.ts";
 
 const helloText = `
 Fala galera!
 Cheguei pra ajudar vocês a gerenciarem as contas do grupo.
-Primeiro, preciso que todo mundo clique no botão abaixo pra eu conhecer todo mundo.
-
-Enviem /done quando todos tiverem feito isso.
+Primeiro, preciso que todo mundo clique no botão abaixo pra se cadastrar.
 `.trim();
 
 const joined = (chatMember: ChatMemberUpdated) => {
@@ -22,14 +21,28 @@ const left = (chatMember: ChatMemberUpdated) => {
 const composer = new Composer<AppContext>();
 const hydratedComposer = composer.filter(hasHydratedGroup);
 
-hydratedComposer.callbackQuery("join", (ctx) => {
-  ctx.group.addMember(ctx.from);
-  return ctx.answerCallbackQuery("Pronto, agora eu te conheço :)");
-});
+hydratedComposer
+  .callbackQuery("join", async (ctx) => {
+    if (ctx.group.has(ctx.from)) return ctx.answerCallbackQuery("Já te conheço, jovem 👍");
+    ctx.group.addMember(ctx.from);
+
+    const keyboard = ctx.callbackQuery.message?.reply_markup;
+
+    const newMessage = [
+      helloText,
+      "",
+      "Membros cadastrados:",
+      ...ctx.group.members.map((member) => `- ${member.firstName}`),
+    ].join("\n");
+
+    await Promise.all([
+      ctx.editMessageText(newMessage, { reply_markup: keyboard }),
+      ctx.answerCallbackQuery("Pronto, agora eu te conheço :)"),
+    ]);
+  });
 
 hydratedComposer
   .on("my_chat_member", (_, next) => {
-    console.log("got event");
     return next();
   })
   .filter((ctx) => joined(ctx.myChatMember))
@@ -53,6 +66,14 @@ hydratedComposer
   .use((ctx, next) => {
     ctx.group.removeMember(ctx.chatMember.old_chat_member.user);
     return next();
+  });
+
+composer
+  .on("my_chat_member")
+  .filter((ctx) => left(ctx.myChatMember))
+  .use(async (ctx, next) => {
+    await next();
+    ctx.session.group = Group.empty;
   });
 
 export default composer;

@@ -1,13 +1,13 @@
 import { AppContext } from "../bot.ts";
-import { Composer } from "../deps.ts";
+import { Composer, Context } from "../deps.ts";
 import { hasHydratedGroup } from "../middleware/group-instance.ts";
 import { BRL } from "../util/currency.ts";
 
 export const expense = new Composer<AppContext>();
 
 expense
-  .command("despesa")
   .filter(hasHydratedGroup)
+  .filter(Context.has.filterQuery("message:text"))
   .use((ctx) => {
     if (!ctx.from) return;
 

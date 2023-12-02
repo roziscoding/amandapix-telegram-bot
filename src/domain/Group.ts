@@ -32,6 +32,13 @@ export class Group {
     };
   }
 
+  static get empty(): SerializedGroup {
+    return {
+      members: [],
+      debts: [],
+    };
+  }
+
   addMember(user: User) {
     this.#members.set(user.id, { id: user.id, username: user.username, firstName: user.first_name });
   }
@@ -74,5 +81,13 @@ export class Group {
       }
     }
     return debts;
+  }
+
+  has(user: User) {
+    return this.#members.has(user.id);
+  }
+
+  get members() {
+    return [...this.#members.values()];
   }
 }
