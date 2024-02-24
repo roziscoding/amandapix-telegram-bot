@@ -1,15 +1,15 @@
 {
   "imports": {
     "common-tags": "https://esm.sh/v133/common-tags@1.8.2",
-    "mathjs": "https://esm.sh/v133/*mathjs@11.11.1",
-    "mathjs/": "https://esm.sh/v133/*mathjs@11.11.1/",
-    "preact": "https://esm.sh/v133/preact@10.18.1",
-    "preact/": "https://esm.sh/v133/preact@10.18.1/"
+    "mathjs": "https://esm.sh/v133/*mathjs@11.11.2",
+    "mathjs/": "https://esm.sh/v133/*mathjs@11.11.2/",
+    "preact": "https://esm.sh/v133/preact@10.18.2",
+    "preact/": "https://esm.sh/v133/preact@10.18.2/"
   },
   "scopes": {
     "https://esm.sh/v133/": {
-      "@babel/runtime": "https://esm.sh/v133/@babel/runtime@7.23.1",
       "@babel/runtime/": "https://esm.sh/v133/@babel/runtime@7.23.1/",
+      "@babel/runtime": "https://esm.sh/v133/@babel/runtime@7.23.9",
       "complex.js": "https://esm.sh/v133/complex.js@2.1.1",
       "decimal.js": "https://esm.sh/v133/decimal.js@10.4.3",
       "escape-latex": "https://esm.sh/v133/escape-latex@1.2.0",

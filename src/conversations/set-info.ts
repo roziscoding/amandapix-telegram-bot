@@ -19,8 +19,10 @@ const setInfo = async (
     `,
     {
       parse_mode: "HTML",
-      disable_web_page_preview: true,
       reply_markup: confirm(),
+      link_preview_options: {
+        is_disabled: true,
+      },
     },
   );
 
