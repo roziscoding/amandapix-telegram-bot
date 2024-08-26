@@ -39,7 +39,6 @@ composer
     log("inlineQuery", ctx.match);
 
     const [query] = ctx.match;
-
     const parsedQueryData = await evaluateQuery(query);
     log("parsed query data:", parsedQueryData);
     const { finalValue } = parsedQueryData;

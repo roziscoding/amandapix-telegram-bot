@@ -45,9 +45,10 @@ commands.command("webapp", "Opens the web app")
     ctx.reply("WebApp test", {
       reply_markup: new InlineKeyboard().webApp(
         "Open WebApp",
-        `https://chatbot.roz.ninja/miniapp?pixcode=${encodeURIComponent(
-          "00020126350014br.gov.bcb.pix0113pix@roz.ninja520400005303986540539.905802BR5914Rogerio Munhoz6011Joao Pessoa62070503***630432F6",
-        )
+        `https://chatbot.roz.ninja/miniapp?pixcode=${
+          encodeURIComponent(
+            "00020126350014br.gov.bcb.pix0113pix@roz.ninja520400005303986540539.905802BR5914Rogerio Munhoz6011Joao Pessoa62070503***630432F6",
+          )
         }`,
       ),
     });
