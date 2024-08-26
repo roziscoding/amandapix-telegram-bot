@@ -1,4 +1,4 @@
-import "https://deno.land/std@0.167.0/dotenv/load.ts";
+import "https://lib.deno.dev/std@0.167/dotenv/load.ts";
 import { z } from "./deps.ts";
 
 const AppConfig = z.object({

@@ -6,84 +6,77 @@ import { evaluateQuery } from "../util/query.ts";
 const PRIVACY_URL = "https://github.com/roziscoding/amandapix-telegram-bot/blob/main/PRIVACY.md";
 
 const confirm = () => new InlineKeyboard().text("Sim", "sim").text("Não", "não");
-const cancellable = (fn: (ctx: AppContext) => unknown) => (ctx: AppContext) => ctx.hasCommand("cancel") ?? fn(ctx);
 
 const setInfo = async (
   conversation: Conversation<AppContext>,
   ctx: AppContext,
 ) => {
-  await ctx.reply(
-    oneLine`
+  const isOnboarded = ctx.session.onboarded ?? true;
+
+  if (!isOnboarded) {
+    await ctx.reply(
+      oneLine`
       Antes de começarmos, preciso que você leia minha <a href="${PRIVACY_URL}">política de privacidade</a>.
       Você concorda com a política de privacidade?.
     `,
-    {
-      parse_mode: "HTML",
-      reply_markup: confirm(),
-      link_preview_options: {
-        is_disabled: true,
-      },
-    },
-  );
-
-  const privacyPolicy = await conversation
-    .waitFor(
-      "callback_query:data",
-      (ctx) => ctx.reply("Não entendi... Por favor, clique em um dos botões"),
-    )
-    .then(async (ctx) => {
-      await ctx.editMessageReplyMarkup({});
-      return ctx;
-    })
-    .then((ctx) => ctx.callbackQuery.data);
-
-  if (privacyPolicy === "não") {
-    await ctx.reply("Tudo bem. Deixa pra lá então.", {
-      reply_markup: { remove_keyboard: true },
-    });
-    return ctx.reply(
-      "Se quiser sugerir mudanças na minha política de privacidade, você pode abrir uma issue no meu repositório.",
       {
-        reply_markup: new InlineKeyboard().url(
-          "Abrir issue",
-          "https://github.com/roziscoding/amandapix-telegram-bot/issues/new",
-        ),
+        parse_mode: "HTML",
+        reply_markup: confirm(),
+        link_preview_options: {
+          is_disabled: true,
+        },
       },
     );
-  }
 
-  await ctx.reply("Boa! Agora sim, podemos começar!", {
-    reply_markup: { remove_keyboard: true },
-  });
+    const privacyPolicy = await conversation
+      .waitFor("callback_query:data")
+      .then(async (ctx) => {
+        await ctx.editMessageReplyMarkup({});
+        return ctx;
+      })
+      .then((ctx) => ctx.callbackQuery.data);
+
+    if (privacyPolicy === "não") {
+      await ctx.reply("Tudo bem. Deixa pra lá então.", {
+        reply_markup: { remove_keyboard: true },
+      });
+      return ctx.reply(
+        "Se quiser sugerir mudanças na minha política de privacidade, você pode abrir uma issue no meu repositório.",
+        {
+          reply_markup: new InlineKeyboard().url(
+            "Abrir issue",
+            "https://github.com/roziscoding/amandapix-telegram-bot/issues/new",
+          ),
+        },
+      );
+    }
+
+    await ctx.reply("Boa! Agora sim, podemos começar!", {
+      reply_markup: { remove_keyboard: true },
+    });
+  }
 
   let confirmmed = false;
 
   while (!confirmmed) {
     await ctx.reply("Primeiro, me envia sua chave pix. Se for telefone, preciso do número com DDD.");
-    const pixKey = await conversation.form.text(
-      cancellable((ctx) => ctx.reply("Me manda sua chave pix como texto, por favor!")),
-    ).then((answer) => {
-      if (answer.length === 11) return answer;
-      return answer.replace(/\(|\)|\s/ig, "");
-    });
+    const pixKey = await conversation
+      .waitFor("message:text")
+      .then((ctx) => ctx.message.text)
+      .then((answer) => {
+        if (answer.length === 11) return answer;
+        return answer.replace(/\(|\)|\s/ig, "");
+      });
 
     await ctx.reply("Show. Agora me manda sua cidade, por favor");
-    const city = await conversation.form.text(
-      cancellable((ctx) =>
-        ctx.reply(
-          "Pra continuarmos, preciso que me mande sua cidade como texto",
-        )
-      ),
-    );
+    const city = await conversation
+      .waitFor("message:text")
+      .then((ctx) => ctx.message.text);
 
     await ctx.reply("Boa. Por último, me diz seu nome");
-    const name = await conversation.form.text(
-      cancellable((ctx) =>
-        ctx.reply(
-          "Ainda não sei seu nome... Pode me mandar como texto, por favor?",
-        )
-      ),
-    );
+    const name = await conversation
+      .waitFor("message:text")
+      .then((ctx) => ctx.message.text);
 
     await ctx.reply(
       stripIndents(safeHtml)`
@@ -102,14 +95,7 @@ const setInfo = async (
     );
 
     const confirmation = await conversation
-      .waitFor(
-        "callback_query:data",
-        cancellable((ctx) =>
-          ctx.reply(
-            "Não entendi... Por favor, usa os botões pra me responder :)",
-          )
-        ),
-      )
+      .waitFor("callback_query:data")
       .then(async (ctx) => {
         await ctx.editMessageReplyMarkup({});
         return ctx;
@@ -137,6 +123,7 @@ const setInfo = async (
     conversation.session.pixKey = pixKey;
     conversation.session.city = city;
     conversation.session.name = name;
+    conversation.session.onboarded = true;
   }
 
   await ctx.reply("Só mais um minuto...", {

@@ -31,6 +31,7 @@ export const sessionMiddleware = (config: AppConfig, environment: Environment) =
       pixKey: "",
       city: "",
       name: "",
+      onboarded: false,
     }),
     storage: getStorage(config, environment),
   });

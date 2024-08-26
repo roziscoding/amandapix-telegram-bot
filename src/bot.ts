@@ -1,4 +1,4 @@
-import { commands } from "./commands.ts";
+import { commands, priorityCommands, setMyCommands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import conversations from "./conversations.ts";
 import { Bot, Context, type ConversationFlavor, conversations as grammyConversations, SessionFlavor } from "./deps.ts";
@@ -12,6 +12,7 @@ export type AppSession = {
   city: string;
   name: string;
   query?: string;
+  onboarded?: boolean;
 };
 
 export type AppContext =
@@ -35,11 +36,12 @@ export async function getBot(config: AppConfig, environment = Environment.Develo
 
   /** Conversations */
   bot.use(grammyConversations());
+  bot.use(priorityCommands);
   bot.use(conversations);
 
   /** Commands */
   bot.use(commands);
-  await commands.setCommands(bot);
+  await setMyCommands(bot);
 
   /** Query Handlers */
   bot.use(handlers);

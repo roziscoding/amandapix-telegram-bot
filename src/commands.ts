@@ -1,13 +1,20 @@
 import { AppContext } from "./bot.ts";
+import { cancel } from "./commands/cancel.ts";
 import { getInfo } from "./commands/getInfo.ts";
 import { privacy } from "./commands/privacy.ts";
 import { repo } from "./commands/repo.ts";
 import { setInfo } from "./commands/set-info.ts";
 import { start } from "./commands/start.ts";
 import { stop } from "./commands/stop.ts";
-import { Commands, InlineKeyboard } from "./deps.ts";
+import { Api, CommandGroup, InlineKeyboard } from "./deps.ts";
 
-export const commands = new Commands<AppContext>();
+export const priorityCommands = new CommandGroup<AppContext>();
+
+priorityCommands
+  .command("cancel", "Cancela a operação atual")
+  .addToScope({ type: "default" }, cancel);
+
+export const commands = new CommandGroup<AppContext>();
 
 commands
   .command("start", "Cria seu cadastro, caso ainda não exista")
@@ -38,11 +45,24 @@ commands.command("webapp", "Opens the web app")
     ctx.reply("WebApp test", {
       reply_markup: new InlineKeyboard().webApp(
         "Open WebApp",
-        `https://chatbot.roz.ninja/miniapp?pixcode=${
-          encodeURIComponent(
-            "00020126350014br.gov.bcb.pix0113pix@roz.ninja520400005303986540539.905802BR5914Rogerio Munhoz6011Joao Pessoa62070503***630432F6",
-          )
+        `https://chatbot.roz.ninja/miniapp?pixcode=${encodeURIComponent(
+          "00020126350014br.gov.bcb.pix0113pix@roz.ninja520400005303986540539.905802BR5914Rogerio Munhoz6011Joao Pessoa62070503***630432F6",
+        )
         }`,
       ),
     });
   });
+
+export const setMyCommands = async ({ api }: { api: Api }) => {
+  const args = [
+    ...priorityCommands.toArgs().scopes,
+    ...commands.toArgs().scopes,
+  ];
+
+  for (const arg of args) {
+    console.log(await api.setMyCommands(arg.commands, {
+      scope: arg.scope,
+      language_code: arg.language_code,
+    }));
+  }
+};

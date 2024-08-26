@@ -9,6 +9,7 @@ composer.callbackQuery("stop", (ctx) => {
     pixKey: "",
     query: "",
     city: "",
+    onboarded: false,
     conversation: undefined,
   };
 
