@@ -60,9 +60,9 @@ export const setMyCommands = async ({ api }: { api: Api }) => {
   ];
 
   for (const arg of args) {
-    console.log(await api.setMyCommands(arg.commands, {
+    await api.setMyCommands(arg.commands, {
       scope: arg.scope,
       language_code: arg.language_code,
-    }));
+    });
   }
 };
