@@ -179,3 +179,5 @@ $RECYCLE.BIN/
 .envrc
 old
 sessions
+db*
+dump.json
