@@ -6,7 +6,7 @@ export * from "https://lib.deno.dev/x/grammy@v1/mod.ts";
 export * from "https://lib.deno.dev/x/grammy_commands@v0/mod.ts";
 export { conversations, createConversation } from "https://lib.deno.dev/x/grammy_conversations@v1/mod.ts";
 export type { Conversation, ConversationFlavor } from "https://lib.deno.dev/x/grammy_conversations@v1/mod.ts";
-export * from "https://lib.deno.dev/x/grammy_storages@v2/file/src/mod.ts";
+export * from "https://lib.deno.dev/x/grammy_storages@v2/denokv/src/adapter.ts";
 export * from "https://lib.deno.dev/x/pix@v2/mod.ts";
 export { json, serve } from "https://lib.deno.dev/x/sift@0/mod.ts";
 export * from "https://lib.deno.dev/x/zod@v3/mod.ts";

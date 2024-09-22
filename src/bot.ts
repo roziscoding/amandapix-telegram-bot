@@ -1,3 +1,4 @@
+/// <reference lib="deno.unstable" />
 import { commands, priorityCommands, setMyCommands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import conversations from "./conversations.ts";
@@ -26,12 +27,18 @@ export enum Environment {
   Production = "production",
 }
 
-export async function getBot(config: AppConfig, environment = Environment.Development) {
+export async function getBot(
+  config: AppConfig,
+  environment = Environment.Development,
+) {
   const bot = new Bot<AppContext>(config.TELEGRAM_TOKEN);
+  const kv = await Deno.openKv(
+    environment === Environment.Development ? "./db" : undefined,
+  );
 
   /** Common middleware */
   bot.use(loggerMiddleware(environment));
-  bot.use(sessionMiddleware(config, environment));
+  bot.use(sessionMiddleware(kv));
   bot.use(qrCodeUrl);
 
   /** Conversations */
