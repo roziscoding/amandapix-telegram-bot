@@ -33,7 +33,7 @@ composer
     if (!ctx.match || !Array.isArray(ctx.match) || !ctx.match[0]) {
       return ctx.answerInlineQuery([], {
         cache_time: 0,
-      }).catch(() => {});
+      }).catch(() => { });
     }
 
     log("inlineQuery", ctx.match);
@@ -44,7 +44,7 @@ composer
     const { finalValue } = parsedQueryData;
     log("final value:", finalValue);
 
-    if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 }).catch(() => {});
+    if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 }).catch(() => { });
 
     const pixCode = getPixCodeForUser(ctx.session, finalValue);
     log("pix code:", pixCode);
@@ -66,13 +66,12 @@ composer
             `<b>Valor:</b> ${formattedAmount}`,
             `<b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>`,
             ...buildAdditionalData(parsedQueryData),
-            "",
-            `<b>Pix Copia e Cola:</b>`,
-            `<code>${pixCode}</code>`,
           ].join("\n"),
           parse_mode: "HTML",
         },
         reply_markup: new InlineKeyboard()
+          .copyText('Copiar Pix Copia e Cola', pixCode)
+          .row()
           .url("Visualizar QRCode", qrCodeUrl)
           .row()
           .text("Marcar como concluído", `done_${finalValue}`),
