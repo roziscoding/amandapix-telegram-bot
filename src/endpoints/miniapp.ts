@@ -16,6 +16,7 @@ function html(args: TemplateStringsArray, ...args2: string[]) {
 }
 
 export const miniapp = () => {
+
   return html`
     <!DOCTYPE html>
     <html>
@@ -23,11 +24,14 @@ export const miniapp = () => {
         <title>Miniapp</title>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script>
-          document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             const img = document.getElementById("img");
             const search = new URLSearchParams(location.search);
             const pixcode = search.get("tgWebAppStartParam");
-            img.src = "https://${config.WEBHOOK_URL}/qrcode?pixCode=" + pixcode;
+            const url = new URL('${config.WEBHOOK_URL.toString()}');
+            url.pathname = "/qrcode";
+            url.searchParams.set("pixCode", pixcode);
+            img.src = url.toString();
           })
         </script>
         <style>

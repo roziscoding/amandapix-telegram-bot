@@ -1,14 +1,8 @@
-import { decodeBase64, json, qrcode } from "../deps.ts";
+import { decodeBase64, json, qrCode } from "../deps.ts";
 
-function createQrCode(content: string) {
-  return qrcode(content)
-    .then((codeString) => codeString.split(",")[1])
-    .then((codeString) => decodeBase64(codeString));
-}
-
-export async function getQRCode(req: Request) {
+export function getQRCode(req: Request) {
   const url = new URL(req.url);
-  const pixCode = new TextDecoder().decode(decodeBase64(url.searchParams.get("pixCode") ?? ""));
+  const pixCode = new TextDecoder().decode(decodeBase64(decodeURIComponent(url.searchParams.get("pixCode") ?? "")));
 
   if (!pixCode) {
     return json({ message: "missing pixCode param" }, { status: 422 });
@@ -17,7 +11,7 @@ export async function getQRCode(req: Request) {
     return json({ message: "more than one pixCode provided" }, { status: 422 });
   }
 
-  const buffer = await createQrCode(pixCode);
+  const code = qrCode(pixCode, { output: "svg" });
 
-  return new Response(buffer, { headers: { "Content-Type": "image/jpeg" } });
+  return new Response(code, { headers: { "Content-Type": "image/svg+xml" } });
 }
