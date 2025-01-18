@@ -33,7 +33,7 @@ composer
     if (!ctx.match || !Array.isArray(ctx.match) || !ctx.match[0]) {
       return ctx.answerInlineQuery([], {
         cache_time: 0,
-      }).catch(() => { });
+      }).catch(() => {});
     }
 
     log("inlineQuery", ctx.match);
@@ -44,7 +44,7 @@ composer
     const { finalValue } = parsedQueryData;
     log("final value:", finalValue);
 
-    if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 }).catch(() => { });
+    if (!finalValue) return ctx.answerInlineQuery([], { cache_time: 0 }).catch(() => {});
 
     const pixCode = getPixCodeForUser(ctx.session, finalValue);
     log("pix code:", pixCode);
@@ -58,10 +58,10 @@ composer
       {
         id: query,
         type: "article",
-        title: `Gerar código pix de ${formattedAmount}`,
+        title: `Receber ${formattedAmount}`,
         input_message_content: {
           message_text: [
-            `Para me transferir ${formattedAmount}, utilize o código abaixo (clique no código para copiar).`,
+            `Para me transferir ${formattedAmount}, utilize os botões abaixo.`,
             "",
             `<b>Valor:</b> ${formattedAmount}`,
             `<b>Chave PIX:</b> <code>${ctx.session.pixKey}</code>`,
@@ -70,7 +70,7 @@ composer
           parse_mode: "HTML",
         },
         reply_markup: new InlineKeyboard()
-          .copyText('Copiar Pix Copia e Cola', pixCode)
+          .copyText("Copiar Pix Copia e Cola", pixCode)
           .row()
           .url("Visualizar QRCode", qrCodeUrl)
           .row()
@@ -79,7 +79,7 @@ composer
       {
         id: `req-${query}`,
         type: "article",
-        title: `Solicitar código pix de ${formattedAmount}`,
+        title: `Enviar ${formattedAmount}`,
         input_message_content: {
           message_text:
             `${ctx.session.name} deseja te enviar ${formattedAmount} via pix! Para gerar um código pix neste valor, clique no botão abaixo.`,
