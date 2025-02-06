@@ -57,7 +57,7 @@ export async function getUpdateHandler(config: AppConfig) {
       logInfo.error = formatError(err);
       console.error(err);
 
-      return new Response(undefined, { status: 500 });
+      return new Response(undefined, { status: 200 });
     } finally {
       logInfo.end = new Date();
       axiom.ingest(config.AXIOM_DATASET, logInfo);
