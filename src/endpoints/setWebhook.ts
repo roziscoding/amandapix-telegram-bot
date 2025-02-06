@@ -6,7 +6,7 @@ export async function setWebhook(req: Request) {
   const webhookUrl = new URL(config.WEBHOOK_URL);
   webhookUrl.pathname = "/bot";
 
-  const token = new URL(req.url).searchParams.get("token");
+  const token = req.headers.get("x-telegram-token");
   if (token !== config.TELEGRAM_TOKEN) {
     return new Response(undefined, { status: 401 });
   }
