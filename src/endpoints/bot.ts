@@ -35,8 +35,8 @@ export async function getUpdateHandler(config: AppConfig) {
         method: clonedRequest.method,
         headers: sanitizeHeaders(clonedRequest.headers),
         body: await clonedRequest.json(),
-        start: new Date(),
       },
+      start: new Date(),
     };
 
     try {
