@@ -37,7 +37,7 @@ export async function getBot(
   );
 
   /** Common middleware */
-  bot.use(loggerMiddleware(environment));
+  bot.use(loggerMiddleware(environment, config));
   bot.use(limit())
   bot.use(sessionMiddleware(kv));
   bot.use(qrCodeUrl);
