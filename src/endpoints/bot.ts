@@ -8,6 +8,19 @@ function sanitizeHeaders(headers: Headers) {
   );
 }
 
+function formatError(err: unknown) {
+  if (err instanceof Error) {
+    return {
+      message: err.message,
+      stack: err.stack,
+      name: err.name,
+      cause: err.cause,
+    };
+  }
+
+  return JSON.stringify(err);
+}
+
 export async function getUpdateHandler(config: AppConfig) {
   const bot = await getBot(config, Environment.Production);
   const axiom = new Axiom({
@@ -40,7 +53,7 @@ export async function getUpdateHandler(config: AppConfig) {
       return response;
     } catch (err) {
       logInfo.result = "error";
-      logInfo.error = err;
+      logInfo.error = formatError(err);
       console.error(err);
 
       return new Response(undefined, { status: 500 });
