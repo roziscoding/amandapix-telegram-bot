@@ -2,7 +2,7 @@
 import { commands, priorityCommands, setMyCommands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import conversations from "./conversations.ts";
-import { Bot, Context, type ConversationFlavor, conversations as grammyConversations, SessionFlavor } from "./deps.ts";
+import { Bot, Context, type ConversationFlavor, conversations as grammyConversations, SessionFlavor, limit } from "./deps.ts";
 import handlers from "./handlers.ts";
 import { loggerMiddleware } from "./middleware/logger.ts";
 import { sessionMiddleware } from "./middleware/session.ts";
@@ -38,6 +38,7 @@ export async function getBot(
 
   /** Common middleware */
   bot.use(loggerMiddleware(environment));
+  bot.use(limit())
   bot.use(sessionMiddleware(kv));
   bot.use(qrCodeUrl);
 
