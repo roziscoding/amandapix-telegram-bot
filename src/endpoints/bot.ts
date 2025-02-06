@@ -41,6 +41,7 @@ export async function getUpdateHandler(config: AppConfig) {
     } catch (err) {
       logInfo.result = "error";
       logInfo.error = err;
+      console.error(err);
 
       return new Response(undefined, { status: 500 });
     } finally {
