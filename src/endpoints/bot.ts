@@ -33,7 +33,7 @@ export async function getUpdateHandler(config: AppConfig) {
       const clonedResponse = response.clone();
       logInfo.result = "success";
       logInfo.response = {
-        body: await clonedResponse.json(),
+        body: await clonedResponse.text(),
         status: clonedResponse.status,
       };
 
