@@ -45,7 +45,9 @@ export async function getUpdateHandler(config: AppConfig) {
       return new Response(undefined, { status: 500 });
     } finally {
       axiom.ingest(config.AXIOM_DATASET, logInfo);
-      axiom.flush();
+      axiom.flush().catch((err) => {
+        console.error(err);
+      });
     }
   };
 }
