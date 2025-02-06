@@ -15,3 +15,4 @@ export * from "https://raw.githubusercontent.com/denorg/qrcode/87101e061a7b1f9f9
 export { evaluate, round } from "mathjs";
 export { qrcode as qrCode } from 'jsr:@libs/qrcode'
 export { limit } from "https://lib.deno.dev/x/grammy_ratelimiter@v1/mod.ts";
+export { Axiom } from 'npm:@axiomhq/js'

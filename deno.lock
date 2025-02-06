@@ -4,6 +4,7 @@
     "jsr:@hexagon/proper-tags@*": "2.0.2",
     "jsr:@libs/qrcode@*": "2.0.1",
     "jsr:@std/encoding@*": "1.0.6",
+    "npm:@axiomhq/js@*": "1.3.1",
     "npm:mathjs@11.11.2": "11.11.2",
     "npm:preact@10.18.2": "10.18.2"
   },
@@ -19,6 +20,13 @@
     }
   },
   "npm": {
+    "@axiomhq/js@1.3.1": {
+      "integrity": "sha512-Ytf5V3wKz8FKNiqJxnqZmUhjgJ7TItKUoyHVNE/H2V9dN1ozD6NNnsueenOjKdA48cm2sGRyP432nworst18aA==",
+      "dependencies": [
+        "fetch-retry",
+        "uuid"
+      ]
+    },
     "@babel/runtime@7.26.0": {
       "integrity": "sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==",
       "dependencies": [
@@ -33,6 +41,9 @@
     },
     "escape-latex@1.2.0": {
       "integrity": "sha512-nV5aVWW1K0wEiUIEdZ4erkGGH8mDxGyxSeqPzRNtWP7ataw+/olFObw7hujFWlVjNsaDFw5VZ5NzVSIqRgfTiw=="
+    },
+    "fetch-retry@6.0.0": {
+      "integrity": "sha512-BUFj1aMubgib37I3v4q78fYo63Po7t4HUPTpQ6/QE6yK6cIQrP+W43FYToeTEyg5m2Y7eFUtijUuAv/PDlWuag=="
     },
     "fraction.js@4.3.4": {
       "integrity": "sha512-pwiTgt0Q7t+GHZA4yaLjObx4vXmmdcS0iSJ19o8d/goUGgItX9UZWKWNnLHehxviD8wU2IWRsnR8cD5+yOJP2Q=="
@@ -68,6 +79,9 @@
     },
     "typed-function@4.2.1": {
       "integrity": "sha512-EGjWssW7Tsk4DGfE+5yluuljS1OGYWiI1J6e8puZz9nTMM51Oug8CD5Zo4gWMsOhq5BI+1bF+rWTm4Vbj3ivRA=="
+    },
+    "uuid@11.0.5": {
+      "integrity": "sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA=="
     }
   },
   "redirects": {
