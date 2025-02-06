@@ -1,8 +1,11 @@
+import { config } from "./src/config.ts";
 import { serve } from "./src/deps.ts";
-import { handleUpdate } from "./src/endpoints/bot.ts";
+import { getUpdateHandler } from "./src/endpoints/bot.ts";
 import { miniapp } from "./src/endpoints/miniapp.ts";
 import { getQRCode } from "./src/endpoints/qrcode.ts";
 import { setWebhook } from "./src/endpoints/setWebhook.ts";
+
+const handleUpdate = await getUpdateHandler(config);
 
 serve({
   "/bot": handleUpdate,
