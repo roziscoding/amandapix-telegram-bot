@@ -28,7 +28,7 @@ export async function getUpdateHandler(config: AppConfig) {
     try {
       const response = await webhookCallback(bot, "std/http", {
         secretToken: config.WEBHOOK_SECRET,
-      })(clonedRequest);
+      })(originalRequest);
 
       const clonedResponse = response.clone();
       logInfo.result = "success";
