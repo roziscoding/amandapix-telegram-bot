@@ -35,6 +35,7 @@ export async function getUpdateHandler(config: AppConfig) {
         method: clonedRequest.method,
         headers: sanitizeHeaders(clonedRequest.headers),
         body: await clonedRequest.json(),
+        start: new Date(),
       },
     };
 
@@ -58,6 +59,7 @@ export async function getUpdateHandler(config: AppConfig) {
 
       return new Response(undefined, { status: 500 });
     } finally {
+      logInfo.end = new Date();
       axiom.ingest(config.AXIOM_DATASET, logInfo);
       axiom.flush().catch((err) => {
         console.error(err);
