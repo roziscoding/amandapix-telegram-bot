@@ -16,7 +16,6 @@ function html(args: TemplateStringsArray, ...args2: string[]) {
 }
 
 export const miniapp = () => {
-
   return html`
     <!DOCTYPE html>
     <html>
