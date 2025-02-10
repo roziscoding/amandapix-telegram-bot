@@ -23,6 +23,14 @@ function formatError(err: unknown) {
 
 export async function getUpdateHandler(config: AppConfig) {
   const bot = await getBot(config, Environment.Production);
+
+  if (!config.AXIOM_TOKEN) {
+    console.warn("AXIOM_TOKEN is not set, skipping Axiom ingestion");
+    return (req: Request) =>
+      webhookCallback(bot, "std/http", { secretToken: config.WEBHOOK_SECRET })(req)
+        .catch(console.error);
+  }
+
   const axiom = new Axiom({
     token: config.AXIOM_TOKEN,
   });

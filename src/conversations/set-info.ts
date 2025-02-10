@@ -131,6 +131,9 @@ const setInfo = async (
   }
 
   const keyboard = new InlineKeyboard().switchInline(`Gerar código Pix`);
+
+  await conversation.external((ctx) => ctx.session = session);
+
   return ctx.reply(
     stripIndents`
       Pronto! Agora tá tudo certo pra gerar códigos Pix. Pra isso, é só clicar no botão aqui em baixo.

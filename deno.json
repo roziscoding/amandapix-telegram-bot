@@ -9,8 +9,8 @@
     "hooks:install": "deno run -A -r https://deno.land/x/githooks/githooks.ts",
     "quality:check": "FMTFLAGS=--check; deno task quality:fix",
     "quality:fix": "deno lint && deno fmt $FMTFLAGS && deno check -I polling.ts && deno check -I server.ts",
-    "start:polling": "deno run -A --watch polling.ts",
-    "start:server": "deno run -A --watch server.ts"
+    "start:polling": "deno run --env-file -A --watch polling.ts",
+    "start:server": "deno run --env-file -A --watch server.ts"
   },
   "lint": {
     "exclude": [

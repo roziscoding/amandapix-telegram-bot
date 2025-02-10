@@ -4,8 +4,8 @@ import { z } from "./deps.ts";
 const AppConfig = z.object({
   TELEGRAM_TOKEN: z.string(),
   WEBHOOK_URL: z.string().url().default(""),
-  AXIOM_TOKEN: z.string(),
-  AXIOM_DATASET: z.string(),
+  AXIOM_TOKEN: z.string().optional().default(""),
+  AXIOM_DATASET: z.string().optional().default(""),
 }).transform((obj) => ({
   ...obj,
   WEBHOOK_URL: new URL(obj.WEBHOOK_URL),
