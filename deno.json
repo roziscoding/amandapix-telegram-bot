@@ -1,7 +1,7 @@
 {
   "tasks": {
     "deps:install": "deno cache -I src/deps.ts",
-    "deps:reload": "deno cache --reload src/deps.ts",
+    "deps:reload": "deno cache -I --reload src/deps.ts",
     "deps:update": "deno run -A --unstable https://deno.land/x/udd@0.8.2/main.ts src/deps.ts && deno task esm:update & deno task deps:reload",
     "esm:add": "deno run -A https://esm.sh/v133 add",
     "esm:remove": "deno run -A https://esm.sh/v133 remove",

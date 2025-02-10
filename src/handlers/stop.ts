@@ -10,7 +10,6 @@ composer.callbackQuery("stop", (ctx) => {
     query: "",
     city: "",
     onboarded: false,
-    conversation: undefined,
   };
 
   return ctx.editMessageText("Pronto. Excluí todos os dados que eu tinha sobre você! Até a próxima.", {

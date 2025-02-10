@@ -11,11 +11,10 @@ export const cancel = new Composer<AppContext>(async (ctx) => {
       city: "",
       name: "",
       onboarded: false,
-      conversation: undefined,
     };
   }
 
-  await ctx.conversation.exit().catch(() => {});
+  await ctx.conversation.exitAll().catch(() => {});
 
   await ctx.reply("Tudo bem. Deixa pra lá :)", {
     reply_markup: { remove_keyboard: true },
