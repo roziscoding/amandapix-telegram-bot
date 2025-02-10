@@ -1,5 +1,5 @@
 import { AppContext } from "../bot.ts";
-import { Conversation, createConversation, InlineKeyboard, oneLine, safeHtml, stripIndents } from "../deps.ts";
+import { Context, Conversation, createConversation, InlineKeyboard, oneLine, safeHtml, stripIndents } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 import { evaluateQuery } from "../util/query.ts";
 
@@ -8,10 +8,11 @@ const PRIVACY_URL = "https://github.com/roziscoding/amandapix-telegram-bot/blob/
 const confirm = () => new InlineKeyboard().text("Sim", "sim").text("Não", "não");
 
 const setInfo = async (
-  conversation: Conversation<AppContext>,
-  ctx: AppContext,
+  conversation: Conversation<AppContext, Context>,
+  ctx: Context,
 ) => {
-  const isOnboarded = ctx.session.onboarded ?? true;
+  const session = await conversation.external((ctx) => ctx.session);
+  const isOnboarded = session.onboarded ?? true;
 
   if (!isOnboarded) {
     await ctx.reply(
@@ -37,9 +38,7 @@ const setInfo = async (
       .then((ctx) => ctx.callbackQuery.data);
 
     if (privacyPolicy === "não") {
-      await ctx.reply("Tudo bem. Deixa pra lá então.", {
-        reply_markup: { remove_keyboard: true },
-      });
+      await ctx.reply("Tudo bem. Deixa pra lá então.");
       return ctx.reply(
         "Se quiser sugerir mudanças na minha política de privacidade, você pode abrir uma issue no meu repositório.",
         {
@@ -51,9 +50,7 @@ const setInfo = async (
       );
     }
 
-    await ctx.reply("Boa! Agora sim, podemos começar!", {
-      reply_markup: { remove_keyboard: true },
-    });
+    await ctx.reply("Boa! Agora sim, podemos começar!");
   }
 
   let confirmmed = false;
@@ -103,39 +100,27 @@ const setInfo = async (
       .then((ctx) => ctx.callbackQuery.data);
 
     if (confirmation === "cancel") {
-      return ctx.reply(
-        "OK. Deixa pra lá então. Espero poder ajudar numa próxima :)",
-        {
-          reply_markup: { remove_keyboard: true },
-        },
-      );
+      return ctx.reply("OK. Deixa pra lá então. Espero poder ajudar numa próxima :)");
     }
 
     if (confirmation.match("não")) {
-      await ctx.reply("Putz. Bora do começo?", {
-        reply_markup: { remove_keyboard: true },
-      });
+      await ctx.reply("Putz. Bora do começo?");
       continue;
     }
 
     confirmmed = true;
 
-    conversation.session.pixKey = pixKey;
-    conversation.session.city = city;
-    conversation.session.name = name;
-    conversation.session.onboarded = true;
+    session.pixKey = pixKey;
+    session.city = city;
+    session.name = name;
+    session.onboarded = true;
   }
 
-  await ctx.reply("Só mais um minuto...", {
-    reply_markup: { remove_keyboard: true },
-  });
-  await conversation.sleep(1000);
-
-  if (ctx.session.query) {
-    const amount = await evaluateQuery(ctx.session.query).then(({ finalValue }) => finalValue ?? 0);
+  if (session.query) {
+    const amount = await evaluateQuery(session.query).then(({ finalValue }) => finalValue ?? 0);
     const keyboard = new InlineKeyboard().switchInline(
       `Gerar código Pix de ${BRL(amount)}`,
-      ctx.session.query,
+      session.query,
     );
     return ctx.reply(
       `Pronto! Agora tá tudo certo pra gerar o código Pix de ${BRL(amount)}. É só clicar no botão:`,
@@ -159,4 +144,4 @@ const setInfo = async (
   );
 };
 
-export default createConversation<AppContext>(setInfo);
+export default createConversation<AppContext, Context>(setInfo);

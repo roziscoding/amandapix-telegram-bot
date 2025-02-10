@@ -16,11 +16,11 @@ export type AppSession = {
   onboarded?: boolean;
 };
 
-export type AppContext =
+export type AppContext = ConversationFlavor<
   & Context
-  & ConversationFlavor
   & SessionFlavor<AppSession>
-  & QRCodeUrlFlavor;
+  & QRCodeUrlFlavor
+>;
 
 export enum Environment {
   Development = "development",
