@@ -2,7 +2,14 @@
 import { commands, priorityCommands, setMyCommands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import conversations from "./conversations.ts";
-import { Bot, Context, type ConversationFlavor, conversations as grammyConversations, SessionFlavor } from "./deps.ts";
+import {
+  Bot,
+  Context,
+  type ConversationFlavor,
+  conversations as grammyConversations,
+  DenoKVAdapter,
+  SessionFlavor,
+} from "./deps.ts";
 import handlers from "./handlers.ts";
 import { loggerMiddleware } from "./middleware/logger.ts";
 import { sessionMiddleware } from "./middleware/session.ts";
@@ -43,7 +50,15 @@ export async function getBot(
   bot.use(qrCodeUrl);
 
   /** Conversations */
-  bot.use(grammyConversations());
+  bot.use(
+    grammyConversations({
+      storage: {
+        type: "key",
+        adapter: new DenoKVAdapter(kv),
+        prefix: "conversation",
+      },
+    }),
+  );
   bot.use(priorityCommands);
   bot.use(conversations);
 
