@@ -21,6 +21,7 @@ export type AppSession = {
   name: string;
   query?: string;
   onboarded?: boolean;
+  legacyLayout?: boolean;
 };
 
 export type AppContext = ConversationFlavor<

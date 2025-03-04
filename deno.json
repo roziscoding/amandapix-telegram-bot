@@ -10,7 +10,8 @@
     "quality:check": "FMTFLAGS=--check; deno task quality:fix",
     "quality:fix": "deno lint && deno fmt $FMTFLAGS && deno check -I polling.ts && deno check -I server.ts",
     "start:polling": "deno run --env-file -A --watch polling.ts",
-    "start:server": "deno run --env-file -A --watch server.ts"
+    "start:server": "deno run --env-file -A --watch server.ts",
+    "dev:kv": "deno run -A kv.ts"
   },
   "lint": {
     "exclude": [

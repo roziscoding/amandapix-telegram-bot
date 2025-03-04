@@ -6,7 +6,8 @@ import { repo } from "./commands/repo.ts";
 import { setInfo } from "./commands/set-info.ts";
 import { start } from "./commands/start.ts";
 import { stop } from "./commands/stop.ts";
-import { Api, CommandGroup, InlineKeyboard } from "./deps.ts";
+import { legacy } from "./commands/legacy.ts";
+import { Api, CommandGroup } from "./deps.ts";
 
 export const priorityCommands = new CommandGroup<AppContext>();
 
@@ -40,19 +41,8 @@ commands
   .command("repo", "Envia o link do repositório do bot")
   .addToScope({ type: "default" }, repo);
 
-commands.command("webapp", "Opens the web app")
-  .addToScope({ type: "default" }, (ctx) => {
-    ctx.reply("WebApp test", {
-      reply_markup: new InlineKeyboard().webApp(
-        "Open WebApp",
-        `https://chatbot.roz.ninja/miniapp?pixcode=${
-          encodeURIComponent(
-            "00020126350014br.gov.bcb.pix0113pix@roz.ninja520400005303986540539.905802BR5914Rogerio Munhoz6011Joao Pessoa62070503***630432F6",
-          )
-        }`,
-      ),
-    });
-  });
+commands.command("legacy", "Ativa ou desativa o layout antigo")
+  .addToScope({ type: "default" }, legacy);
 
 export const setMyCommands = async ({ api }: { api: Api }) => {
   const args = [
