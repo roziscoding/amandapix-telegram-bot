@@ -28,7 +28,10 @@ export async function getUpdateHandler(config: AppConfig) {
     console.warn("AXIOM_TOKEN is not set, skipping Axiom ingestion");
     return (req: Request) =>
       webhookCallback(bot, "std/http", { secretToken: config.WEBHOOK_SECRET })(req)
-        .catch(console.error);
+        .catch((error) => {
+          console.error(error);
+          return new Response(null, { status: 200 });
+        });
   }
 
   const axiom = new Axiom({

@@ -1,4 +1,4 @@
-import { type Manifest, start } from "https://deno.land/x/fresh@1.6.8/server.ts";
+import { type Manifest, start } from "$fresh/server.ts";
 import { kvInsightsPlugin } from "https://deno.land/x/deno_kv_insights/mod.ts";
 
 function getKvInstance() {

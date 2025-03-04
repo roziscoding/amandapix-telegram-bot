@@ -40,9 +40,7 @@ export async function getBot(
   environment = Environment.Development,
 ) {
   const bot = new Bot<AppContext>(config.TELEGRAM_TOKEN);
-  const kv = await Deno.openKv(
-    environment === Environment.Development ? "./db" : undefined,
-  );
+  const kv = await Deno.openKv();
 
   /** Common middleware */
   bot.use(loggerMiddleware(environment));
@@ -55,8 +53,7 @@ export async function getBot(
     grammyConversations({
       storage: {
         type: "key",
-        adapter: new DenoKVAdapter(kv),
-        prefix: "conversation",
+        adapter: new DenoKVAdapter(kv, ["conversation"]),
       },
     }),
   );
