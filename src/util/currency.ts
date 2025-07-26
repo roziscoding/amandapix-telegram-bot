@@ -1,4 +1,4 @@
-import { z } from "../deps.ts";
+import { z } from "zod";
 
 export class CurrencyNotFoundError extends Error {
   public readonly currency: string;

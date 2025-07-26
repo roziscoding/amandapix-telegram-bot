@@ -1,5 +1,5 @@
-import type { Context, MiddlewareFn } from "../deps.ts";
-import { encodeBase64 } from "../deps.ts";
+import type { Context, MiddlewareFn } from "grammy";
+import { encodeBase64 } from "jsr:@std/encoding";
 
 export type QRCodeUrlFlavor = {
   getQrCodeUrl: (pixCode: string) => string;

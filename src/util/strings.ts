@@ -1,5 +1,4 @@
-// @deno-types="https://esm.sh/common-tags@1.8.2"
-import { stripIndents } from "../deps.ts";
+import { stripIndents } from "@hexagon/proper-tags";
 
 export const REPO_URL = "https://github.com/roziscoding/amandapix-telegram-bot";
 export const PRIVACY_POLICY_URL = `${REPO_URL}/blob/main/PRIVACY.md`;

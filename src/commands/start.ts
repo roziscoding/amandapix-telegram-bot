@@ -1,5 +1,6 @@
+import { stripIndents } from "@hexagon/proper-tags";
+import { Composer, InlineKeyboard } from "grammy";
 import { AppContext, AppSession } from "../bot.ts";
-import { Composer, InlineKeyboard, stripIndents } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 import { evaluateQuery } from "../util/query.ts";
 

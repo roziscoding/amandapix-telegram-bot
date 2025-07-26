@@ -24,21 +24,21 @@ export const miniapp = () => {
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const img = document.getElementById("img");
-            const search = new URLSearchParams(location.search);
-            const pixcode = search.get("tgWebAppStartParam");
-            const url = new URL('${config.WEBHOOK_URL.toString()}');
-            url.pathname = "/qrcode";
-            url.searchParams.set("pixCode", pixcode);
-            img.src = url.toString();
-          })
+          const img = document.getElementById("img");
+          const search = new URLSearchParams(location.search);
+          const pixcode = search.get("tgWebAppStartParam");
+          const url = new URL('${config.WEBHOOK_URL.toString()}');
+          url.pathname = "/qrcode";
+          url.searchParams.set("pixCode", pixcode);
+          img.src = url.toString();
+        })
         </script>
         <style>
-          body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-          }
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #000;
+        }
         </style>
       </head>
       <body>

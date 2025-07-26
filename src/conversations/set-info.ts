@@ -1,5 +1,7 @@
+import { Conversation, createConversation } from "@grammyjs/conversations";
+import { oneLine, safeHtml, stripIndents } from "@hexagon/proper-tags";
+import { Context, InlineKeyboard } from "grammy";
 import { AppContext } from "../bot.ts";
-import { Context, Conversation, createConversation, InlineKeyboard, oneLine, safeHtml, stripIndents } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 import { evaluateQuery } from "../util/query.ts";
 

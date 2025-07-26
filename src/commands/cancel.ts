@@ -1,5 +1,5 @@
+import { Composer } from "grammy";
 import { AppContext } from "../bot.ts";
-import { Composer } from "../deps.ts";
 
 export const cancel = new Composer<AppContext>(async (ctx) => {
   delete ctx.session.query;

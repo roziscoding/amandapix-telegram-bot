@@ -1,11 +1,9 @@
 {
   "tasks": {
+    "udd": "deno run -A https://deno.land/x/udd@0.8.2/main.ts",
     "deps:install": "deno cache -I src/deps.ts",
-    "deps:reload": "deno cache -I --reload src/deps.ts",
-    "deps:update": "deno run -A --unstable https://deno.land/x/udd@0.8.2/main.ts src/deps.ts && deno task esm:update & deno task deps:reload",
-    "esm:add": "deno run -A https://esm.sh/v133 add",
-    "esm:remove": "deno run -A https://esm.sh/v133 remove",
-    "esm:update": "deno run -A https://esm.sh/v133 update",
+    "deps:reload": "deno cache -I --reload src/server.ts src/polling.ts",
+    "deps:update": "deno task udd server.ts polling.ts && deno task deps:reload",
     "hooks:install": "deno run -A -r https://deno.land/x/githooks/githooks.ts",
     "quality:check": "FMTFLAGS=--check; deno task quality:fix",
     "quality:fix": "deno lint && deno fmt $FMTFLAGS && deno check -I polling.ts && deno check -I server.ts",
@@ -32,7 +30,22 @@
     ]
   },
   "imports": {
+    "@grammyjs/debug": "jsr:@grammyjs/debug@^0.2.1",
+    "@hexagon/proper-tags": "jsr:@hexagon/proper-tags@^2.0.2",
+    "@libs/qrcode": "jsr:@libs/qrcode@^3.0.0",
+    "@axiomhq/js": "npm:@axiomhq/js@^1.3.1",
     "mathjs": "npm:mathjs@11.11.2",
+    "pix-me": "npm:pix-me@^2.0.6",
+    "zod": "npm:zod@^4.0.10",
+    "grammy": "https://deno.land/x/grammy@v1.37.0/mod.ts",
+    "grammy/": "https://deno.land/x/grammy@v1.37.0/",
+    "@grammyjs/conversations": "https://deno.land/x/grammy_conversations@v2.1.0/mod.ts",
+    "@grammyjs/conversations/": "https://deno.land/x/grammy_conversations@v2.1.0/",
+    "@grammyjs/storages/": "https://deno.land/x/grammy_storages@v2.5.1/",
+    "@grammyjs/commands": "https://deno.land/x/grammy_commands@v1.0.9/mod.ts",
+    "atlas_sdk": "https://deno.land/x/atlas_sdk@v1.1.3/mod.ts",
+    "sift": "https://deno.land/x/sift@0.6.0/mod.ts",
+    // kv-insights deps
     "$fresh/": "https://deno.land/x/fresh@1.6.8/",
     "clean-css": "https://esm.sh/clean-css@5.3.1",
     "preact": "https://esm.sh/preact@10.19.6",
@@ -46,7 +59,11 @@
   },
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "lib": [
+      "deno.unstable",
+      "dom"
+    ]
   },
   "unstable": [
     "kv"

@@ -1,5 +1,6 @@
+import { safeHtml, stripIndents } from "@hexagon/proper-tags";
+import { Composer } from "grammy";
 import { AppContext } from "../bot.ts";
-import { Composer, safeHtml, stripIndents } from "../deps.ts";
 
 export const getInfo = new Composer<AppContext>((ctx) => {
   if (!ctx.session.pixKey) {

@@ -1,6 +1,7 @@
+import { Axiom } from "@axiomhq/js";
+import { webhookCallback } from "grammy";
 import { Environment, getBot } from "../bot.ts";
 import { AppConfig } from "../config.ts";
-import { Axiom, webhookCallback } from "../deps.ts";
 
 function sanitizeHeaders(headers: Headers) {
   return Object.fromEntries(

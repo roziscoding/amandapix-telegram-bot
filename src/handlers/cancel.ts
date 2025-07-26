@@ -1,5 +1,5 @@
+import { Composer } from "grammy";
 import { AppContext } from "../bot.ts";
-import { Composer } from "../deps.ts";
 
 const composer = new Composer<AppContext>();
 

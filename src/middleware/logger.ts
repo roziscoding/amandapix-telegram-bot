@@ -1,5 +1,5 @@
+import { Composer } from "grammy";
 import { AppContext, Environment } from "../bot.ts";
-import { Composer } from "../deps.ts";
 
 export const loggerMiddleware = (environment: Environment) => {
   const composer = new Composer<AppContext>();

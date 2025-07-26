@@ -1,3 +1,5 @@
+import { CommandGroup } from "@grammyjs/commands";
+import { Api } from "grammy";
 import { AppContext } from "./bot.ts";
 import { cancel } from "./commands/cancel.ts";
 import { getInfo } from "./commands/getInfo.ts";
@@ -6,7 +8,6 @@ import { repo } from "./commands/repo.ts";
 import { setInfo } from "./commands/set-info.ts";
 import { start } from "./commands/start.ts";
 import { stop } from "./commands/stop.ts";
-import { Api, CommandGroup } from "./deps.ts";
 
 export const priorityCommands = new CommandGroup<AppContext>();
 

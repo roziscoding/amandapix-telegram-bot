@@ -1,4 +1,5 @@
-import { debug, evaluate, round } from "../deps.ts";
+import { createDebug as debug } from "@grammyjs/debug";
+import { evaluate, round } from "mathjs";
 import { CurrencyConverstionRates, getConversionRates } from "./currency.ts";
 
 const log = debug("query.ts");

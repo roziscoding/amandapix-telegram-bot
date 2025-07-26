@@ -1,5 +1,6 @@
+import { createDebug as debug } from "@grammyjs/debug";
+import { Composer, InlineKeyboard } from "grammy";
 import { AppContext } from "../bot.ts";
-import { Composer, debug, InlineKeyboard } from "../deps.ts";
 import { BRL } from "../util/currency.ts";
 import { getPixCodeForUser } from "../util/pix-code.ts";
 import { evaluateQuery } from "../util/query.ts";

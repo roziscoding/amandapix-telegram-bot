@@ -1,5 +1,5 @@
 import "https://lib.deno.dev/std@0.167/dotenv/load.ts";
-import { z } from "./deps.ts";
+import { z } from "zod";
 
 const AppConfig = z.object({
   TELEGRAM_TOKEN: z.string(),

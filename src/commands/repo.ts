@@ -1,5 +1,5 @@
+import { Composer } from "grammy";
 import { AppContext } from "../bot.ts";
-import { Composer } from "../deps.ts";
 import { REPO_URL } from "../util/strings.ts";
 
 export const repo = new Composer<AppContext>((ctx: AppContext) =>

@@ -1,5 +1,5 @@
+import { serve } from "sift";
 import { config } from "./src/config.ts";
-import { serve } from "./src/deps.ts";
 import { getUpdateHandler } from "./src/endpoints/bot.ts";
 import { miniapp } from "./src/endpoints/miniapp.ts";
 import { getQRCode } from "./src/endpoints/qrcode.ts";

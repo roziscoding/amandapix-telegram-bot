@@ -1,15 +1,10 @@
 /// <reference lib="deno.unstable" />
+import { type ConversationFlavor, conversations as grammyConversations } from "@grammyjs/conversations";
+import { DenoKVAdapter } from "@grammyjs/storages/denokv/src/adapter.ts";
+import { Bot, Context, SessionFlavor } from "grammy";
 import { commands, priorityCommands, setMyCommands } from "./commands.ts";
 import { AppConfig } from "./config.ts";
 import conversations from "./conversations.ts";
-import {
-  Bot,
-  Context,
-  type ConversationFlavor,
-  conversations as grammyConversations,
-  DenoKVAdapter,
-  SessionFlavor,
-} from "./deps.ts";
 import handlers from "./handlers.ts";
 import { loggerMiddleware } from "./middleware/logger.ts";
 import { sessionMiddleware } from "./middleware/session.ts";

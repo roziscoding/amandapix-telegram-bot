@@ -1,5 +1,5 @@
+import { Composer } from "grammy";
 import { AppContext } from "./bot.ts";
-import { Composer } from "./deps.ts";
 import cancel from "./handlers/cancel.ts";
 import done from "./handlers/done.ts";
 import registered from "./handlers/registered.ts";

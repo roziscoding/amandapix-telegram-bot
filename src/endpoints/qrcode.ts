@@ -1,4 +1,6 @@
-import { decodeBase64, json, qrCode } from "../deps.ts";
+import { qrcode as qrCode } from "jsr:@libs/qrcode";
+import { decodeBase64 } from "jsr:@std/encoding";
+import { json } from "sift";
 
 export function getQRCode(req: Request) {
   const url = new URL(req.url);

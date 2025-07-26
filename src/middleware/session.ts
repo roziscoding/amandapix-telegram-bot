@@ -1,5 +1,6 @@
+import { DenoKVAdapter } from "@grammyjs/storages/denokv/src/adapter.ts";
+import { session } from "grammy";
 import { AppContext, AppSession } from "../bot.ts";
-import { DenoKVAdapter, session } from "../deps.ts";
 
 export const sessionMiddleware = (kv: Deno.Kv) =>
   session<AppSession, AppContext>({
